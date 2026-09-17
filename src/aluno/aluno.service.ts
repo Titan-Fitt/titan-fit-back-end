@@ -160,5 +160,11 @@ export class AlunoService {
 
   }
 
+  buscarPorId(id: number) {
+
+    return this.alunos.find(aluno => aluno.id === id);
+
+  }
+
 }
  
