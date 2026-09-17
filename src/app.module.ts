@@ -5,6 +5,7 @@ import { FichaAlunoModule } from './ficha-aluno/ficha-aluno.module';
 import { EvolucaoModule } from './evolucao/evolucao.module';
 import { ExercicioModule } from './exercicio/exercicio.module';
 import { TreinoModule } from './treino/treino.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { TreinoModule } from './treino/treino.module';
     FichaAlunoModule,
     EvolucaoModule,
     ExercicioModule,
-    TreinoModule
+    TreinoModule,
+    DatabaseModule
   ],
   controllers: [],
   providers: [],
