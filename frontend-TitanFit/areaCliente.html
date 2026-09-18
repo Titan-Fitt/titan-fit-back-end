@@ -48,14 +48,23 @@
                 <h3>Professor conectado</h3>
                 <p>Prof. Flavio</p>
                 <p>personal treiner</p>
-                <button>Se conectar</button>
+                <button type="button" id="abrirModalProfessores">
+    Se conectar
+</button>
+
             </div>
-            <div class="caixa-cliente">
-                <h3>Meu plano</h3>
-                <p>Plano Premium</p>
-                <p>valido até 15/9/2026</p>
-                <button>Mudar plano</button>
-            </div>
+       <div class="caixa-cliente">
+    <h3>Meu plano</h3>
+
+    <p>Plano Premium</p>
+
+    <p>Válido até 15/9/2026</p>
+
+    <button type="button" id="abrirModalPlanos">
+        Mudar plano
+    </button>
+</div>
+
         </section>
 
         <section class="treinos-cliente">
@@ -176,7 +185,215 @@
             </p>
         </div>
     </footer>
+
+<!-- =====================================================
+     MODAL DE PLANOS
+===================================================== -->
+
+<div class="modal-planos" id="modalPlanos">
+
+    <div class="modal-planos-caixa">
+
+        <!-- CABEÇALHO -->
+
+        <div class="modal-planos-header">
+
+            <div>
+                <h2>Escolha seu plano</h2>
+                <p>Selecione o plano que deseja utilizar</p>
+            </div>
+
+            <button
+                type="button"
+                class="modal-planos-fechar"
+                id="fecharModalPlanos"
+                aria-label="Fechar"
+            >
+                &times;
+            </button>
+
+        </div>
+
+
+        <!-- PLANOS -->
+
+        <div class="modal-planos-lista">
+
+
+            <!-- PLANO BÁSICO -->
+
+            <div class="modal-plano-card modal-plano-basico">
+
+                <div class="modal-plano-conteudo">
+
+                    <h3>Plano Básico</h3>
+
+                    <h2>GRATUITO</h2>
+
+                    <ul>
+
+                        <li>Treinos básicos;</li>
+
+                        <li>Acompanhamento inicial;</li>
+
+                        <li>Exercícios essenciais;</li>
+
+                    </ul>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-plano-botao"
+                    data-plano="basico"
+                >
+                    ESCOLHER PLANO
+                </button>
+
+            </div>
+
+
+
+            <!-- PLANO AVANÇADO -->
+
+            <div class="modal-plano-card modal-plano-avancado">
+
+                <div class="modal-plano-conteudo">
+
+                    <h3>Plano Avançado</h3>
+
+                    <h2>R$ 19,99/Mês</h2>
+
+                    <ul>
+
+                        <li>Treinos mais avançados;</li>
+
+                        <li>Ajustes automáticos de treino;</li>
+
+                        <li>Relatórios detalhados;</li>
+
+                        <li>Suporte via chat;</li>
+
+                    </ul>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-plano-botao"
+                    data-plano="avancado"
+                >
+                    ESCOLHER PLANO
+                </button>
+
+            </div>
+
+
+
+            <!-- PLANO PREMIUM -->
+
+            <div class="modal-plano-card modal-plano-premium">
+
+                <div class="modal-plano-conteudo">
+
+                    <h3>Plano Premium</h3>
+
+                    <h2>R$ 39,99/Mês</h2>
+
+                    <ul>
+
+                        <li>Treinos VIP personalizados;</li>
+
+                        <li>Consultoria com especialistas;</li>
+
+                        <li>Evolução monitorada em tempo real;</li>
+
+                        <li>Relatórios completos de desempenho;</li>
+
+                        <li>Suporte via chat;</li>
+
+                    </ul>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-plano-botao"
+                    data-plano="premium"
+                >
+                    ESCOLHER PLANO
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <div
+        class="modal-professores"
+        id="modalProfessores"
+        aria-hidden="true"
+    >
+
+        <div class="modal-professores-caixa">
+
+            <!-- CABEÇALHO -->
+
+            <div class="modal-professores-header">
+
+                <div>
+
+                    <h2>Encontrar professor</h2>
+
+                    <p>
+                        Escolha um professor para se conectar
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-professores-fechar"
+                    id="fecharModalProfessores"
+                    aria-label="Fechar"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+
+            <!-- LISTA DOS PROFESSORES -->
+
+            <div
+                class="professores-lista"
+                id="professoresLista"
+            >
+
+                <div class="professores-carregando">
+
+                    <div class="spinner"></div>
+
+                    <p>
+                        Carregando professores...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <script src="interacao.js"></script>
+    
 </body>
 
 </html>

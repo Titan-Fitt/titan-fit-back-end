@@ -291,3 +291,570 @@ titulosAcordeon.forEach((titulo) => {
     });
 });
 
+/* =====================================================
+   MODAL DE PLANOS
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modalPlanos = document.getElementById("modalPlanos");
+
+    const abrirModal = document.getElementById("abrirModalPlanos");
+
+    const fecharModal = document.getElementById("fecharModalPlanos");
+
+
+    /* ================================================
+       ABRIR MODAL
+    ================================================ */
+
+    if (abrirModal) {
+
+        abrirModal.addEventListener("click", function () {
+
+            modalPlanos.classList.add("ativo");
+
+            document.body.style.overflow = "hidden";
+
+        });
+
+    }
+
+
+    /* ================================================
+       FECHAR MODAL PELO X
+    ================================================ */
+
+    if (fecharModal) {
+
+        fecharModal.addEventListener("click", function () {
+
+            fecharModalPlanos();
+
+        });
+
+    }
+
+
+    /* ================================================
+       FUNÇÃO PARA FECHAR
+    ================================================ */
+
+    function fecharModalPlanos() {
+
+        modalPlanos.classList.remove("ativo");
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    /* ================================================
+       CLICAR FORA DA CAIXA
+    ================================================ */
+
+    if (modalPlanos) {
+
+        modalPlanos.addEventListener("click", function (event) {
+
+            if (event.target === modalPlanos) {
+
+                fecharModalPlanos();
+
+            }
+
+        });
+
+    }
+
+
+    /* ================================================
+       TECLA ESC
+    ================================================ */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (
+            event.key === "Escape" &&
+            modalPlanos.classList.contains("ativo")
+        ) {
+
+            fecharModalPlanos();
+
+        }
+
+    });
+
+
+    /* ================================================
+       BOTÕES DOS PLANOS
+    ================================================ */
+
+    const botoesPlanos =
+        document.querySelectorAll(".modal-plano-botao");
+
+
+    botoesPlanos.forEach(function (botao) {
+
+        botao.addEventListener("click", function () {
+
+            const plano =
+                botao.getAttribute("data-plano");
+
+
+            console.log("Plano selecionado:", plano);
+
+
+            /*
+             * AQUI VOCÊ PODE REDIRECIONAR
+             * PARA A PÁGINA DE PAGAMENTO.
+             *
+             * Exemplo:
+             *
+             * if (plano === "avancado") {
+             *     window.location.href = "pagamento.html?plano=avancado";
+             * }
+             */
+
+
+        });
+
+    });
+
+});
+
+
+
+const abrirModalProfessores =
+    document.getElementById("abrirModalProfessores");
+
+const fecharModalProfessores =
+    document.getElementById("fecharModalProfessores");
+
+const modalProfessores =
+    document.getElementById("modalProfessores");
+
+const professoresLista =
+    document.getElementById("professoresLista");
+
+
+/*
+    Abre o modal de professores
+*/
+
+if (abrirModalProfessores) {
+
+    abrirModalProfessores.addEventListener(
+        "click",
+        function () {
+
+            modalProfessores.classList.add("ativo");
+
+            modalProfessores.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            carregarProfessores();
+
+        }
+    );
+
+}
+
+
+/*
+    Fecha o modal
+*/
+
+if (fecharModalProfessores) {
+
+    fecharModalProfessores.addEventListener(
+        "click",
+        fecharModalProfessoresFunc
+    );
+
+}
+
+
+function fecharModalProfessoresFunc() {
+
+    modalProfessores.classList.remove("ativo");
+
+    modalProfessores.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+}
+
+
+/*
+    Fecha clicando no fundo escuro
+*/
+
+if (modalProfessores) {
+
+    modalProfessores.addEventListener(
+        "click",
+        function (evento) {
+
+            if (evento.target === modalProfessores) {
+
+                fecharModalProfessoresFunc();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BUSCAR PROFESSORES DO BANCO
+===================================================== */
+
+async function carregarProfessores() {
+
+    professoresLista.innerHTML = `
+
+        <div class="professores-carregando">
+
+            <div class="spinner"></div>
+
+            <p>Carregando professores...</p>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const resposta = await fetch(
+            "professores.php",
+            {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Não foi possível buscar os professores."
+            );
+
+        }
+
+
+        const professores =
+            await resposta.json();
+
+
+        /*
+            Verifica se retornou um array
+        */
+
+        if (!Array.isArray(professores)) {
+
+            throw new Error(
+                "Resposta inválida do servidor."
+            );
+
+        }
+
+
+        /*
+            Nenhum professor cadastrado
+        */
+
+        if (professores.length === 0) {
+
+            professoresLista.innerHTML = `
+
+                <div class="sem-professores">
+
+                    <strong>
+                        Nenhum professor encontrado
+                    </strong>
+
+                    <span>
+                        No momento não existem professores
+                        cadastrados.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /*
+            Limpa a lista
+        */
+
+        professoresLista.innerHTML = "";
+
+
+        /*
+            Cria os cards
+        */
+
+        professores.forEach(
+            function (professor) {
+
+                const card =
+                    criarCardProfessor(professor);
+
+                professoresLista.appendChild(card);
+
+            }
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar professores:",
+            erro
+        );
+
+
+        professoresLista.innerHTML = `
+
+            <div class="sem-professores">
+
+                <strong>
+                    Não foi possível carregar os professores.
+                </strong>
+
+                <span>
+                    Verifique a conexão com o servidor
+                    e tente novamente.
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   CRIAR CARD DO PROFESSOR
+===================================================== */
+
+function criarCardProfessor(professor) {
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "professor-card";
+
+
+    /*
+        Foto padrão caso o professor
+        não tenha foto cadastrada.
+    */
+
+    const foto =
+        professor.foto &&
+        professor.foto.trim() !== ""
+            ? professor.foto
+            : "fotos/professor-padrao.png";
+
+
+    /*
+        Cria o HTML do professor
+    */
+
+    card.innerHTML = `
+
+        <img
+            class="professor-foto"
+            src="${escaparHTML(foto)}"
+            alt="Foto de ${escaparHTML(professor.nome)}"
+            onerror="
+                this.src='fotos/professor-padrao.png'
+            "
+        >
+
+
+        <div class="professor-info">
+
+            <h3>
+                ${escaparHTML(professor.nome)}
+            </h3>
+
+            <p class="professor-especialidade">
+                ${escaparHTML(
+                    professor.especialidade ||
+                    "Professor de Educação Física"
+                )}
+            </p>
+
+            <p class="professor-telefone">
+                📞 ${escaparHTML(
+                    professor.telefone ||
+                    "Telefone não informado"
+                )}
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="professor-conectar"
+            data-professor-id="${escaparHTML(
+                professor.id
+            )}"
+        >
+            Conectar
+        </button>
+
+    `;
+
+
+    /*
+        Evento do botão
+    */
+
+    const botao =
+        card.querySelector(
+            ".professor-conectar"
+        );
+
+
+    botao.addEventListener(
+        "click",
+        function () {
+
+            conectarProfessor(
+                professor.id,
+                professor.nome
+            );
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+/* =====================================================
+   CONECTAR AO PROFESSOR
+===================================================== */
+
+async function conectarProfessor(
+    professorId,
+    professorNome
+) {
+
+    const confirmar =
+        confirm(
+            `Deseja se conectar ao professor ${professorNome}?`
+        );
+
+
+    if (!confirmar) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                "conectar-professor.php",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        professor_id:
+                            professorId
+                    })
+                }
+            );
+
+
+        const resultado =
+            await resposta.json();
+
+
+        if (!resposta.ok || !resultado.sucesso) {
+
+            throw new Error(
+                resultado.mensagem ||
+                "Não foi possível realizar a conexão."
+            );
+
+        }
+
+
+        alert(
+            resultado.mensagem ||
+            "Solicitação enviada com sucesso!"
+        );
+
+
+        fecharModalProfessoresFunc();
+
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            erro.message ||
+            "Erro ao conectar com o professor."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   PROTEÇÃO CONTRA HTML INJETADO
+===================================================== */
+
+function escaparHTML(valor) {
+
+    if (valor === null ||
+        valor === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(valor)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
