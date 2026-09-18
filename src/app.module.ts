@@ -6,6 +6,11 @@ import { EvolucaoModule } from './evolucao/evolucao.module';
 import { ExercicioModule } from './exercicio/exercicio.module';
 import { TreinoModule } from './treino/treino.module';
 import { DatabaseModule } from './database/database.module';
+import { TreinoExercicioModule } from './treino-exercicio/treino-exercicio.module';
+import { ProfessorAlunoModule } from './professor-aluno/professor-aluno.module';
+import { PlanoModule } from './plano/plano.module';
+import { AlunoPlanoModule } from './aluno-plano/aluno-plano.module';
+import { PagamentoModule } from './pagamento/pagamento.module';
 
 @Module({
   imports: [
@@ -15,7 +20,12 @@ import { DatabaseModule } from './database/database.module';
     EvolucaoModule,
     ExercicioModule,
     TreinoModule,
-    DatabaseModule
+    DatabaseModule,
+    TreinoExercicioModule,
+    ProfessorAlunoModule,
+    PlanoModule,
+    AlunoPlanoModule,
+    PagamentoModule
   ],
   controllers: [],
   providers: [],
