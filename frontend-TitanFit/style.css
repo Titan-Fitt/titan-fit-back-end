@@ -3261,364 +3261,196 @@ a {
 
 }
 
+/* =====================================================
+   MODAL DE PROFESSORES
+===================================================== */
 
 .modal-professores {
     position: fixed;
-
     inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.60);
-
+    background: rgba(0, 0, 0, 0.75);
     display: none;
-
     align-items: center;
-    justify-content: flex-start;
-
-    z-index: 2000;
-
-    padding: 30px;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
 }
 
 .modal-professores.ativo {
     display: flex;
 }
 
-
-/* CAIXA */
-
 .modal-professores-caixa {
-
-    width: min(440px, 100%);
-
+    width: 100%;
+    max-width: 900px;
     max-height: 90vh;
-
-    background: #ffffff;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.35);
-
-    animation: abrirModalProfessor 0.25s ease;
-
-    margin-left: 20px;
+    overflow-y: auto;
+    background: #292929;
+    border: 1px solid #CE5500;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-
-@keyframes abrirModalProfessor {
-
-    from {
-        opacity: 0;
-        transform: translateX(-40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-}
-
-
-/* HEADER */
+/* CABEÇALHO */
 
 .modal-professores-header {
-
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 24px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #5b21b6,
-            #7c3aed
-        );
-
-    color: white;
+    margin-bottom: 25px;
 }
-
 
 .modal-professores-header h2 {
-
-    margin: 0 0 6px;
-
-    font-size: 24px;
-
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
 }
-
 
 .modal-professores-header p {
-
     margin: 0;
-
+    color: #aaa;
     font-size: 14px;
-
-    opacity: 0.9;
-
 }
-
-
-/* BOTÃO FECHAR */
 
 .modal-professores-fechar {
-
     width: 38px;
     height: 38px;
-
     border: none;
-
     border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.15);
-
-    color: white;
-
+    background: #383838;
+    color: #ffffff;
     font-size: 28px;
-
-    line-height: 1;
-
+    line-height: 30px;
     cursor: pointer;
-
     transition: 0.2s;
-
-    flex-shrink: 0;
 }
-
 
 .modal-professores-fechar:hover {
-
-    background: rgba(255, 255, 255, 0.30);
-
-    transform: rotate(90deg);
-
+    background: #4a4a4a;
 }
-
 
 /* LISTA */
 
-.professores-lista {
-
-    padding: 18px;
-
-    max-height: calc(90vh - 110px);
-
-    overflow-y: auto;
+.lista-professores {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-
-/* CARD PROFESSOR */
+/* CARD DO PROFESSOR */
 
 .professor-card {
-
     display: flex;
-
     align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 
-    gap: 14px;
+    padding: 20px;
 
-    padding: 15px;
-
-    margin-bottom: 12px;
-
-    border: 1px solid #e5e7eb;
-
-    border-radius: 14px;
-
-    background: #ffffff;
+    background: #292929;
+    border: 2px solid #a932ff;
+    border-radius: 15px;
 
     transition: 0.2s;
 }
 
-
 .professor-card:hover {
-
-    border-color: #7c3aed;
-
-    box-shadow:
-        0 5px 18px rgba(124, 58, 237, 0.12);
-
+    background: #303030;
     transform: translateY(-2px);
-
 }
-
-
-/* FOTO */
-
-.professor-foto {
-
-    width: 65px;
-    height: 65px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-
-    flex-shrink: 0;
-
-    border: 3px solid #7c3aed;
-
-}
-
 
 /* INFORMAÇÕES */
 
 .professor-info {
-
-    flex: 1;
-
-    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
-
-.professor-info h3 {
-
-    margin: 0 0 5px;
-
-    font-size: 16px;
-
-    color: #222;
-
-}
-
-
-.professor-info p {
-
-    margin: 3px 0;
-
-    font-size: 13px;
-
-    color: #666;
-
-}
-
-
-.professor-especialidade {
-
-    color: #7c3aed !important;
-
-    font-weight: 600;
-
-}
-
-
-/* TELEFONE */
-
-.professor-telefone {
-
-    font-size: 12px !important;
-
-}
-
-
-/* BOTÃO CONECTAR */
-
-.professor-conectar {
-
-    border: none;
-
-    padding: 9px 13px;
-
-    border-radius: 9px;
-
-    background: #7c3aed;
-
-    color: white;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-
-    white-space: nowrap;
-}
-
-
-.professor-conectar:hover {
-
-    background: #5b21b6;
-
-}
-
-
-/* CARREGANDO */
-
-.professores-carregando {
+.professor-avatar {
+    width: 65px;
+    height: 65px;
 
     display: flex;
-
-    flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
-    min-height: 200px;
-
-    color: #666;
-
-}
-
-
-/* SPINNER */
-
-.spinner {
-
-    width: 35px;
-    height: 35px;
-
-    border: 4px solid #e5e7eb;
-
-    border-top-color: #7c3aed;
-
+    background: #3a3a3a;
     border-radius: 50%;
 
-    animation: girar 0.8s linear infinite;
-
-    margin-bottom: 15px;
+    font-size: 30px;
 }
 
+.professor-info h3 {
+    margin: 0 0 5px;
+    color: #a932ff;
+    font-size: 19px;
+}
 
-@keyframes girar {
+.professor-info p {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 14px;
+}
 
-    to {
-        transform: rotate(360deg);
+.professor-info span {
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* BOTÃO */
+
+.professor-botao {
+    min-width: 150px;
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #a932ff;
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.professor-botao:hover {
+    background: #b84aff;
+    transform: scale(1.03);
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 650px) {
+
+    .modal-professores {
+        padding: 12px;
     }
 
+    .modal-professores-caixa {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .modal-professores-header h2 {
+        font-size: 22px;
+    }
+
+    .professor-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .professor-info {
+        align-items: flex-start;
+    }
+
+    .professor-botao {
+        width: 100%;
+    }
 }
-
-
-/* SEM PROFESSORES */
-
-.sem-professores {
-
-    text-align: center;
-
-    padding: 40px 20px;
-
-    color: #666;
-}
-
-
-.sem-professores strong {
-
-    display: block;
-
-    color: #333;
-
-    margin-bottom: 8px;
-
-}
-

@@ -334,62 +334,47 @@
 </div>
 
 
-    <div
-        class="modal-professores"
-        id="modalProfessores"
-        aria-hidden="true"
-    >
+    <!-- =====================================================
+     MODAL DE PROFESSORES
+===================================================== -->
 
-        <div class="modal-professores-caixa">
+<div class="modal-professores" id="modalProfessores">
 
-            <!-- CABEÇALHO -->
+    <div class="modal-professores-caixa">
 
-            <div class="modal-professores-header">
+        <div class="modal-professores-header">
 
-                <div>
-
-                    <h2>Encontrar professor</h2>
-
-                    <p>
-                        Escolha um professor para se conectar
-                    </p>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="modal-professores-fechar"
-                    id="fecharModalProfessores"
-                    aria-label="Fechar"
-                >
-                    &times;
-                </button>
-
+            <div>
+                <h2>Encontrar professor</h2>
+                <p>Escolha um professor para se conectar</p>
             </div>
 
-
-            <!-- LISTA DOS PROFESSORES -->
-
-            <div
-                class="professores-lista"
-                id="professoresLista"
+            <button
+                type="button"
+                class="modal-professores-fechar"
+                id="fecharModalProfessores"
+                aria-label="Fechar"
             >
-
-                <div class="professores-carregando">
-
-                    <div class="spinner"></div>
-
-                    <p>
-                        Carregando professores...
-                    </p>
-
-                </div>
-
-            </div>
+                &times;
+            </button>
 
         </div>
 
+        <!--
+            Aqui aparecerão os professores cadastrados.
+            Caso não exista nenhum, será mostrado:
+            "Sem professores no momento"
+        -->
+
+        <div
+            id="listaProfessores"
+            class="lista-professores"
+        ></div>
+
     </div>
+
+</div>
+
 
 
     <script src="interacao.js"></script>
