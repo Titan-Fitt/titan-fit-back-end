@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>Area do Cliente</title>
+
+</head>
+
+<body>
+
+    <header class="topo">
+
+        <a href="index.html"> <img src="fotos/logo_txt.png" alt="Titan Fit"></a>
+        </a>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+        <nav id="menu">
+            <div class="close-menu" onclick="toggleMenu()">✖</div>
+
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="servico.html">Serviços</a></li>
+                <li><a href="sobre-nos.html">Sobre Nós</a></li>
+                <li><a href="planos.html">Plano Premium</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="conteudo-areaCliente">
+
+
+        <section class="bemVindo-cliente">
+            <h1> Olá, Gustavo</h1>
+            <p>Bem vindo(a) de volta, como podemos ajudar</p>
+        </section>
+        <section class="sessao-cliente">
+            <div class="caixa-cliente">
+                <h3>proximo treino</h3>
+                <p>Hoja ás 18:00</p>
+                <p>Treino A: peito e Triceps</p>
+
+                <button> Visualizar treino</button>
+            </div>
+            <div class="caixa-cliente">
+                <h3>Professor conectado</h3>
+                <p>Prof. Flavio</p>
+                <p>personal treiner</p>
+                <button>Se conectar</button>
+            </div>
+            <div class="caixa-cliente">
+                <h3>Meu plano</h3>
+                <p>Plano Premium</p>
+                <p>valido até 15/9/2026</p>
+                <button>Mudar plano</button>
+            </div>
+        </section>
+
+        <section class="treinos-cliente">
+            <div class="treinos">
+                <div class="acordeon">
+                    <div class="acordeon-item">
+                        <button class="acordeon-titulo">
+                           Peitoral
+                            <span>+</span>
+                        </button>
+
+                        <div class="acordeon-conteudo">
+                            <p>
+                               ...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="acordeon-item">
+                        <button class="acordeon-titulo">
+                            Costas
+                            <span>+</span>
+                        </button>
+
+                        <div class="acordeon-conteudo">
+                            <p>
+                              ...
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="acordeon-item">
+                        <button class="acordeon-titulo">
+                          Pernas
+                            <span>+</span>
+                        </button>
+
+                        <div class="acordeon-conteudo">
+                            <p>
+                               ...
+                            </p>
+                        </div>
+                    </div>
+                </div>  
+           
+                <button class="visualizar-Treino">Visualizar Treino</button>
+           </div>
+            <div class="acordeon">
+                <div class="acordeon-item">
+                    <button class="acordeon-titulo">
+                        Faturas
+                        <span>+</span>
+                    </button>
+
+                    <div class="acordeon-conteudo">
+                        <p>
+                          ...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="acordeon-item">
+                    <button class="acordeon-titulo">
+                        Meus dados
+                        <span>+</span>
+                    </button>
+
+                    <div class="acordeon-conteudo">
+                        <p>
+                        ...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="acordeon-item">
+                    <button class="acordeon-titulo">
+                       meta mensal
+                        <span>+</span>
+                    </button>
+
+                    <div class="acordeon-conteudo">
+                        <p>...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ <footer class="footer">
+        <div class="footer-conteudo">
+            <div class="footer-nav">
+                <h3>navegação</h3>
+                <a href="index.html">Home</a>
+                <a href="servico.html">Serviços</a>
+                <a href="sobre-nos.html">Sobre Nós</a>
+                <a href="planos.html">Plano Premium</a>
+                <a href="login.html">login</a>
+            </div>
+ 
+            <div class="footer-logo">
+                <img src="fotos/logo_txt.png" alt="Titan Fit">
+            </div>
+ 
+            <div class="footer-redes">
+                <h3>siga-nos em nossas redes sociais</h3>
+                <div class="icones-redes">
+                    <img src="fotos/insta.png" alt="Instagram">
+                    <img src="fotos/facebook.png" alt="Facebook">
+                </div>
+            </div>
+        </div>
+ 
+        <div class="footer-baixo">
+            <p>
+                desenvolvido por Luis Felipe, Pedro Henrique, Pedro Gabriel e Heloisa
+                Site acadêmico | Todos os direitos reservados | Senac LAPA TITO © 2026
+            </p>
+        </div>
+    </footer>
+    <script src="interacao.js"></script>
+</body>
+
+</html>
