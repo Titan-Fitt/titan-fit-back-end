@@ -10,7 +10,7 @@ export interface Plano {
 
   valor: number;
 
-  duracao: number;
+  tipo_plano: string;
 
 }
 
@@ -48,7 +48,7 @@ export class PlanoService {
 
       valor: dados.valor,
 
-      duracao: dados.duracao
+      tipo_plano: dados.tipo_plano
 
     };
 
@@ -90,7 +90,7 @@ interface CreatePlanoDados {
 
   valor: number;
 
-  duracao: number;
+  tipo_plano: string;
 
 }
  

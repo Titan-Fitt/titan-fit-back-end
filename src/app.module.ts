@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AlunoModule } from './aluno/aluno.module';
 import { ProfessorModule } from './professor/professor.module';
 import { FichaAlunoModule } from './ficha-aluno/ficha-aluno.module';
@@ -14,6 +15,10 @@ import { PagamentoModule } from './pagamento/pagamento.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
     AlunoModule,
     ProfessorModule,
     FichaAlunoModule,
@@ -25,7 +30,7 @@ import { PagamentoModule } from './pagamento/pagamento.module';
     ProfessorAlunoModule,
     PlanoModule,
     AlunoPlanoModule,
-    PagamentoModule
+    PagamentoModule,
   ],
   controllers: [],
   providers: [],

@@ -2,65 +2,69 @@ import { Injectable } from '@nestjs/common';
 
 import * as bcrypt from 'bcrypt';
 
-interface Aluno {
-
-  id: number;
-
-  nome: string;
-
-  email: string;
-
-  senha: string;
-
-  telefone: string;
-
-  cpf: string;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 
 export class AlunoService {
 
-  private alunos: Aluno[] = [];
+  constructor(
+
+    private readonly databaseService: DatabaseService
+
+  ) {}
 
   async cadastro(dados: any) {
 
-    const alunoExiste = this.alunos.find(
+    const pool = this.databaseService.getPool();
 
-      aluno => aluno.email === dados.email
+    const [alunoExiste]: any = await pool.query(
+
+      'SELECT id_aluno FROM aluno WHERE email = ? OR cpf = ?',
+
+      [dados.email, dados.cpf]
 
     );
 
-    if (alunoExiste) {
+    if (alunoExiste.length > 0) {
 
       return {
 
-        mensagem: 'E-mail já cadastrado'
+        mensagem: 'E-mail ou CPF já cadastrado'
 
       };
 
     }
 
-    const senhaCriptografada = await bcrypt.hash(dados.senha, 10);
+    const senhaCriptografada = await bcrypt.hash(
 
-    const novoAluno: Aluno = {
+      dados.senha,
 
-      id: this.alunos.length + 1,
+      10
 
-      nome: dados.nome,
+    );
 
-      email: dados.email,
+    const [resultado]: any = await pool.query(
 
-      senha: senhaCriptografada,
+      `INSERT INTO aluno
 
-      telefone: dados.telefone,
+      (nome, email, senha, cpf)
 
-      cpf: dados.cpf
+      VALUES (?, ?, ?, ?)`,
 
-    };
+      [
 
-    this.alunos.push(novoAluno);
+        dados.nome,
+
+        dados.email,
+
+        senhaCriptografada,
+
+        dados.cpf
+
+      ]
+
+    );
 
     return {
 
@@ -68,15 +72,13 @@ export class AlunoService {
 
       aluno: {
 
-        id: novoAluno.id,
+        id: resultado.insertId,
 
-        nome: novoAluno.nome,
+        nome: dados.nome,
 
-        email: novoAluno.email,
+        email: dados.email,
 
-        telefone: novoAluno.telefone,
-
-        cpf: novoAluno.cpf
+        cpf: dados.cpf
 
       }
 
@@ -86,13 +88,17 @@ export class AlunoService {
 
   async login(dados: any) {
 
-    const aluno = this.alunos.find(
+    const pool = this.databaseService.getPool();
 
-      aluno => aluno.email === dados.email
+    const [alunos]: any = await pool.query(
+
+      'SELECT * FROM aluno WHERE email = ?',
+
+      [dados.email]
 
     );
 
-    if (!aluno) {
+    if (alunos.length === 0) {
 
       return {
 
@@ -101,6 +107,8 @@ export class AlunoService {
       };
 
     }
+
+    const aluno = alunos[0];
 
     const senhaCorreta = await bcrypt.compare(
 
@@ -126,15 +134,15 @@ export class AlunoService {
 
       aluno: {
 
-        id: aluno.id,
+        id: aluno.id_aluno,
 
         nome: aluno.nome,
 
         email: aluno.email,
 
-        telefone: aluno.telefone,
+        cpf: aluno.cpf,
 
-        cpf: aluno.cpf
+        data_cadastro: aluno.data_cadastro
 
       }
 
@@ -142,27 +150,69 @@ export class AlunoService {
 
   }
 
-  listar() {
+  async listar() {
 
-    return this.alunos.map(aluno => ({
+    const pool = this.databaseService.getPool();
 
-      id: aluno.id,
+    const [alunos]: any = await pool.query(
 
-      nome: aluno.nome,
+      `SELECT
 
-      email: aluno.email,
+        id_aluno,
 
-      telefone: aluno.telefone,
+        nome,
 
-      cpf: aluno.cpf
+        email,
 
-    }));
+        cpf,
+
+        data_cadastro
+
+       FROM aluno`
+
+    );
+
+    return alunos;
 
   }
 
-  buscarPorId(id: number) {
+  async buscarPorId(id: number) {
 
-    return this.alunos.find(aluno => aluno.id === id);
+    const pool = this.databaseService.getPool();
+
+    const [alunos]: any = await pool.query(
+
+      `SELECT
+
+        id_aluno,
+
+        nome,
+
+        email,
+
+        cpf,
+
+        data_cadastro
+
+       FROM aluno
+
+       WHERE id_aluno = ?`,
+
+      [id]
+
+    );
+
+    if (alunos.length === 0) {
+
+      return {
+
+        mensagem: 'Aluno não encontrado'
+
+      };
+
+    }
+
+    return alunos[0];
 
   }
 

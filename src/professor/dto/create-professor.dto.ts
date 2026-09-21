@@ -1,8 +1,11 @@
 export class CreateProfessorDto {
   nome: string;
+  curriculo: string;
   email: string;
   senha: string;
-  telefone: string;
-  cpf: string;
-  crf: string;
+  registro_cref: string;
+  bacharelado: string;
+  formacao_academica: string;
+  status: string;
+  especialidade: string;
 }

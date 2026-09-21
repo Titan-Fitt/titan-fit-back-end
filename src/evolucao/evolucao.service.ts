@@ -1,74 +1,130 @@
 import { Injectable } from '@nestjs/common';
 
-export interface Evolucao {
-
-  id_evolucao: number;
-
-  id_aluno: number;
-
-  peso: number;
-
-  carga: number;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 
 export class EvolucaoService {
 
-  private evolucoes: Evolucao[] = [];
+  constructor(
 
-  cadastrar(dados: CreateEvolucaoDados) {
+    private readonly databaseService: DatabaseService
 
-    const novaEvolucao: Evolucao = {
+  ) {}
 
-      id_evolucao: this.evolucoes.length + 1,
+  async cadastrar(dados: any) {
 
-      id_aluno: dados.id_aluno,
+    const pool = this.databaseService.getPool();
 
-      peso: dados.peso,
+    const [alunos]: any = await pool.query(
 
-      carga: dados.carga
+      `SELECT id_aluno
 
-    };
+       FROM aluno
 
-    this.evolucoes.push(novaEvolucao);
+       WHERE id_aluno = ?`,
+
+      [dados.id_aluno]
+
+    );
+
+    if (alunos.length === 0) {
+
+      return {
+
+        mensagem: 'Aluno não encontrado'
+
+      };
+
+    }
+
+    const [resultado]: any = await pool.query(
+
+      `INSERT INTO evolucao
+
+      (
+
+        id_aluno,
+
+        peso,
+
+        carga
+
+      )
+
+      VALUES (?, ?, ?)`,
+
+      [
+
+        dados.id_aluno,
+
+        dados.peso,
+
+        dados.carga
+
+      ]
+
+    );
+
+    const [evolucoes]: any = await pool.query(
+
+      `SELECT *
+
+       FROM evolucao
+
+       WHERE id_evolucao = ?`,
+
+      [resultado.insertId]
+
+    );
 
     return {
 
       mensagem: 'Evolução cadastrada com sucesso',
 
-      evolucao: novaEvolucao
+      evolucao: evolucoes[0]
 
     };
 
   }
 
-  listar() {
+  async listar() {
 
-    return this.evolucoes;
+    const pool = this.databaseService.getPool();
 
-  }
+    const [evolucoes]: any = await pool.query(
 
-  buscarPorAluno(id_aluno: number) {
+      `SELECT *
 
-    return this.evolucoes.filter(
-
-      evolucao => evolucao.id_aluno === id_aluno
+       FROM evolucao`
 
     );
 
+    return evolucoes;
+
   }
 
-}
+  async buscarPorAluno(id_aluno: number) {
 
-interface CreateEvolucaoDados {
+    const pool = this.databaseService.getPool();
 
-  id_aluno: number;
+    const [evolucoes]: any = await pool.query(
 
-  peso: number;
+      `SELECT *
 
-  carga: number;
+       FROM evolucao
+
+       WHERE id_aluno = ?
+
+       ORDER BY id_evolucao DESC`,
+
+      [id_aluno]
+
+    );
+
+    return evolucoes;
+
+  }
 
 }
  

@@ -1,74 +1,116 @@
 import { Injectable } from '@nestjs/common';
 
-export interface Exercicio {
-
-  id_exercicio: number;
-
-  nome: string;
-
-  grupo_muscular: string;
-
-  video: string;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 
 export class ExercicioService {
 
-  private exercicios: Exercicio[] = [];
+  constructor(
 
-  cadastrar(dados: CreateExercicioDados) {
+    private readonly databaseService: DatabaseService
 
-    const novoExercicio: Exercicio = {
+  ) {}
 
-      id_exercicio: this.exercicios.length + 1,
+  async cadastrar(dados: any) {
 
-      nome: dados.nome,
+    const pool = this.databaseService.getPool();
 
-      grupo_muscular: dados.grupo_muscular,
+    const [resultado]: any = await pool.query(
 
-      video: dados.video
+      `INSERT INTO exercicio
 
-    };
+      (
 
-    this.exercicios.push(novoExercicio);
+        nome,
+
+        grupo_muscular,
+
+        video
+
+      )
+
+      VALUES (?, ?, ?)`,
+
+      [
+
+        dados.nome,
+
+        dados.grupo_muscular,
+
+        dados.video
+
+      ]
+
+    );
+
+    const [exercicios]: any = await pool.query(
+
+      `SELECT *
+
+       FROM exercicio
+
+       WHERE id_exercicio = ?`,
+
+      [resultado.insertId]
+
+    );
 
     return {
 
       mensagem: 'Exercício cadastrado com sucesso',
 
-      exercicio: novoExercicio
+      exercicio: exercicios[0]
 
     };
 
   }
 
-  listar() {
+  async listar() {
 
-    return this.exercicios;
+    const pool = this.databaseService.getPool();
 
-  }
+    const [exercicios]: any = await pool.query(
 
-  buscarPorId(id: number) {
+      `SELECT *
 
-    return this.exercicios.find(
-
-      exercicio => exercicio.id_exercicio === id
+       FROM exercicio`
 
     );
 
+    return exercicios;
+
   }
 
-}
+  async buscarPorId(id: number) {
 
-interface CreateExercicioDados {
+    const pool = this.databaseService.getPool();
 
-  nome: string;
+    const [exercicios]: any = await pool.query(
 
-  grupo_muscular: string;
+      `SELECT *
 
-  video: string;
+       FROM exercicio
+
+       WHERE id_exercicio = ?`,
+
+      [id]
+
+    );
+
+    if (exercicios.length === 0) {
+
+      return {
+
+        mensagem: 'Exercício não encontrado'
+
+      };
+
+    }
+
+    return exercicios[0];
+
+  }
 
 }
  
