@@ -3454,3 +3454,31 @@ a {
         width: 100%;
     }
 }
+
+
+/* =====================================================
+   MEUS DADOS
+   ===================================================== */
+
+.meus-dados-conteudo {
+    padding: 15px 20px;
+}
+
+.dado-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.dado-item:last-child {
+    border-bottom: none;
+}
+
+.dado-item strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dado-item p {
+    margin: 0;
+}
+

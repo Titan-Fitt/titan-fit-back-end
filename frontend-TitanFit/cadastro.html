@@ -2,35 +2,81 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
 
     <title>Cadastro - Titan Fit</title>
 
     <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
 
     <!-- CABEÇALHO -->
+
     <header class="topo">
 
         <a href="index.html">
-            <img src="fotos/logo_txt.png" alt="Titan Fit">
+            <img
+                src="fotos/logo_txt.png"
+                alt="Titan Fit"
+            >
         </a>
 
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <div
+            class="menu-toggle"
+            onclick="toggleMenu()"
+        >
+            ☰
+        </div>
 
         <nav id="menu">
 
-            <div class="close-menu" onclick="toggleMenu()">✖</div>
+            <div
+                class="close-menu"
+                onclick="toggleMenu()"
+            >
+                ✖
+            </div>
 
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="servico.html">Serviços</a></li>
-                <li><a href="sobre-nos.html">Sobre Nós</a></li>
-                <li><a href="planos.html">Plano Premium</a></li>
-                <li><a href="login.html">Login</a></li>
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="servico.html">
+                        Serviços
+                    </a>
+                </li>
+
+                <li>
+                    <a href="sobre-nos.html">
+                        Sobre Nós
+                    </a>
+                </li>
+
+                <li>
+                    <a href="planos.html">
+                        Plano Premium
+                    </a>
+                </li>
+
+                <li>
+                    <a href="login.html">
+                        Login
+                    </a>
+                </li>
+
             </ul>
 
         </nav>
@@ -39,35 +85,47 @@
 
 
     <!-- CADASTRO -->
+
     <main>
 
         <section class="conteudo-cadastro">
 
             <div class="cadastro-box">
 
-                <h2 class="titulo-cadastro">Cadastro</h2>
+                <h2 class="titulo-cadastro">
+                    Cadastro
+                </h2>
 
-                <p>Crie sua conta</p>
+                <p>
+                    Crie sua conta
+                </p>
 
 
                 <!-- FORMULÁRIO -->
-                <form id="formCadastro" autocomplete="on">
+
+                <form
+                    id="formCadastro"
+                    autocomplete="on"
+                >
 
 
                     <!-- ESCOLHA DO TIPO -->
+
                     <div class="escolha-professor-aluno">
 
                         <button
                             type="button"
                             class="botao-escolha ativo"
-                            data-tipo="usuario">
+                            data-tipo="usuario"
+                        >
                             Aluno
                         </button>
 
                         <button
                             type="button"
                             class="botao-escolha"
-                            data-tipo="professor">
+                            data-tipo="professor"
+                        >
                             Professor
                         </button>
 
@@ -75,6 +133,7 @@
 
 
                     <!-- TIPO DO USUÁRIO -->
+
                     <input
                         type="hidden"
                         name="tipo"
@@ -84,6 +143,7 @@
 
 
                     <!-- NOME -->
+
                     <div class="caixa-cadastro">
 
                         <label for="nome">
@@ -102,6 +162,7 @@
 
 
                     <!-- E-MAIL -->
+
                     <div class="caixa-cadastro">
 
                         <label for="email">
@@ -120,6 +181,7 @@
 
 
                     <!-- TELEFONE -->
+
                     <div class="caixa-cadastro">
 
                         <label for="telefone">
@@ -138,6 +200,7 @@
 
 
                     <!-- CPF -->
+
                     <div class="caixa-cadastro">
 
                         <label for="cpf">
@@ -156,12 +219,15 @@
 
 
                     <!-- CAMPOS DO PROFESSOR -->
+
                     <div
                         id="camposProfessor"
                         style="display: none;"
                     >
 
+
                         <!-- CREF -->
+
                         <div class="caixa-cadastro">
 
                             <label for="cref">
@@ -179,6 +245,7 @@
 
 
                         <!-- ESPECIALIDADE -->
+
                         <div class="caixa-cadastro">
 
                             <label for="especialidade">
@@ -194,10 +261,64 @@
 
                         </div>
 
+
+                        <!-- CURRÍCULO -->
+
+                        <div class="caixa-cadastro">
+
+                            <label for="curriculo">
+                                Currículo
+                            </label>
+
+                            <textarea
+                                id="curriculo"
+                                name="curriculo"
+                                placeholder="Digite seu currículo"
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- BACHARELADO -->
+
+                        <div class="caixa-cadastro">
+
+                            <label for="bacharelado">
+                                Bacharelado
+                            </label>
+
+                            <input
+                                type="text"
+                                id="bacharelado"
+                                name="bacharelado"
+                                placeholder="Ex: Bacharelado em Educação Física"
+                            />
+
+                        </div>
+
+
+                        <!-- FORMAÇÃO ACADÊMICA -->
+
+                        <div class="caixa-cadastro">
+
+                            <label for="formacao_academica">
+                                Formação acadêmica
+                            </label>
+
+                            <input
+                                type="text"
+                                id="formacao_academica"
+                                name="formacao_academica"
+                                placeholder="Digite sua formação acadêmica"
+                            />
+
+                        </div>
+
                     </div>
 
 
                     <!-- SENHA -->
+
                     <div class="caixa-cadastro">
 
                         <label for="senha-cadastro">
@@ -216,6 +337,7 @@
 
 
                     <!-- CONFIRMAR SENHA -->
+
                     <div class="caixa-cadastro">
 
                         <label for="confirmar-senha">
@@ -234,21 +356,25 @@
 
 
                     <!-- BOTÃO -->
+
                     <button
                         type="submit"
-                        class="btn-cadastro">
+                        class="btn-cadastro"
+                    >
                         Cadastrar
                     </button>
 
 
                     <!-- LOGIN -->
+
                     <p class="ja-tem-conta">
                         Já tem conta?
                     </p>
 
                     <a
                         href="login.html"
-                        class="link-login">
+                        class="link-login"
+                    >
                         Entrar
                     </a>
 
@@ -262,7 +388,9 @@
 
 
     <!-- JAVASCRIPT -->
+
     <script src="interacao.js"></script>
+
     <script src="conexoes.js"></script>
 
 </body>
