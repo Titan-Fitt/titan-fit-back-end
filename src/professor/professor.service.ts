@@ -1,103 +1,290 @@
 import { Injectable } from '@nestjs/common';
+
 import * as bcrypt from 'bcrypt';
 
-interface Professor {
-  id: number;
-  nome: string;
-  email: string;
-  senha: string;
-  telefone: string;
-  cpf: string;
-  crf: string;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
+
 export class ProfessorService {
-  private professores: Professor[] = [];
+
+  constructor(
+
+    private readonly databaseService: DatabaseService
+
+  ) {}
+
   async cadastro(dados: any) {
 
-    const professorExiste = this.professores.find(
-      professor => professor.email === dados.email
+    const pool = this.databaseService.getPool();
+
+    const [professoresExistentes]: any = await pool.query(
+
+      `SELECT id_professor
+
+       FROM professor
+
+       WHERE email = ? OR registro_cref = ?`,
+
+      [dados.email, dados.registro_cref]
+
     );
 
-    if (professorExiste) {
+    if (professoresExistentes.length > 0) {
+
       return {
-        mensagem: 'E-mail já cadastrado'
+
+        mensagem: 'E-mail ou registro CREF já cadastrado'
+
       };
+
     }
 
-    const senhaCriptografada = await bcrypt.hash(dados.senha, 10);
+    const senhaCriptografada = await bcrypt.hash(
 
-    const novoProfessor: Professor = {
-      id: this.professores.length + 1,
-      nome: dados.nome,
-      email: dados.email,
-      senha: senhaCriptografada,
-      telefone: dados.telefone,
-      cpf: dados.cpf,
-      crf: dados.crf
-    };
+      dados.senha,
 
-    this.professores.push(novoProfessor);
+      10
+
+    );
+
+    const [resultado]: any = await pool.query(
+
+      `INSERT INTO professor
+
+      (
+
+        nome,
+
+        curriculo,
+
+        email,
+
+        senha,
+
+        registro_cref,
+
+        bacharelado,
+
+        formacao_academica,
+
+        status,
+
+        especialidade
+
+      )
+
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+
+      [
+
+        dados.nome,
+
+        dados.curriculo,
+
+        dados.email,
+
+        senhaCriptografada,
+
+        dados.registro_cref,
+
+        dados.bacharelado,
+
+        dados.formacao_academica,
+
+        dados.status,
+
+        dados.especialidade
+
+      ]
+
+    );
+
     return {
+
       mensagem: 'Professor cadastrado com sucesso',
 
       professor: {
-        id: novoProfessor.id,
-        nome: novoProfessor.nome,
-        email: novoProfessor.email,
-        telefone: novoProfessor.telefone,
-        cpf: novoProfessor.cpf,
-        crf: novoProfessor.crf
+
+        id: resultado.insertId,
+
+        nome: dados.nome,
+
+        email: dados.email,
+
+        registro_cref: dados.registro_cref,
+
+        bacharelado: dados.bacharelado,
+
+        formacao_academica: dados.formacao_academica,
+
+        status: dados.status,
+
+        especialidade: dados.especialidade
+
       }
+
     };
+
   }
 
   async login(dados: any) {
-    const professor = this.professores.find(
-      professor => professor.email === dados.email
+
+    const pool = this.databaseService.getPool();
+
+    const [professores]: any = await pool.query(
+
+      `SELECT *
+
+       FROM professor
+
+       WHERE email = ?`,
+
+      [dados.email]
+
     );
 
-    if (!professor) {
+    if (professores.length === 0) {
+
       return {
+
         mensagem: 'E-mail ou senha incorretos'
+
       };
+
     }
 
+    const professor = professores[0];
+
     const senhaCorreta = await bcrypt.compare(
+
       dados.senha,
+
       professor.senha
+
     );
 
     if (!senhaCorreta) {
 
       return {
+
         mensagem: 'E-mail ou senha incorretos'
+
       };
+
     }
 
     return {
+
       mensagem: 'Login realizado com sucesso',
+
       professor: {
-        id: professor.id,
+
+        id: professor.id_professor,
+
         nome: professor.nome,
+
         email: professor.email,
-        telefone: professor.telefone,
-        cpf: professor.cpf,
-        crf: professor.crf
+
+        curriculo: professor.curriculo,
+
+        registro_cref: professor.registro_cref,
+
+        bacharelado: professor.bacharelado,
+
+        formacao_academica: professor.formacao_academica,
+
+        status: professor.status,
+
+        especialidade: professor.especialidade
+
       }
+
     };
+
   }
 
-  listar() {
-    return this.professores.map(professor => ({
-      id: professor.id,
-      nome: professor.nome,
-      email: professor.email,
-      telefone: professor.telefone,
-      cpf: professor.cpf,
-      crf: professor.crf
-    }));
+  async listar() {
+
+    const pool = this.databaseService.getPool();
+
+    const [professores]: any = await pool.query(
+
+      `SELECT
+
+        id_professor,
+
+        nome,
+
+        curriculo,
+
+        email,
+
+        registro_cref,
+
+        bacharelado,
+
+        formacao_academica,
+
+        status,
+
+        especialidade
+
+       FROM professor`
+
+    );
+
+    return professores;
+
   }
+
+  async buscarPorId(id: number) {
+
+    const pool = this.databaseService.getPool();
+
+    const [professores]: any = await pool.query(
+
+      `SELECT
+
+        id_professor,
+
+        nome,
+
+        curriculo,
+
+        email,
+
+        registro_cref,
+
+        bacharelado,
+
+        formacao_academica,
+
+        status,
+
+        especialidade
+
+       FROM professor
+
+       WHERE id_professor = ?`,
+
+      [id]
+
+    );
+
+    if (professores.length === 0) {
+
+      return {
+
+        mensagem: 'Professor não encontrado'
+
+      };
+
+    }
+
+    return professores[0];
+
+  }
+
 }
+ 

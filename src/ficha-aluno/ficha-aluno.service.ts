@@ -1,25 +1,59 @@
 import { Injectable } from '@nestjs/common';
 
-export interface FichaAluno {
-  id_ficha: number;
-  idade: number;
-  peso: number;
-  altura: number;
-  objetivo: string;
-  id_aluno: number;
-  data_atualizacao: Date;
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
+
 export class FichaAlunoService {
-  private fichas: FichaAluno[] = [];
-  cadastrar(dados: any) {
-    const fichaExiste = this.fichas.find(
-      ficha => ficha.id_aluno === dados.id_aluno
+
+  constructor(
+
+    private readonly databaseService: DatabaseService
+
+  ) {}
+
+  async cadastrar(dados: any) {
+
+    const pool = this.databaseService.getPool();
+
+    const [aluno]: any = await pool.query(
+
+      `SELECT id_aluno
+
+       FROM aluno
+
+       WHERE id_aluno = ?`,
+
+      [dados.id_aluno]
+
     );
 
-    if (fichaExiste) {
+    if (aluno.length === 0) {
+
       return {
+
+        mensagem: 'Aluno não encontrado'
+
+      };
+
+    }
+
+    const [fichaExiste]: any = await pool.query(
+
+      `SELECT id_ficha
+
+       FROM ficha_aluno
+
+       WHERE id_aluno = ?`,
+
+      [dados.id_aluno]
+
+    );
+
+    if (fichaExiste.length > 0) {
+
+      return {
+
         mensagem: 'Esse aluno já possui uma ficha'
 
       };
@@ -48,61 +82,97 @@ export class FichaAlunoService {
 
     }
 
-    const novaFicha: FichaAluno = {
+    const [resultado]: any = await pool.query(
 
-      id_ficha: this.fichas.length + 1,
+      `INSERT INTO ficha_aluno
 
-      idade: dados.idade,
+      (
 
-      peso: dados.peso,
+        idade,
 
-      altura: dados.altura,
+        peso,
 
-      objetivo: dados.objetivo,
+        altura,
 
-      id_aluno: dados.id_aluno,
+        objetivo,
 
-      data_atualizacao: new Date()
+        id_aluno
 
-    };
+      )
 
-    this.fichas.push(novaFicha);
+      VALUES (?, ?, ?, ?, ?)`,
+
+      [
+
+        dados.idade,
+
+        dados.peso,
+
+        dados.altura,
+
+        dados.objetivo,
+
+        dados.id_aluno
+
+      ]
+
+    );
+
+    const [ficha]: any = await pool.query(
+
+      `SELECT *
+
+       FROM ficha_aluno
+
+       WHERE id_ficha = ?`,
+
+      [resultado.insertId]
+
+    );
 
     return {
 
       mensagem: 'Ficha cadastrada com sucesso',
 
-      ficha: novaFicha
+      ficha: ficha[0]
 
     };
 
   }
 
-  listar() {
+  async listar() {
 
-    return this.fichas;
+    const pool = this.databaseService.getPool();
 
-  }
+    const [fichas]: any = await pool.query(
 
-  buscarPorAluno(id_aluno: number) {
+      `SELECT *
 
-    return this.fichas.find(
-
-      ficha => ficha.id_aluno === id_aluno
+       FROM ficha_aluno`
 
     );
 
+    return fichas;
+
   }
 
-  atualizar(id_aluno: number, dados: any) {
+  async buscarPorAluno(id_aluno: number) {
 
-    const ficha = this.fichas.find(
+    const pool = this.databaseService.getPool();
 
-      ficha => ficha.id_aluno === id_aluno
+    const [fichas]: any = await pool.query(
+
+      `SELECT *
+
+       FROM ficha_aluno
+
+       WHERE id_aluno = ?`,
+
+      [id_aluno]
 
     );
 
-    if (!ficha) {
+    if (fichas.length === 0) {
 
       return {
 
@@ -112,24 +182,97 @@ export class FichaAlunoService {
 
     }
 
-    ficha.idade = dados.idade;
+    return fichas[0];
 
-    ficha.peso = dados.peso;
+  }
 
-    ficha.altura = dados.altura;
+  async atualizar(id_aluno: number, dados: any) {
 
-    ficha.objetivo = dados.objetivo;
+    const pool = this.databaseService.getPool();
 
-    ficha.data_atualizacao = new Date();
+    const objetivos = [
+
+      'Funcional',
+
+      'Hipertrofia',
+
+      'Força máxima',
+
+      'Resistência muscular'
+
+    ];
+
+    if (!objetivos.includes(dados.objetivo)) {
+
+      return {
+
+        mensagem: 'Objetivo inválido'
+
+      };
+
+    }
+
+    const [resultado]: any = await pool.query(
+
+      `UPDATE ficha_aluno
+
+       SET idade = ?,
+
+           peso = ?,
+
+           altura = ?,
+
+           objetivo = ?
+
+       WHERE id_aluno = ?`,
+
+      [
+
+        dados.idade,
+
+        dados.peso,
+
+        dados.altura,
+
+        dados.objetivo,
+
+        id_aluno
+
+      ]
+
+    );
+
+    if (resultado.affectedRows === 0) {
+
+      return {
+
+        mensagem: 'Ficha não encontrada'
+
+      };
+
+    }
+
+    const [ficha]: any = await pool.query(
+
+      `SELECT *
+
+       FROM ficha_aluno
+
+       WHERE id_aluno = ?`,
+
+      [id_aluno]
+
+    );
 
     return {
 
       mensagem: 'Ficha atualizada com sucesso',
 
-      ficha
+      ficha: ficha[0]
 
     };
 
   }
 
 }
+ 

@@ -1,23 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { createPool, Pool } from 'mysql2/promise';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+
+import mysql from 'mysql2/promise';
+
 @Injectable()
-export class DatabaseService {
 
-    private readonly pool: Pool;
-    constructor(private readonly configservice: ConfigService) {
-        this.pool = createPool({
-            host: this.configservice.get<string>('DB_HOST'),
-            port: Number(this.configservice.get<string>('DB_PORT')),
-            user: this.configservice.get<string>('DB_USER'),
-            password: this.configservice.get<string>('DB_PASSAWORD'),
-            database: this.configservice.get<string>('DB_NAME')
-        })
-}
+export class DatabaseService implements OnModuleInit, OnModuleDestroy {
 
-async query(sql: string, valores:any[] = []){
-      const [resultado] = await this.pool.execute(sql, valores);
+  private pool: mysql.Pool;
 
-      return resultado;
+  constructor() {
+
+    this.pool = mysql.createPool({
+
+      host: process.env.DB_HOST,
+
+      port: Number(process.env.DB_PORT),
+
+      user: process.env.DB_USER,
+
+      password: process.env.DB_PASSWORD,
+
+      database: process.env.DB_NAME,
+
+      waitForConnections: true,
+
+      connectionLimit: 10,
+
+    });
+
+  }
+
+  async onModuleInit() {
+
+    const connection = await this.pool.getConnection();
+
+    console.log('Banco de dados conectado com sucesso!');
+
+    connection.release();
+
+  }
+
+  async onModuleDestroy() {
+
+    await this.pool.end();
+
+  }
+
+  getPool() {
+
+    return this.pool;
+
+  }
+
 }
-}
+ 
