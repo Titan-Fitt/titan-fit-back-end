@@ -1,126 +1,140 @@
 import { Injectable } from '@nestjs/common';
-
-export interface AlunoPlano {
-
-  id_aluno_plano: number;
-
-  id_aluno: number;
-
-  id_plano: number;
-
-  data_inicio: string;
-
-  data_fim: string;
-
-  status: string;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
-
 export class AlunoPlanoService {
+  constructor(
+    private readonly databaseService: DatabaseService
+  ) {}
 
-  private alunoPlanos: AlunoPlano[] = [];
+  async cadastrar(dados: any) {
+    const pool = this.databaseService.getPool();
 
-  cadastrar(dados: CreateAlunoPlanoDados) {
-
-    const planoAtivo = this.alunoPlanos.find(
-
-      item =>
-
-        item.id_aluno === dados.id_aluno &&
-
-        item.status === 'Ativo'
-
+    const [alunos]: any = await pool.query(
+      `SELECT id_aluno
+       FROM aluno
+       WHERE id_aluno = ?`,
+      [dados.id_aluno]
     );
 
-    if (planoAtivo) {
-
+    if (alunos.length === 0) {
       return {
-
-        mensagem: 'Esse aluno já possui um plano ativo'
-
+        mensagem: 'Aluno não encontrado'
       };
-
     }
 
-    const novoAlunoPlano: AlunoPlano = {
+    const [planos]: any = await pool.query(
+      `SELECT id_plano
+       FROM plano
+       WHERE id_plano = ?`,
+      [dados.id_plano]
+    );
 
-      id_aluno_plano: this.alunoPlanos.length + 1,
+    if (planos.length === 0) {
+      return {
+        mensagem: 'Plano não encontrado'
+      };
+    }
 
-      id_aluno: dados.id_aluno,
+    const [planoAtivo]: any = await pool.query(
+      `SELECT id_aluno_plano
+       FROM aluno_plano
+       WHERE id_aluno = ?
+       AND status = 'Ativo'`,
+      [dados.id_aluno]
+    );
 
-      id_plano: dados.id_plano,
+    if (planoAtivo.length > 0) {
+      return {
+        mensagem: 'Esse aluno já possui um plano ativo'
+      };
+    }
 
-      data_inicio: dados.data_inicio,
+    const [resultado]: any = await pool.query(
+      `INSERT INTO aluno_plano
+      (
+        id_aluno,
+        id_plano,
+        data_inicio,
+        data_fim,
+        status
+      )
+      VALUES (?, ?, ?, ?, ?)`,
+      [
+        dados.id_aluno,
+        dados.id_plano,
+        dados.data_inicio,
+        dados.data_fim,
+        dados.status
+      ]
+    );
 
-      data_fim: dados.data_fim,
-
-      status: dados.status
-
-    };
-
-    this.alunoPlanos.push(novoAlunoPlano);
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT *
+       FROM aluno_plano
+       WHERE id_aluno_plano = ?`,
+      [resultado.insertId]
+    );
 
     return {
-
       mensagem: 'Plano vinculado ao aluno com sucesso',
-
-      alunoPlano: novoAlunoPlano
-
+      alunoPlano: alunoPlanos[0]
     };
-
   }
 
-  listar() {
+  async listar() {
+    const pool = this.databaseService.getPool();
 
-    return this.alunoPlanos;
-
-  }
-
-  buscarPorId(id: number) {
-
-    return this.alunoPlanos.find(
-
-      item => item.id_aluno_plano === id
-
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT *
+       FROM aluno_plano`
     );
 
+    return alunoPlanos;
   }
 
-  buscarPorAluno(id_aluno: number) {
+  async buscarPorId(id: number) {
+    const pool = this.databaseService.getPool();
 
-    return this.alunoPlanos.filter(
-
-      item => item.id_aluno === id_aluno
-
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT *
+       FROM aluno_plano
+       WHERE id_aluno_plano = ?`,
+      [id]
     );
 
+    if (alunoPlanos.length === 0) {
+      return {
+        mensagem: 'Plano do aluno não encontrado'
+      };
+    }
+
+    return alunoPlanos[0];
   }
 
-  buscarPorPlano(id_plano: number) {
+  async buscarPorAluno(id_aluno: number) {
+    const pool = this.databaseService.getPool();
 
-    return this.alunoPlanos.filter(
-
-      item => item.id_plano === id_plano
-
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT *
+       FROM aluno_plano
+       WHERE id_aluno = ?`,
+      [id_aluno]
     );
 
+    return alunoPlanos;
   }
 
+  async buscarPorPlano(id_plano: number) {
+    const pool = this.databaseService.getPool();
+
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT *
+       FROM aluno_plano
+       WHERE id_plano = ?`,
+      [id_plano]
+    );
+
+    return alunoPlanos;
+  }
 }
-
-interface CreateAlunoPlanoDados {
-
-  id_aluno: number;
-
-  id_plano: number;
-
-  data_inicio: string;
-
-  data_fim: string;
-
-  status: string;
-
-}
- 

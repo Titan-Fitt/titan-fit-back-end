@@ -1,110 +1,208 @@
 import { Injectable } from '@nestjs/common';
 
-export interface Treino {
-
-  id_treino: number;
-
-  nome_treino: string;
-
-  tipo_treino: string;
-
-  objetivo: string;
-
-  id_ficha: number;
-
-  id_professor: number;
-
-  data_criacao: Date;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 
 export class TreinoService {
 
-  private treinos: Treino[] = [];
+  constructor(
 
-  cadastrar(dados: CreateTreinoDados) {
+    private readonly databaseService: DatabaseService
 
-    const novoTreino: Treino = {
+  ) {}
 
-      id_treino: this.treinos.length + 1,
+  async cadastrar(dados: any) {
 
-      nome_treino: dados.nome_treino,
+    const pool = this.databaseService.getPool();
 
-      tipo_treino: dados.tipo_treino,
+    const [fichas]: any = await pool.query(
 
-      objetivo: dados.objetivo,
+      `SELECT id_ficha
 
-      id_ficha: dados.id_ficha,
+       FROM ficha_aluno
 
-      id_professor: dados.id_professor,
+       WHERE id_ficha = ?`,
 
-      data_criacao: new Date()
+      [dados.id_ficha]
 
-    };
+    );
 
-    this.treinos.push(novoTreino);
+    if (fichas.length === 0) {
+
+      return {
+
+        mensagem: 'Ficha do aluno não encontrada'
+
+      };
+
+    }
+
+    const [professores]: any = await pool.query(
+
+      `SELECT id_professor
+
+       FROM professor
+
+       WHERE id_professor = ?`,
+
+      [dados.id_professor]
+
+    );
+
+    if (professores.length === 0) {
+
+      return {
+
+        mensagem: 'Professor não encontrado'
+
+      };
+
+    }
+
+    const [resultado]: any = await pool.query(
+
+      `INSERT INTO treino
+
+      (
+
+        nome_treino,
+
+        tipo_treino,
+
+        objetivo,
+
+        id_ficha,
+
+        id_professor
+
+      )
+
+      VALUES (?, ?, ?, ?, ?)`,
+
+      [
+
+        dados.nome_treino,
+
+        dados.tipo_treino,
+
+        dados.objetivo,
+
+        dados.id_ficha,
+
+        dados.id_professor
+
+      ]
+
+    );
+
+    const [treinos]: any = await pool.query(
+
+      `SELECT *
+
+       FROM treino
+
+       WHERE id_treino = ?`,
+
+      [resultado.insertId]
+
+    );
 
     return {
 
       mensagem: 'Treino cadastrado com sucesso',
 
-      treino: novoTreino
+      treino: treinos[0]
 
     };
 
   }
 
-  listar() {
+  async listar() {
 
-    return this.treinos;
+    const pool = this.databaseService.getPool();
 
-  }
+    const [treinos]: any = await pool.query(
 
-  buscarPorId(id: number) {
+      `SELECT *
 
-    return this.treinos.find(
-
-      treino => treino.id_treino === id
+       FROM treino`
 
     );
 
+    return treinos;
+
   }
 
-  buscarPorFicha(id_ficha: number) {
+  async buscarPorId(id: number) {
 
-    return this.treinos.filter(
+    const pool = this.databaseService.getPool();
 
-      treino => treino.id_ficha === id_ficha
+    const [treinos]: any = await pool.query(
+
+      `SELECT *
+
+       FROM treino
+
+       WHERE id_treino = ?`,
+
+      [id]
 
     );
 
+    if (treinos.length === 0) {
+
+      return {
+
+        mensagem: 'Treino não encontrado'
+
+      };
+
+    }
+
+    return treinos[0];
+
   }
 
-  buscarPorProfessor(id_professor: number) {
+  async buscarPorFicha(id_ficha: number) {
 
-    return this.treinos.filter(
+    const pool = this.databaseService.getPool();
 
-      treino => treino.id_professor === id_professor
+    const [treinos]: any = await pool.query(
+
+      `SELECT *
+
+       FROM treino
+
+       WHERE id_ficha = ?`,
+
+      [id_ficha]
 
     );
 
+    return treinos;
+
   }
 
-}
+  async buscarPorProfessor(id_professor: number) {
 
-interface CreateTreinoDados {
+    const pool = this.databaseService.getPool();
 
-  nome_treino: string;
+    const [treinos]: any = await pool.query(
 
-  tipo_treino: string;
+      `SELECT *
 
-  objetivo: string;
+       FROM treino
 
-  id_ficha: number;
+       WHERE id_professor = ?`,
 
-  id_professor: number;
+      [id_professor]
+
+    );
+
+    return treinos;
+
+  }
 
 }
  

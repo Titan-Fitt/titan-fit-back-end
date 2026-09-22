@@ -1,96 +1,85 @@
 import { Injectable } from '@nestjs/common';
-
-export interface Plano {
-
-  id_plano: number;
-
-  nome: string;
-
-  descricao: string;
-
-  valor: number;
-
-  tipo_plano: string;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
-
 export class PlanoService {
+  constructor(
+    private readonly databaseService: DatabaseService
+  ) {}
 
-  private planos: Plano[] = [];
+  async cadastrar(dados: any) {
+    const pool = this.databaseService.getPool();
 
-  cadastrar(dados: CreatePlanoDados) {
-
-    const planoExiste = this.planos.find(
-
-      plano => plano.nome === dados.nome
-
+    const [planoExiste]: any = await pool.query(
+      `SELECT id_plano
+       FROM plano
+       WHERE nome = ?`,
+      [dados.nome]
     );
 
-    if (planoExiste) {
-
+    if (planoExiste.length > 0) {
       return {
-
         mensagem: 'Esse plano já está cadastrado'
-
       };
-
     }
 
-    const novoPlano: Plano = {
-
-      id_plano: this.planos.length + 1,
-
-      nome: dados.nome,
-
-      descricao: dados.descricao,
-
-      valor: dados.valor,
-
-      tipo_plano: dados.tipo_plano
-
-    };
-
-    this.planos.push(novoPlano);
-
-    return {
-
-      mensagem: 'Plano cadastrado com sucesso',
-
-      plano: novoPlano
-
-    };
-
-  }
-
-  listar() {
-
-    return this.planos;
-
-  }
-
-  buscarPorId(id: number) {
-
-    return this.planos.find(
-
-      plano => plano.id_plano === id
-
+    const [resultado]: any = await pool.query(
+      `INSERT INTO plano
+      (
+        nome,
+        descricao,
+        valor,
+        tipo_plano
+      )
+      VALUES (?, ?, ?, ?)`,
+      [
+        dados.nome,
+        dados.descricao,
+        dados.valor,
+        dados.tipo_plano
+      ]
     );
 
+    const [planos]: any = await pool.query(
+      `SELECT *
+       FROM plano
+       WHERE id_plano = ?`,
+      [resultado.insertId]
+    );
+
+    return {
+      mensagem: 'Plano cadastrado com sucesso',
+      plano: planos[0]
+    };
   }
 
+  async listar() {
+    const pool = this.databaseService.getPool();
+
+    const [planos]: any = await pool.query(
+      `SELECT *
+       FROM plano`
+    );
+
+    return planos;
+  }
+
+  async buscarPorId(id: number) {
+    const pool = this.databaseService.getPool();
+
+    const [planos]: any = await pool.query(
+      `SELECT *
+       FROM plano
+       WHERE id_plano = ?`,
+      [id]
+    );
+
+    if (planos.length === 0) {
+      return {
+        mensagem: 'Plano não encontrado'
+      };
+    }
+
+    return planos[0];
+  }
 }
-
-interface CreatePlanoDados {
-
-  nome: string;
-
-  descricao: string;
-
-  valor: number;
-
-  tipo_plano: string;
-
-}
- 
