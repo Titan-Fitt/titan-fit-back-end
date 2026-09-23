@@ -1,5 +1,6 @@
 /* =====================================================
    TITAN FIT - INTERACAO.JS
+
    Somente animações e interações visuais.
    Nenhuma conexão com o back-end/API.
 ===================================================== */
@@ -10,11 +11,13 @@
 ===================================================== */
 
 function toggleMenu() {
+
     const menu = document.getElementById("menu");
 
     if (menu) {
         menu.classList.toggle("active");
     }
+
 }
 
 
@@ -24,17 +27,31 @@ function toggleMenu() {
 
 const sobreNos = document.querySelector(".sobrenos-home");
 
-if (sobreNos) {
-    const observerSobre = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                sobreNos.classList.add("animar");
-                observerSobre.disconnect();
-            }
-        });
-    }, { threshold: 0.3 });
+if (sobreNos && "IntersectionObserver" in window) {
+
+    const observerSobre = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    sobreNos.classList.add("animar");
+
+                    observerSobre.disconnect();
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.3
+        }
+    );
 
     observerSobre.observe(sobreNos);
+
 }
 
 
@@ -46,24 +63,46 @@ const planosHome = document.querySelectorAll(
     ".plano_basico-home, .plano_avancado-home, .plano_premium-home"
 );
 
-const secaoPlanosHome = document.querySelector(".caixa-planos_home");
+const secaoPlanosHome =
+    document.querySelector(".caixa-planos_home");
 
-if (secaoPlanosHome && planosHome.length > 0) {
-    const observerPlanos = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                planosHome.forEach((plano, index) => {
-                    setTimeout(() => {
-                        plano.classList.add("animar");
-                    }, index * 300);
-                });
+if (
+    secaoPlanosHome &&
+    planosHome.length > 0 &&
+    "IntersectionObserver" in window
+) {
 
-                observerPlanos.disconnect();
-            }
-        });
-    }, { threshold: 0.3 });
+    const observerPlanos = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    planosHome.forEach((plano, index) => {
+
+                        setTimeout(() => {
+
+                            plano.classList.add("animar");
+
+                        }, index * 300);
+
+                    });
+
+                    observerPlanos.disconnect();
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.3
+        }
+    );
 
     observerPlanos.observe(secaoPlanosHome);
+
 }
 
 
@@ -71,26 +110,49 @@ if (secaoPlanosHome && planosHome.length > 0) {
    ANIMAÇÃO - SERVIÇOS HOME
 ===================================================== */
 
-const servicos = document.querySelectorAll(".animar-servico");
+const servicos =
+    document.querySelectorAll(".animar-servico");
 
-if (servicos.length > 0) {
-    const observerServicos = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                servicos.forEach((servico, index) => {
-                    setTimeout(() => {
-                        servico.classList.add("ativo");
-                    }, index * 250);
-                });
+if (
+    servicos.length > 0 &&
+    "IntersectionObserver" in window
+) {
 
-                observerServicos.disconnect();
-            }
-        });
-    }, { threshold: 0.2 });
+    const observerServicos = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    servicos.forEach((servico, index) => {
+
+                        setTimeout(() => {
+
+                            servico.classList.add("ativo");
+
+                        }, index * 250);
+
+                    });
+
+                    observerServicos.disconnect();
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.2
+        }
+    );
 
     servicos.forEach((servico) => {
+
         observerServicos.observe(servico);
+
     });
+
 }
 
 
@@ -98,43 +160,91 @@ if (servicos.length > 0) {
    CARD CENTRAL - PÁGINA DE PLANOS
 ===================================================== */
 
-const cardsContainer = document.querySelector(".pagina-planos-cards");
-const cardsPlanos = document.querySelectorAll(".pagina-plano-card");
+const cardsContainer =
+    document.querySelector(".pagina-planos-cards");
+
+const cardsPlanos =
+    document.querySelectorAll(".pagina-plano-card");
+
 
 function destacarCardCentral() {
-    if (!cardsContainer || cardsPlanos.length === 0) {
+
+    if (
+        !cardsContainer ||
+        cardsPlanos.length === 0
+    ) {
         return;
     }
 
-    const centroTela = window.innerWidth / 2;
+    const centroTela =
+        window.innerWidth / 2;
 
     let cardMaisCentral = null;
+
     let menorDistancia = Infinity;
 
+
     cardsPlanos.forEach((card) => {
-        const rect = card.getBoundingClientRect();
-        const centroCard = rect.left + rect.width / 2;
-        const distancia = Math.abs(centroTela - centroCard);
+
+        const rect =
+            card.getBoundingClientRect();
+
+        const centroCard =
+            rect.left + rect.width / 2;
+
+        const distancia =
+            Math.abs(
+                centroTela - centroCard
+            );
+
 
         if (distancia < menorDistancia) {
+
             menorDistancia = distancia;
+
             cardMaisCentral = card;
+
         }
+
     });
+
 
     cardsPlanos.forEach((card) => {
+
         card.classList.remove("ativo");
+
     });
 
+
     if (cardMaisCentral) {
+
         cardMaisCentral.classList.add("ativo");
+
     }
+
 }
 
-if (cardsContainer && cardsPlanos.length > 0) {
-    cardsContainer.addEventListener("scroll", destacarCardCentral);
-    window.addEventListener("resize", destacarCardCentral);
-    window.addEventListener("load", destacarCardCentral);
+
+if (
+    cardsContainer &&
+    cardsPlanos.length > 0
+) {
+
+    cardsContainer.addEventListener(
+        "scroll",
+        destacarCardCentral
+    );
+
+    window.addEventListener(
+        "resize",
+        destacarCardCentral
+    );
+
+    window.addEventListener(
+        "load",
+        destacarCardCentral
+    );
+
 }
 
 
@@ -142,366 +252,643 @@ if (cardsContainer && cardsPlanos.length > 0) {
    ANIMAÇÃO DE ENTRADA - PLANOS
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".pagina-plano-card");
-    const secaoPlanos = document.querySelector(".pagina-planos-cards");
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    if (secaoPlanos && cards.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    cards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.classList.add("animar");
-                        }, index * 400);
-                    });
+        const cards =
+            document.querySelectorAll(
+                ".pagina-plano-card"
+            );
 
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.2 });
+        const secaoPlanos =
+            document.querySelector(
+                ".pagina-planos-cards"
+            );
 
-        observer.observe(secaoPlanos);
+
+        if (
+            secaoPlanos &&
+            cards.length > 0 &&
+            "IntersectionObserver" in window
+        ) {
+
+            const observer =
+                new IntersectionObserver(
+                    (entries) => {
+
+                        entries.forEach((entry) => {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                cards.forEach(
+                                    (card, index) => {
+
+                                        setTimeout(
+                                            () => {
+
+                                                card.classList.add(
+                                                    "animar"
+                                                );
+
+                                            },
+                                            index * 400
+                                        );
+
+                                    }
+                                );
+
+
+                                observer.disconnect();
+
+                            }
+
+                        });
+
+                    },
+                    {
+                        threshold: 0.2
+                    }
+                );
+
+
+            observer.observe(secaoPlanos);
+
+        }
+
     }
-});
+);
 
 
 /* =====================================================
    ANIMAÇÃO - PAGAMENTO
 ===================================================== */
 
-const pagamento = document.querySelector(".pagina-pagamento");
+const pagamento =
+    document.querySelector(
+        ".pagina-pagamento"
+    );
 
-if (pagamento) {
-    const observerPagamento = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                pagamento.classList.add("animar");
-                observerPagamento.unobserve(entry.target);
+
+if (
+    pagamento &&
+    "IntersectionObserver" in window
+) {
+
+    const observerPagamento =
+        new IntersectionObserver(
+            (entries) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+
+                        pagamento.classList.add(
+                            "animar"
+                        );
+
+                        observerPagamento.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.3
             }
-        });
-    }, { threshold: 0.3 });
+        );
+
 
     observerPagamento.observe(pagamento);
+
 }
 
 
 /* =====================================================
-   CADASTRO - ESCOLHA PROFESSOR / USUÁRIO
+   CADASTRO - ESCOLHA PROFESSOR / ALUNO
+
    Apenas interação visual do formulário.
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-    const botoes = document.querySelectorAll(".botao-escolha");
-    const camposProfessor = document.getElementById("camposProfessor");
-    const tipoInput = document.getElementById("tipoInput");
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    if (botoes.length === 0) {
-        return;
-    }
+        const botoes =
+            document.querySelectorAll(
+                ".botao-escolha"
+            );
 
-    botoes.forEach((botao) => {
-        botao.addEventListener("click", () => {
+        const camposProfessor =
+            document.getElementById(
+                "camposProfessor"
+            );
 
-            botoes.forEach((b) => {
-                b.classList.remove("ativo");
-            });
-
-            botao.classList.add("ativo");
-
-            const tipo = botao.dataset.tipo;
-
-            if (tipoInput) {
-                tipoInput.value = tipo;
-            }
-
-            if (camposProfessor) {
-                camposProfessor.style.display =
-                    tipo === "professor" ? "block" : "none";
-            }
-        });
-    });
-});
+        const tipoInput =
+            document.getElementById(
+                "tipoInput"
+            );
 
 
-/* =====================================================
-   MENU MOBILE - CONTROLE ALTERNATIVO
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-    const menu = document.querySelector("#menu");
-    const botaoAbrirMenu = document.querySelector(".menu-toggle");
-    const botaoFecharMenu = document.querySelector(".close-menu");
-
-    function alternarMenu() {
-        if (!menu) {
+        if (botoes.length === 0) {
             return;
         }
 
-        const menuEstaAberto = menu.classList.toggle("aberto");
 
-        if (botaoAbrirMenu) {
-            botaoAbrirMenu.setAttribute(
-                "aria-expanded",
-                String(menuEstaAberto)
+        botoes.forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+
+                    /* Remove ativo dos outros */
+
+                    botoes.forEach((b) => {
+
+                        b.classList.remove(
+                            "ativo"
+                        );
+
+                    });
+
+
+                    /* Ativa o botão clicado */
+
+                    botao.classList.add(
+                        "ativo"
+                    );
+
+
+                    /* Descobre o tipo */
+
+                    const tipo =
+                        botao.dataset.tipo;
+
+
+                    /* Salva no input hidden */
+
+                    if (tipoInput) {
+
+                        tipoInput.value =
+                            tipo;
+
+                    }
+
+
+                    /* Mostra/esconde campos de professor */
+
+                    if (camposProfessor) {
+
+                        camposProfessor.style.display =
+                            tipo === "professor"
+                                ? "block"
+                                : "none";
+
+                    }
+
+                }
             );
-        }
-    }
 
-    if (botaoAbrirMenu) {
-        botaoAbrirMenu.addEventListener("click", alternarMenu);
-    }
+        });
 
-    if (botaoFecharMenu) {
-        botaoFecharMenu.addEventListener("click", alternarMenu);
     }
-});
+);
 
 
 /* =====================================================
    ACORDEÃO
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-    const titulosAcordeon = document.querySelectorAll(
-        ".acordeon-titulo"
-    );
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    titulosAcordeon.forEach((titulo) => {
-        titulo.addEventListener("click", () => {
+        const titulosAcordeon =
+            document.querySelectorAll(
+                ".acordeon-titulo"
+            );
 
-            const itemAtual = titulo.closest(".acordeon-item");
 
-            if (!itemAtual) {
-                return;
-            }
+        titulosAcordeon.forEach((titulo) => {
 
-            const acordeonAtual = itemAtual.closest(".acordeon");
+            /* Acessibilidade */
 
-            if (!acordeonAtual) {
-                return;
-            }
+            titulo.setAttribute(
+                "aria-expanded",
+                "false"
+            );
 
-            const itemEstaAtivo =
-                itemAtual.classList.contains("ativo");
 
-            acordeonAtual
-                .querySelectorAll(".acordeon-item")
-                .forEach((item) => {
+            titulo.addEventListener(
+                "click",
+                () => {
 
-                    item.classList.remove("ativo");
-
-                    const botao = item.querySelector(
-                        ".acordeon-titulo"
-                    );
-
-                    if (botao) {
-                        botao.setAttribute(
-                            "aria-expanded",
-                            "false"
+                    const itemAtual =
+                        titulo.closest(
+                            ".acordeon-item"
                         );
+
+
+                    if (!itemAtual) {
+                        return;
                     }
-                });
-
-            if (!itemEstaAtivo) {
-
-                itemAtual.classList.add("ativo");
-
-                titulo.setAttribute(
-                    "aria-expanded",
-                    "true"
-                );
-            }
-        });
-    });
-});
 
 
-/* =====================================================
-   MODAL DE PLANOS
-   Apenas abrir, fechar e selecionar visualmente.
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const modalPlanos =
-        document.getElementById("modalPlanos");
-
-    const abrirModal =
-        document.getElementById("abrirModalPlanos");
-
-    const fecharModal =
-        document.getElementById("fecharModalPlanos");
+                    const acordeonAtual =
+                        itemAtual.closest(
+                            ".acordeon"
+                        );
 
 
-    function fecharModalPlanos() {
-
-        if (!modalPlanos) {
-            return;
-        }
-
-        modalPlanos.classList.remove("ativo");
-
-        document.body.style.overflow = "";
-    }
+                    if (!acordeonAtual) {
+                        return;
+                    }
 
 
-    if (abrirModal && modalPlanos) {
-
-        abrirModal.addEventListener("click", () => {
-
-            modalPlanos.classList.add("ativo");
-
-            document.body.style.overflow = "hidden";
-
-        });
-    }
+                    const itemEstaAtivo =
+                        itemAtual.classList.contains(
+                            "ativo"
+                        );
 
 
-    if (fecharModal) {
+                    /*
+                     * Fecha todos os itens
+                     * do mesmo acordeão
+                     */
 
-        fecharModal.addEventListener(
-            "click",
-            fecharModalPlanos
-        );
+                    acordeonAtual
+                        .querySelectorAll(
+                            ".acordeon-item"
+                        )
+                        .forEach((item) => {
 
-    }
-
-
-    if (modalPlanos) {
-
-        modalPlanos.addEventListener("click", (event) => {
-
-            if (event.target === modalPlanos) {
-                fecharModalPlanos();
-            }
-
-        });
-
-    }
+                            item.classList.remove(
+                                "ativo"
+                            );
 
 
-    document.addEventListener("keydown", (event) => {
-
-        if (
-            event.key === "Escape" &&
-            modalPlanos &&
-            modalPlanos.classList.contains("ativo")
-        ) {
-
-            fecharModalPlanos();
-
-        }
-
-    });
+                            const botao =
+                                item.querySelector(
+                                    ".acordeon-titulo"
+                                );
 
 
-    const botoesPlanos =
-        document.querySelectorAll(".modal-plano-botao");
+                            if (botao) {
+
+                                botao.setAttribute(
+                                    "aria-expanded",
+                                    "false"
+                                );
 
 
-    botoesPlanos.forEach((botao) => {
+                                const sinal =
+                                    botao.querySelector(
+                                        "span"
+                                    );
 
-        botao.addEventListener("click", () => {
 
-            const plano =
-                botao.getAttribute("data-plano");
+                                if (sinal) {
 
-            console.log(
-                "Plano selecionado:",
-                plano
+                                    sinal.textContent =
+                                        "+";
+
+                                }
+
+                            }
+
+                        });
+
+
+                    /*
+                     * Se estava fechado,
+                     * abre o item clicado
+                     */
+
+                    if (!itemEstaAtivo) {
+
+                        itemAtual.classList.add(
+                            "ativo"
+                        );
+
+
+                        titulo.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+
+                        const sinal =
+                            titulo.querySelector(
+                                "span"
+                            );
+
+
+                        if (sinal) {
+
+                            sinal.textContent =
+                                "−";
+
+                        }
+
+                    }
+
+                }
             );
 
         });
 
-    });
-
-});
+    }
+);
 
 
 /* =====================================================
-   MODAL DE PROFESSORES
-   SOMENTE ABRIR E FECHAR.
-   
-   A busca dos professores e a conexão com o
-   professor ficam no conexoes.js.
+   MODAL DE PLANOS
+
+   Apenas abrir, fechar e selecionar visualmente.
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const abrirModalProfessores =
-        document.getElementById(
-            "abrirModalProfessores"
-        );
+        const modalPlanos =
+            document.getElementById(
+                "modalPlanos"
+            );
 
-    const fecharModalProfessores =
-        document.getElementById(
-            "fecharModalProfessores"
-        );
+        const abrirModal =
+            document.getElementById(
+                "abrirModalPlanos"
+            );
 
-    const modalProfessores =
-        document.getElementById(
-            "modalProfessores"
-        );
+        const fecharModal =
+            document.getElementById(
+                "fecharModalPlanos"
+            );
 
 
-    function fecharModal() {
+        function fecharModalPlanos() {
 
-        if (!modalProfessores) {
-            return;
+            if (!modalPlanos) {
+                return;
+            }
+
+
+            modalPlanos.classList.remove(
+                "ativo"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
         }
 
-        modalProfessores.classList.remove("ativo");
 
-        document.body.style.overflow = "";
+        /* Abrir */
 
-    }
+        if (
+            abrirModal &&
+            modalPlanos
+        ) {
+
+            abrirModal.addEventListener(
+                "click",
+                () => {
+
+                    modalPlanos.classList.add(
+                        "ativo"
+                    );
 
 
-    if (
-        abrirModalProfessores &&
-        modalProfessores
-    ) {
+                    document.body.style.overflow =
+                        "hidden";
 
-        abrirModalProfessores.addEventListener(
-            "click",
-            () => {
+                }
+            );
 
-                modalProfessores.classList.add(
-                    "ativo"
-                );
+        }
 
-                document.body.style.overflow =
-                    "hidden";
+
+        /* Fechar pelo X */
+
+        if (fecharModal) {
+
+            fecharModal.addEventListener(
+                "click",
+                fecharModalPlanos
+            );
+
+        }
+
+
+        /* Fechar clicando fora */
+
+        if (modalPlanos) {
+
+            modalPlanos.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        event.target ===
+                        modalPlanos
+                    ) {
+
+                        fecharModalPlanos();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* Fechar com ESC */
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key === "Escape" &&
+                    modalPlanos &&
+                    modalPlanos.classList.contains(
+                        "ativo"
+                    )
+                ) {
+
+                    fecharModalPlanos();
+
+                }
 
             }
         );
 
+
+        /* Seleção dos planos */
+
+        const botoesPlanos =
+            document.querySelectorAll(
+                ".modal-plano-botao"
+            );
+
+
+        botoesPlanos.forEach((botao) => {
+
+            botao.addEventListener(
+                "click",
+                () => {
+
+                    const plano =
+                        botao.getAttribute(
+                            "data-plano"
+                        );
+
+
+                    console.log(
+                        "Plano selecionado:",
+                        plano
+                    );
+
+                }
+            );
+
+        });
+
     }
+);
 
 
-    if (fecharModalProfessores) {
+/* =====================================================
+   MODAL DE PROFESSORES
 
-        fecharModalProfessores.addEventListener(
-            "click",
-            fecharModal
-        );
+   Somente abrir e fechar.
 
-    }
+   A busca dos professores e a conexão
+   com o professor ficam no conexoes.js.
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const abrirModalProfessores =
+            document.getElementById(
+                "abrirModalProfessores"
+            );
+
+        const fecharModalProfessores =
+            document.getElementById(
+                "fecharModalProfessores"
+            );
+
+        const modalProfessores =
+            document.getElementById(
+                "modalProfessores"
+            );
 
 
-    if (modalProfessores) {
+        function fecharModalProfessoresFunc() {
 
-        modalProfessores.addEventListener(
-            "click",
+            if (!modalProfessores) {
+                return;
+            }
+
+
+            modalProfessores.classList.remove(
+                "ativo"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        /* Abrir modal */
+
+        if (
+            abrirModalProfessores &&
+            modalProfessores
+        ) {
+
+            abrirModalProfessores.addEventListener(
+                "click",
+                () => {
+
+                    modalProfessores.classList.add(
+                        "ativo"
+                    );
+
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
+            );
+
+        }
+
+
+        /* Fechar pelo X */
+
+        if (fecharModalProfessores) {
+
+            fecharModalProfessores.addEventListener(
+                "click",
+                fecharModalProfessoresFunc
+            );
+
+        }
+
+
+        /* Fechar clicando fora */
+
+        if (modalProfessores) {
+
+            modalProfessores.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        event.target ===
+                        modalProfessores
+                    ) {
+
+                        fecharModalProfessoresFunc();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* Fechar com ESC */
+
+        document.addEventListener(
+            "keydown",
             (event) => {
 
                 if (
-                    event.target ===
-                    modalProfessores
+                    event.key === "Escape" &&
+                    modalProfessores &&
+                    modalProfessores.classList.contains(
+                        "ativo"
+                    )
                 ) {
 
-                    fecharModal();
+                    fecharModalProfessoresFunc();
 
                 }
 
@@ -509,25 +896,4 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.key === "Escape" &&
-                modalProfessores &&
-                modalProfessores.classList.contains(
-                    "ativo"
-                )
-            ) {
-
-                fecharModal();
-
-            }
-
-        }
-    );
-
-});
+);

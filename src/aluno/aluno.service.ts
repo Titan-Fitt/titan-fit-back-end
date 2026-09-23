@@ -1,34 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class AlunoService {
-
   constructor(
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
   ) {}
-
 
   // =====================================================
   // CADASTRO
   // =====================================================
 
   async cadastro(dados: any) {
-
     const pool = this.databaseService.getPool();
 
-
-    // Normaliza os dados
+    const nome = dados.nome.trim();
     const email = dados.email.trim().toLowerCase();
-
     const cpf = dados.cpf.replace(/\D/g, '');
-
-    const telefone = dados.telefone
-      ? dados.telefone.replace(/\D/g, '')
-      : null;
-
 
     // Verifica se e-mail ou CPF já existem
     const [alunoExiste]: any = await pool.query(
@@ -37,222 +26,186 @@ export class AlunoService {
       FROM aluno
       WHERE email = ? OR cpf = ?
       `,
-      [
-        email,
-        cpf
-      ]
+      [email, cpf],
     );
 
-
     if (alunoExiste.length > 0) {
-
       return {
-        mensagem: 'E-mail ou CPF já cadastrado'
+        mensagem: 'E-mail ou CPF já cadastrado',
       };
-
     }
 
-
     // Criptografa a senha
-    const senhaCriptografada =
-      await bcrypt.hash(
-        dados.senha,
-        10
-      );
-
+    const senhaCriptografada = await bcrypt.hash(
+      dados.senha,
+      10,
+    );
 
     // Insere no banco
     const [resultado]: any = await pool.query(
       `
       INSERT INTO aluno
-      (nome, email, senha, telefone, cpf)
-      VALUES (?, ?, ?, ?, ?)
+      (nome, email, senha, cpf)
+      VALUES (?, ?, ?, ?)
       `,
       [
-        dados.nome,
+        nome,
         email,
         senhaCriptografada,
-        telefone,
-        cpf
-      ]
+        cpf,
+      ],
     );
 
-
     return {
-
-      mensagem:
-        'Aluno cadastrado com sucesso',
+      mensagem: 'Aluno cadastrado com sucesso',
 
       aluno: {
-
         id: resultado.insertId,
-
-        nome: dados.nome,
-
+        nome: nome,
         email: email,
-
-        telefone: telefone,
-
-        cpf: cpf
-
-      }
-
+        cpf: cpf,
+      },
     };
-
   }
-
 
   // =====================================================
   // LOGIN
   // =====================================================
 
   async login(dados: any) {
+    const pool = this.databaseService.getPool();
 
-    const pool =
-      this.databaseService.getPool();
+    const email = dados.email.trim().toLowerCase();
+    const senha = dados.senha;
 
+    console.log('=================================');
+    console.log('LOGIN ALUNO');
+    console.log('E-mail recebido:', email);
+    console.log('Senha recebida:', senha ? 'SIM' : 'NÃO');
+    console.log('=================================');
 
-    const email =
-      dados.email.trim().toLowerCase();
+    const [alunos]: any = await pool.query(
+      `
+      SELECT
+        id_aluno,
+        nome,
+        email,
+        senha,
+        cpf,
+        data_cadastro
+      FROM aluno
+      WHERE email = ?
+      `,
+      [email],
+    );
 
-
-    const [alunos]: any =
-      await pool.query(
-        `
-        SELECT *
-        FROM aluno
-        WHERE email = ?
-        `,
-        [email]
-      );
-
-
+    // E-mail não encontrado
     if (alunos.length === 0) {
+      console.log('E-mail não encontrado');
 
       return {
-        mensagem:
-          'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
       };
-
     }
-
 
     const aluno = alunos[0];
 
+    console.log('Aluno encontrado:', aluno.email);
+    console.log(
+      'Hash armazenado:',
+      aluno.senha,
+    );
 
-    const senhaCorreta =
-      await bcrypt.compare(
-        dados.senha,
-        aluno.senha
-      );
-
-
-    if (!senhaCorreta) {
+    // Verifica se existe senha no banco
+    if (!aluno.senha) {
+      console.log('Aluno não possui senha cadastrada');
 
       return {
-        mensagem:
-          'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
       };
-
     }
 
+    // Compara senha digitada com o hash
+    const senhaCorreta = await bcrypt.compare(
+      senha,
+      aluno.senha,
+    );
+
+    console.log(
+      'Senha correta:',
+      senhaCorreta,
+    );
+
+    if (!senhaCorreta) {
+      return {
+        mensagem: 'E-mail ou senha incorretos',
+      };
+    }
+
+    console.log('LOGIN REALIZADO COM SUCESSO');
 
     return {
-
-      mensagem:
-        'Login realizado com sucesso',
+      mensagem: 'Login realizado com sucesso',
 
       aluno: {
-
         id: aluno.id_aluno,
-
         nome: aluno.nome,
-
         email: aluno.email,
-
-        telefone: aluno.telefone,
-
         cpf: aluno.cpf,
-
-        data_cadastro:
-          aluno.data_cadastro
-
-      }
-
+        data_cadastro: aluno.data_cadastro,
+      },
     };
-
   }
-
 
   // =====================================================
   // LISTAR ALUNOS
   // =====================================================
 
   async listar() {
+    const pool = this.databaseService.getPool();
 
-    const pool =
-      this.databaseService.getPool();
-
-
-    const [alunos]: any =
-      await pool.query(
-        `
-        SELECT
-          id_aluno,
-          nome,
-          email,
-          telefone,
-          cpf,
-          data_cadastro
-        FROM aluno
-        `
-      );
-
+    const [alunos]: any = await pool.query(
+      `
+      SELECT
+        id_aluno,
+        nome,
+        email,
+        cpf,
+        data_cadastro
+      FROM aluno
+      `,
+    );
 
     return alunos;
-
   }
-
 
   // =====================================================
   // BUSCAR ALUNO POR ID
   // =====================================================
 
   async buscarPorId(id: number) {
+    const pool = this.databaseService.getPool();
 
-    const pool =
-      this.databaseService.getPool();
-
-
-    const [alunos]: any =
-      await pool.query(
-        `
-        SELECT
-          id_aluno,
-          nome,
-          email,
-          telefone,
-          cpf,
-          data_cadastro
-        FROM aluno
-        WHERE id_aluno = ?
-        `,
-        [id]
-      );
-
+    const [alunos]: any = await pool.query(
+      `
+      SELECT
+        id_aluno,
+        nome,
+        email,
+        cpf,
+        data_cadastro
+      FROM aluno
+      WHERE id_aluno = ?
+      `,
+      [id],
+    );
 
     if (alunos.length === 0) {
-
       return {
-        mensagem:
-          'Aluno não encontrado'
+        mensagem: 'Aluno não encontrado',
       };
-
     }
 
-
     return alunos[0];
-
   }
-
 }

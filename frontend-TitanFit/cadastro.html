@@ -1,24 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
-    />
+    >
 
     <title>Cadastro - Titan Fit</title>
 
-    <link rel="stylesheet" href="style.css" />
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- CABEÇALHO -->
+    <!-- =====================================================
+         CABEÇALHO
+    ====================================================== -->
 
     <header class="topo">
 
@@ -84,7 +84,9 @@
     </header>
 
 
-    <!-- CADASTRO -->
+    <!-- =====================================================
+         CADASTRO
+    ====================================================== -->
 
     <main>
 
@@ -101,22 +103,25 @@
                 </p>
 
 
-                <!-- FORMULÁRIO -->
+                <!-- =================================================
+                     FORMULÁRIO
+                ================================================== -->
 
                 <form
                     id="formCadastro"
                     autocomplete="on"
                 >
 
-
-                    <!-- ESCOLHA DO TIPO -->
+                    <!-- =================================================
+                         ESCOLHA DO TIPO
+                    ================================================== -->
 
                     <div class="escolha-professor-aluno">
 
                         <button
                             type="button"
                             class="botao-escolha ativo"
-                            data-tipo="usuario"
+                            data-tipo="aluno"
                         >
                             Aluno
                         </button>
@@ -132,17 +137,21 @@
                     </div>
 
 
-                    <!-- TIPO DO USUÁRIO -->
+                    <!-- =================================================
+                         TIPO
+                    ================================================== -->
 
                     <input
                         type="hidden"
                         name="tipo"
                         id="tipoInput"
-                        value="usuario"
-                    />
+                        value="aluno"
+                    >
 
 
-                    <!-- NOME -->
+                    <!-- =================================================
+                         NOME
+                    ================================================== -->
 
                     <div class="caixa-cadastro">
 
@@ -156,12 +165,14 @@
                             name="nome"
                             placeholder="Digite seu nome completo"
                             required
-                        />
+                        >
 
                     </div>
 
 
-                    <!-- E-MAIL -->
+                    <!-- =================================================
+                         E-MAIL
+                    ================================================== -->
 
                     <div class="caixa-cadastro">
 
@@ -175,31 +186,18 @@
                             name="email"
                             placeholder="Digite seu e-mail"
                             required
-                        />
+                        >
 
                     </div>
 
 
-                    <!-- TELEFONE -->
 
-                    <div class="caixa-cadastro">
-
-                        <label for="telefone">
-                            Telefone
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="telefone"
-                            name="telefone"
-                            placeholder="Digite seu telefone"
-                            required
-                        />
-
-                    </div>
+            
 
 
-                    <!-- CPF -->
+                    <!-- =================================================
+                         CPF
+                    ================================================== -->
 
                     <div class="caixa-cadastro">
 
@@ -213,18 +211,19 @@
                             name="cpf"
                             placeholder="Digite seu CPF"
                             required
-                        />
+                        >
 
                     </div>
 
 
-                    <!-- CAMPOS DO PROFESSOR -->
+                    <!-- =================================================
+                         CAMPOS DO PROFESSOR
+                    ================================================== -->
 
                     <div
                         id="camposProfessor"
                         style="display: none;"
                     >
-
 
                         <!-- CREF -->
 
@@ -239,7 +238,7 @@
                                 id="cref"
                                 name="cref"
                                 placeholder="Digite seu CREF"
-                            />
+                            >
 
                         </div>
 
@@ -257,7 +256,7 @@
                                 id="especialidade"
                                 name="especialidade"
                                 placeholder="Ex: Musculação"
-                            />
+                            >
 
                         </div>
 
@@ -292,7 +291,7 @@
                                 id="bacharelado"
                                 name="bacharelado"
                                 placeholder="Ex: Bacharelado em Educação Física"
-                            />
+                            >
 
                         </div>
 
@@ -310,14 +309,16 @@
                                 id="formacao_academica"
                                 name="formacao_academica"
                                 placeholder="Digite sua formação acadêmica"
-                            />
+                            >
 
                         </div>
 
                     </div>
 
 
-                    <!-- SENHA -->
+                    <!-- =================================================
+                         SENHA
+                    ================================================== -->
 
                     <div class="caixa-cadastro">
 
@@ -331,12 +332,14 @@
                             name="senha"
                             placeholder="Digite sua senha"
                             required
-                        />
+                        >
 
                     </div>
 
 
-                    <!-- CONFIRMAR SENHA -->
+                    <!-- =================================================
+                         CONFIRMAR SENHA
+                    ================================================== -->
 
                     <div class="caixa-cadastro">
 
@@ -350,12 +353,14 @@
                             name="confirmarSenha"
                             placeholder="Digite sua senha novamente"
                             required
-                        />
+                        >
 
                     </div>
 
 
-                    <!-- BOTÃO -->
+                    <!-- =================================================
+                         BOTÃO
+                    ================================================== -->
 
                     <button
                         type="submit"
@@ -365,7 +370,9 @@
                     </button>
 
 
-                    <!-- LOGIN -->
+                    <!-- =================================================
+                         LOGIN
+                    ================================================== -->
 
                     <p class="ja-tem-conta">
                         Já tem conta?
@@ -387,10 +394,11 @@
     </main>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
     <script src="interacao.js"></script>
-
     <script src="conexoes.js"></script>
 
 </body>
