@@ -3459,26 +3459,50 @@ a {
 /* =====================================================
    MEUS DADOS
    ===================================================== */
-
-.meus-dados-conteudo {
-    padding: 15px 20px;
+.acordeao {
+    width: 100%;
+    border: 1px solid #555;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dado-item {
-    padding: 10px 0;
-    border-bottom: 1px solid #333;
+.acordeao:hover {
+    border-color: #ff7d1a;
+    box-shadow: 0 0 8px rgba(255, 125, 26, 0.25);
 }
 
-.dado-item:last-child {
-    border-bottom: none;
+.acordeao-header {
+    height: 54px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+    background: #292929;
+    color: #ffffff;
 }
 
-.dado-item strong {
+.acordeao-icon {
+    color: #ff7d1a;
+    font-size: 24px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.acordeao-conteudo {
+    display: none;
+    padding: 18px;
+    background: #303030;
+    border-top: 1px solid #555;
+}
+
+.acordeao-conteudo.ativo {
     display: block;
-    margin-bottom: 5px;
 }
 
-.dado-item p {
-    margin: 0;
+.acordeao-conteudo p {
+    margin: 8px 0;
 }
 

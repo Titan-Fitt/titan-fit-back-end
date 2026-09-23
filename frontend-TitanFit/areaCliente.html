@@ -4,17 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="style.css">
-
     <title>Área do Cliente</title>
 </head>
 
 <body>
-
-    <!-- =====================================================
-         CABEÇALHO
-    ====================================================== -->
 
     <header class="topo">
 
@@ -35,33 +29,23 @@
             <ul>
 
                 <li>
-                    <a href="index.html">
-                        Home
-                    </a>
+                    <a href="index.html">Home</a>
                 </li>
 
                 <li>
-                    <a href="servico.html">
-                        Serviços
-                    </a>
+                    <a href="servico.html">Serviços</a>
                 </li>
 
                 <li>
-                    <a href="sobre-nos.html">
-                        Sobre Nós
-                    </a>
+                    <a href="sobre-nos.html">Sobre Nós</a>
                 </li>
 
                 <li>
-                    <a href="planos.html">
-                        Plano Premium
-                    </a>
+                    <a href="planos.html">Plano Premium</a>
                 </li>
 
                 <li>
-                    <a href="login.html">
-                        Login
-                    </a>
+                    <a href="login.html">Login</a>
                 </li>
 
             </ul>
@@ -71,15 +55,7 @@
     </header>
 
 
-    <!-- =====================================================
-         CONTEÚDO PRINCIPAL
-    ====================================================== -->
-
     <main class="conteudo-areaCliente">
-
-        <!-- =================================================
-             BOAS-VINDAS
-        ================================================== -->
 
         <section class="bemVindo-cliente">
 
@@ -94,18 +70,12 @@
         </section>
 
 
-        <!-- =================================================
-             CARDS PRINCIPAIS
-        ================================================== -->
-
         <section class="sessao-cliente">
-
-            <!-- PRÓXIMO TREINO -->
 
             <div class="caixa-cliente">
 
                 <h3>
-                    Próximo treino
+                    próximo treino
                 </h3>
 
                 <p>
@@ -123,8 +93,6 @@
             </div>
 
 
-            <!-- PROFESSOR -->
-
             <div class="caixa-cliente">
 
                 <h3>
@@ -136,7 +104,7 @@
                 </p>
 
                 <p>
-                    Personal trainer
+                    personal trainer
                 </p>
 
                 <button
@@ -148,8 +116,6 @@
 
             </div>
 
-
-            <!-- PLANO -->
 
             <div class="caixa-cliente">
 
@@ -177,31 +143,19 @@
         </section>
 
 
-        <!-- =================================================
-             TREINOS
-        ================================================== -->
-
         <section class="treinos-cliente">
 
             <div class="treinos">
 
                 <div class="acordeon">
 
-
-                    <!-- PEITORAL -->
-
                     <div class="acordeon-item">
 
-                        <button
-                            type="button"
-                            class="acordeon-titulo"
-                        >
+                        <button class="acordeon-titulo">
 
                             Peitoral
 
-                            <span>
-                                +
-                            </span>
+                            <span>+</span>
 
                         </button>
 
@@ -216,20 +170,13 @@
                     </div>
 
 
-                    <!-- COSTAS -->
-
                     <div class="acordeon-item">
 
-                        <button
-                            type="button"
-                            class="acordeon-titulo"
-                        >
+                        <button class="acordeon-titulo">
 
                             Costas
 
-                            <span>
-                                +
-                            </span>
+                            <span>+</span>
 
                         </button>
 
@@ -244,20 +191,13 @@
                     </div>
 
 
-                    <!-- PERNAS -->
-
                     <div class="acordeon-item">
 
-                        <button
-                            type="button"
-                            class="acordeon-titulo"
-                        >
+                        <button class="acordeon-titulo">
 
                             Pernas
 
-                            <span>
-                                +
-                            </span>
+                            <span>+</span>
 
                         </button>
 
@@ -274,118 +214,53 @@
                 </div>
 
 
-                <!-- BOTÃO VISUALIZAR TREINO -->
-
-                <button
-                    type="button"
-                    class="visualizar-Treino"
-                >
+                <button class="visualizar-Treino">
                     Visualizar Treino
                 </button>
 
             </div>
 
 
-            <!-- =================================================
-                 FATURAS
-            ================================================== -->
-
             <div class="acordeon">
 
                 <div class="acordeon-item">
 
-                    <button
-                        type="button"
-                        class="acordeon-titulo"
-                    >
+                    <button class="acordeon-titulo">
 
                         Faturas
 
-                        <span>
-                            +
-                        </span>
+                        <span>+</span>
 
                     </button>
 
                     <div class="acordeon-conteudo">
 
                         <p>
-                            Nenhuma fatura disponível.
+                            ...
                         </p>
 
                     </div>
 
                 </div>
 
-            </div>
 
+        <div class="acordeao">
+    <div class="acordeao-header" onclick="toggleAcordeao(this)">
+        <span>Meus Dados</span>
+        <span class="acordeao-icon">+</span>
+    </div>
 
-            <!-- =================================================
-                 MEUS DADOS
-            ================================================== -->
+    <div class="acordeao-conteudo">
+        <p><strong>Nome:</strong> <span id="dadosNome"></span></p>
+        <p><strong>E-mail:</strong> <span id="dadosEmail"></span></p>
+        <p><strong>Idade:</strong> <span id="dadosIdade"></span></p>
+        <p><strong>Peso:</strong> <span id="dadosPeso"></span></p>
+        <p><strong>Objetivo:</strong> <span id="dadosObjetivo"></span></p>
+    </div>
+</div>
 
-            <div class="acordeon">
-
-                <div class="acordeon-item">
-
-                    <button
-                        type="button"
-                        class="acordeon-titulo"
-                    >
-
-                        Meus Dados
-
-                        <span>
-                            +
-                        </span>
-
-                    </button>
-
-
-                    <div class="acordeon-conteudo">
-
-                        <div class="dado-item">
-
-                            <strong>
-                                Nome
-                            </strong>
-
-                            <p id="dadosNome">
-                                -
-                            </p>
-
-                        </div>
-
-
-                        <div class="dado-item">
-
-                            <strong>
-                                E-mail
-                            </strong>
-
-                            <p id="dadosEmail">
-                                -
-                            </p>
-
-                        </div>
-
-
-
-                        <div class="dado-item">
-
-                            <strong>
-                                CPF
-                            </strong>
-
-                            <p id="dadosCpf">
-                                -
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
+</div>
+               
 
             </div>
 
@@ -394,21 +269,14 @@
     </main>
 
 
-    <!-- =====================================================
-         RODAPÉ
-    ====================================================== -->
-
     <footer class="footer">
 
         <div class="footer-conteudo">
 
-
-            <!-- NAVEGAÇÃO -->
-
             <div class="footer-nav">
 
                 <h3>
-                    Navegação
+                    navegação
                 </h3>
 
                 <a href="index.html">
@@ -428,13 +296,11 @@
                 </a>
 
                 <a href="login.html">
-                    Login
+                    login
                 </a>
 
             </div>
 
-
-            <!-- LOGO -->
 
             <div class="footer-logo">
 
@@ -446,12 +312,10 @@
             </div>
 
 
-            <!-- REDES SOCIAIS -->
-
             <div class="footer-redes">
 
                 <h3>
-                    Siga-nos em nossas redes sociais
+                    siga-nos em nossas redes sociais
                 </h3>
 
                 <div class="icones-redes">
@@ -478,7 +342,7 @@
             <p>
                 desenvolvido por Luis Felipe,
                 Pedro Henrique, Pedro Gabriel e Heloisa
-                <br>
+
                 Site acadêmico |
                 Todos os direitos reservados |
                 Senac LAPA TITO © 2026
@@ -499,9 +363,6 @@
     >
 
         <div class="modal-planos-caixa">
-
-
-            <!-- CABEÇALHO -->
 
             <div class="modal-planos-header">
 
@@ -529,8 +390,6 @@
 
             </div>
 
-
-            <!-- LISTA DE PLANOS -->
 
             <div class="modal-planos-lista">
 
@@ -696,9 +555,6 @@
 
         <div class="modal-professores-caixa">
 
-
-            <!-- CABEÇALHO -->
-
             <div class="modal-professores-header">
 
                 <div>
@@ -731,8 +587,7 @@
             <div
                 id="listaProfessores"
                 class="lista-professores"
-            >
-            </div>
+            ></div>
 
         </div>
 
@@ -744,6 +599,7 @@
     ====================================================== -->
 
     <script src="interacao.js"></script>
+
     <script src="conexoes.js"></script>
 
 </body>

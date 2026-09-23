@@ -897,3 +897,16 @@ document.addEventListener(
 
     }
 );
+
+function toggleAcordeao(element) {
+    const conteudo = element.nextElementSibling;
+    const icon = element.querySelector(".acordeao-icon");
+
+    conteudo.classList.toggle("ativo");
+
+    if (conteudo.classList.contains("ativo")) {
+        icon.textContent = "−";
+    } else {
+        icon.textContent = "+";
+    }
+}
