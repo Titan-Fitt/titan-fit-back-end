@@ -1,96 +1,103 @@
 import { Injectable } from '@nestjs/common';
-
-export interface Pagamento {
-
-  id_pagamento: number;
-
-  valor: number;
-
-  data_pagamento: string;
-
-  forma_pagamento: string;
-
-  status: string;
-
-  id_aluno_plano: number;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
-
 export class PagamentoService {
+  constructor(
+    private readonly databaseService: DatabaseService
+  ) {}
 
-  private pagamentos: Pagamento[] = [];
+  async cadastrar(dados: any) {
+    const pool = this.databaseService.getPool();
 
-  cadastrar(dados: CreatePagamentoDados) {
+    const [alunoPlanos]: any = await pool.query(
+      `SELECT id_aluno_plano
+       FROM aluno_plano
+       WHERE id_aluno_plano = ?`,
+      [dados.id_aluno_plano]
+    );
 
-    const novoPagamento: Pagamento = {
+    if (alunoPlanos.length === 0) {
+      return {
+        mensagem: 'Plano do aluno não encontrado'
+      };
+    }
 
-      id_pagamento: this.pagamentos.length + 1,
+    const [resultado]: any = await pool.query(
+      `INSERT INTO pagamento
+      (
+        valor,
+        metodo,
+        status,
+        data,
+        comprovante,
+        id_aluno_plano
+      )
+      VALUES (?, ?, ?, ?, ?, ?)`,
+      [
+        dados.valor,
+        dados.metodo,
+        dados.status,
+        dados.data,
+        dados.comprovante,
+        dados.id_aluno_plano
+      ]
+    );
 
-      valor: dados.valor,
-
-      data_pagamento: dados.data_pagamento,
-
-      forma_pagamento: dados.forma_pagamento,
-
-      status: dados.status,
-
-      id_aluno_plano: dados.id_aluno_plano
-
-    };
-
-    this.pagamentos.push(novoPagamento);
+    const [pagamentos]: any = await pool.query(
+      `SELECT *
+       FROM pagamento
+       WHERE id_pagamento = ?`,
+      [resultado.insertId]
+    );
 
     return {
-
       mensagem: 'Pagamento cadastrado com sucesso',
-
-      pagamento: novoPagamento
-
+      pagamento: pagamentos[0]
     };
-
   }
 
-  listar() {
+  async listar() {
+    const pool = this.databaseService.getPool();
 
-    return this.pagamentos;
-
-  }
-
-  buscarPorId(id: number) {
-
-    return this.pagamentos.find(
-
-      pagamento => pagamento.id_pagamento === id
-
+    const [pagamentos]: any = await pool.query(
+      `SELECT *
+       FROM pagamento`
     );
 
+    return pagamentos;
   }
 
-  buscarPorAlunoPlano(id_aluno_plano: number) {
+  async buscarPorId(id: number) {
+    const pool = this.databaseService.getPool();
 
-    return this.pagamentos.filter(
-
-      pagamento => pagamento.id_aluno_plano === id_aluno_plano
-
+    const [pagamentos]: any = await pool.query(
+      `SELECT *
+       FROM pagamento
+       WHERE id_pagamento = ?`,
+      [id]
     );
 
+    if (pagamentos.length === 0) {
+      return {
+        mensagem: 'Pagamento não encontrado'
+      };
+    }
+
+    return pagamentos[0];
   }
 
+  async buscarPorAlunoPlano(id_aluno_plano: number) {
+    const pool = this.databaseService.getPool();
+
+    const [pagamentos]: any = await pool.query(
+      `SELECT *
+       FROM pagamento
+       WHERE id_aluno_plano = ?
+       ORDER BY id_pagamento DESC`,
+      [id_aluno_plano]
+    );
+
+    return pagamentos;
+  }
 }
-
-interface CreatePagamentoDados {
-
-  valor: number;
-
-  data_pagamento: string;
-
-  forma_pagamento: string;
-
-  status: string;
-
-  id_aluno_plano: number;
-
-}
- 

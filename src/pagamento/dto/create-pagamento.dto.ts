@@ -1,14 +1,34 @@
-export class CreatePagamentoDto {
+import {
+  IsDateString,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
+export class CreatePagamentoDto {
+  @IsNotEmpty()
+  @IsNumber()
   valor: number;
 
-  data_pagamento: string;
+  @IsNotEmpty()
+  @IsString()
+  metodo: string;
 
-  forma_pagamento: string;
-
+  @IsNotEmpty()
+  @IsString()
   status: string;
 
-  id_aluno_plano: number;
+  @IsOptional()
+  @IsDateString()
+  data?: string;
 
+  @IsOptional()
+  @IsString()
+  comprovante?: string;
+
+  @IsNotEmpty()
+  @IsInt()
+  id_aluno_plano: number;
 }
- 

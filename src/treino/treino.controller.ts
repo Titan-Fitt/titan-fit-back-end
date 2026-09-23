@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+
+  Body,
+
+  Controller,
+
+  Get,
+
+  Param,
+
+  Post
+
+} from '@nestjs/common';
 
 import { TreinoService } from './treino.service';
 
@@ -30,19 +42,15 @@ export class TreinoController {
 
   }
 
-  @Get(':id')
-
-  buscarPorId(@Param('id') id: string) {
-
-    return this.treinoService.buscarPorId(Number(id));
-
-  }
-
   @Get('ficha/:id')
 
   buscarPorFicha(@Param('id') id: string) {
 
-    return this.treinoService.buscarPorFicha(Number(id));
+    return this.treinoService.buscarPorFicha(
+
+      Number(id)
+
+    );
 
   }
 
@@ -50,7 +58,23 @@ export class TreinoController {
 
   buscarPorProfessor(@Param('id') id: string) {
 
-    return this.treinoService.buscarPorProfessor(Number(id));
+    return this.treinoService.buscarPorProfessor(
+
+      Number(id)
+
+    );
+
+  }
+
+  @Get(':id')
+
+  buscarPorId(@Param('id') id: string) {
+
+    return this.treinoService.buscarPorId(
+
+      Number(id)
+
+    );
 
   }
 

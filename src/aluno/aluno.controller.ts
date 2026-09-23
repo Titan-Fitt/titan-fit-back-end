@@ -1,10 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-
 import { AlunoService } from './aluno.service';
-
 import { CreateAlunoDto } from './dto/create-aluno.dto';
-
 import { LoginAlunoDto } from './dto/login-aluno.dto';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('aluno')
 
@@ -32,10 +31,9 @@ export class AlunoController {
 
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-
   listar() {
-
     return this.alunoService.listar();
 
   }
@@ -49,4 +47,3 @@ export class AlunoController {
   }
 
 }
- 

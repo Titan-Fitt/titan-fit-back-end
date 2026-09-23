@@ -1,114 +1,120 @@
 import { Injectable } from '@nestjs/common';
-
-export interface TreinoExercicio {
-
-  id_treino_exercicio: number;
-
-  carga: number;
-
-  ordem: number;
-
-  serie: number;
-
-  repeticoes: number;
-
-  descanso: number;
-
-  observacao: string;
-
-  id_exercicio: number;
-
-  id_treino: number;
-
-}
+import { DatabaseService } from '../database/database.service';
 
 @Injectable()
-
 export class TreinoExercicioService {
+  constructor(
+    private readonly databaseService: DatabaseService
+  ) {}
 
-  private treinoExercicios: TreinoExercicio[] = [];
+  async cadastrar(dados: any) {
+    const pool = this.databaseService.getPool();
 
-  cadastrar(dados: CreateTreinoExercicioDados) {
+    const [exercicios]: any = await pool.query(
+      `SELECT id_exercicio
+       FROM exercicio
+       WHERE id_exercicio = ?`,
+      [dados.id_exercicio]
+    );
 
-    const novoTreinoExercicio: TreinoExercicio = {
+    if (exercicios.length === 0) {
+      return {
+        mensagem: 'Exercício não encontrado'
+      };
+    }
 
-      id_treino_exercicio: this.treinoExercicios.length + 1,
+    const [treinos]: any = await pool.query(
+      `SELECT id_treino
+       FROM treino
+       WHERE id_treino = ?`,
+      [dados.id_treino]
+    );
 
-      carga: dados.carga,
+    if (treinos.length === 0) {
+      return {
+        mensagem: 'Treino não encontrado'
+      };
+    }
 
-      ordem: dados.ordem,
+    const [resultado]: any = await pool.query(
+      `INSERT INTO treino_exercicio
+      (
+        carga,
+        ordem,
+        serie,
+        repeticoes,
+        descanso,
+        observacao,
+        id_exercicio,
+        id_treino
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        dados.carga,
+        dados.ordem,
+        dados.serie,
+        dados.repeticoes,
+        dados.descanso,
+        dados.observacao,
+        dados.id_exercicio,
+        dados.id_treino
+      ]
+    );
 
-      serie: dados.serie,
-
-      repeticoes: dados.repeticoes,
-
-      descanso: dados.descanso,
-
-      observacao: dados.observacao,
-
-      id_exercicio: dados.id_exercicio,
-
-      id_treino: dados.id_treino
-
-    };
-
-    this.treinoExercicios.push(novoTreinoExercicio);
+    const [itens]: any = await pool.query(
+      `SELECT *
+       FROM treino_exercicio
+       WHERE id_treino_exercicio = ?`,
+      [resultado.insertId]
+    );
 
     return {
-
       mensagem: 'Exercício adicionado ao treino com sucesso',
-
-      treinoExercicio: novoTreinoExercicio
-
+      treinoExercicio: itens[0]
     };
-
   }
 
-  listar() {
+  async listar() {
+    const pool = this.databaseService.getPool();
 
-    return this.treinoExercicios;
-
-  }
-
-  buscarPorId(id: number) {
-
-    return this.treinoExercicios.find(
-
-      item => item.id_treino_exercicio === id
-
+    const [itens]: any = await pool.query(
+      `SELECT *
+       FROM treino_exercicio`
     );
 
+    return itens;
   }
 
-  buscarPorTreino(id_treino: number) {
+  async buscarPorId(id: number) {
+    const pool = this.databaseService.getPool();
 
-    return this.treinoExercicios.filter(
-
-      item => item.id_treino === id_treino
-
+    const [itens]: any = await pool.query(
+      `SELECT *
+       FROM treino_exercicio
+       WHERE id_treino_exercicio = ?`,
+      [id]
     );
 
+    if (itens.length === 0) {
+      return {
+        mensagem: 'Registro não encontrado'
+      };
+    }
+
+    return itens[0];
   }
 
+  async buscarPorTreino(id_treino: number) {
+    const pool = this.databaseService.getPool();
+
+    const [itens]: any = await pool.query(
+      `SELECT *
+       FROM treino_exercicio
+       WHERE id_treino = ?
+       ORDER BY ordem ASC`,
+      [id_treino]
+    );
+
+    return itens;
+  }
 }
-
-interface CreateTreinoExercicioDados {
-
-  carga: number;
-
-  ordem: number;
-
-  serie: number;
-
-  repeticoes: number;
-
-  descanso: number;
-
-  observacao: string;
-
-  id_exercicio: number;
-
-  id_treino: number;
-
-}
- 

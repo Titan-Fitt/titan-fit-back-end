@@ -12,6 +12,7 @@ import { ProfessorAlunoModule } from './professor-aluno/professor-aluno.module';
 import { PlanoModule } from './plano/plano.module';
 import { AlunoPlanoModule } from './aluno-plano/aluno-plano.module';
 import { PagamentoModule } from './pagamento/pagamento.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PagamentoModule } from './pagamento/pagamento.module';
     PlanoModule,
     AlunoPlanoModule,
     PagamentoModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
