@@ -7,8 +7,19 @@ export class AlunoPlanoService {
     private readonly databaseService: DatabaseService
   ) {}
 
-  async cadastrar(dados: any) {
-    const pool = this.databaseService.getPool();
+async cadastrar(
+  dados: any,
+  usuarioId: number,
+  tipoUsuario: string,
+) {
+  const pool = this.databaseService.getPool();
+
+  if (tipoUsuario === 'aluno' && dados.id_aluno !== usuarioId) {
+    return {
+      mensagem: 'Você só pode criar um plano para o seu próprio cadastro',
+    };
+  }
+
 
     const [alunos]: any = await pool.query(
       `SELECT id_aluno

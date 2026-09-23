@@ -1,4 +1,18 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+
+  Body,
+
+  Controller,
+
+  Get,
+
+  Param,
+
+  Post,
+
+  UseGuards,
+
+} from '@nestjs/common';
 
 import { ProfessorService } from './professor.service';
 
@@ -6,13 +20,15 @@ import { CreateProfessorDto } from './dto/create-professor.dto';
 
 import { LoginProfessorDto } from './dto/login-professor.dto';
 
+import { AuthGuard } from '../auth/auth.guard';
+
 @Controller('professor')
 
 export class ProfessorController {
 
   constructor(
 
-    private readonly professorService: ProfessorService
+    private readonly professorService: ProfessorService,
 
   ) {}
 
@@ -32,6 +48,8 @@ export class ProfessorController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get()
 
   listar() {
@@ -39,6 +57,8 @@ export class ProfessorController {
     return this.professorService.listar();
 
   }
+
+  @UseGuards(AuthGuard)
 
   @Get(':id')
 

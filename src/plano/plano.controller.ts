@@ -1,23 +1,35 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+
 import { PlanoService } from './plano.service';
 import { CreatePlanoDto } from './dto/create-plano.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('plano')
 export class PlanoController {
   constructor(
-    private readonly planoService: PlanoService
+    private readonly planoService: PlanoService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   cadastrar(@Body() dados: CreatePlanoDto) {
     return this.planoService.cadastrar(dados);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   listar() {
     return this.planoService.listar();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   buscarPorId(@Param('id') id: string) {
     return this.planoService.buscarPorId(Number(id));

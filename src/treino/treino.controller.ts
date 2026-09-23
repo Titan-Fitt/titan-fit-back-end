@@ -8,7 +8,9 @@ import {
 
   Param,
 
-  Post
+  Post,
+
+  UseGuards,
 
 } from '@nestjs/common';
 
@@ -16,15 +18,21 @@ import { TreinoService } from './treino.service';
 
 import { CreateTreinoDto } from './dto/create-treino.dto';
 
+import { AuthGuard } from '../auth/auth.guard';
+
+import { ProfessorGuard } from '../auth/professor.guard';
+
 @Controller('treino')
 
 export class TreinoController {
 
   constructor(
 
-    private readonly treinoService: TreinoService
+    private readonly treinoService: TreinoService,
 
   ) {}
+
+  @UseGuards(ProfessorGuard)
 
   @Post()
 
@@ -34,6 +42,8 @@ export class TreinoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get()
 
   listar() {
@@ -42,39 +52,33 @@ export class TreinoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get('ficha/:id')
 
   buscarPorFicha(@Param('id') id: string) {
 
-    return this.treinoService.buscarPorFicha(
-
-      Number(id)
-
-    );
+    return this.treinoService.buscarPorFicha(Number(id));
 
   }
+
+  @UseGuards(AuthGuard)
 
   @Get('professor/:id')
 
   buscarPorProfessor(@Param('id') id: string) {
 
-    return this.treinoService.buscarPorProfessor(
-
-      Number(id)
-
-    );
+    return this.treinoService.buscarPorProfessor(Number(id));
 
   }
+
+  @UseGuards(AuthGuard)
 
   @Get(':id')
 
   buscarPorId(@Param('id') id: string) {
 
-    return this.treinoService.buscarPorId(
-
-      Number(id)
-
-    );
+    return this.treinoService.buscarPorId(Number(id));
 
   }
 
