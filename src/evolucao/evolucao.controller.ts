@@ -10,6 +10,8 @@ import {
 
   Post,
 
+  Req,
+
   UseGuards,
 
 } from '@nestjs/common';
@@ -34,9 +36,23 @@ export class EvolucaoController {
 
   @Post()
 
-  cadastrar(@Body() dados: CreateEvolucaoDto) {
+  cadastrar(
 
-    return this.evolucaoService.cadastrar(dados);
+    @Body() dados: CreateEvolucaoDto,
+
+    @Req() request: any,
+
+  ) {
+
+    return this.evolucaoService.cadastrar(
+
+      dados,
+
+      request.user.id,
+
+      request.user.tipo,
+
+    );
 
   }
 
@@ -44,9 +60,15 @@ export class EvolucaoController {
 
   @Get()
 
-  listar() {
+  listar(@Req() request: any) {
 
-    return this.evolucaoService.listar();
+    return this.evolucaoService.listar(
+
+      request.user.id,
+
+      request.user.tipo,
+
+    );
 
   }
 
@@ -54,11 +76,21 @@ export class EvolucaoController {
 
   @Get('aluno/:id')
 
-  buscarPorAluno(@Param('id') id: string) {
+  buscarPorAluno(
+
+    @Param('id') id: string,
+
+    @Req() request: any,
+
+  ) {
 
     return this.evolucaoService.buscarPorAluno(
 
       Number(id),
+
+      request.user.id,
+
+      request.user.tipo,
 
     );
 

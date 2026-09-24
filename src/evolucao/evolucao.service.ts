@@ -8,13 +8,37 @@ export class EvolucaoService {
 
   constructor(
 
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
 
   ) {}
 
-  async cadastrar(dados: any) {
+  async cadastrar(
+
+    dados: any,
+
+    usuarioId: number,
+
+    tipoUsuario: string,
+
+  ) {
 
     const pool = this.databaseService.getPool();
+
+    if (
+
+      tipoUsuario === 'aluno' &&
+
+      dados.id_aluno !== usuarioId
+
+    ) {
+
+      return {
+
+        mensagem: 'Você só pode cadastrar sua própria evolução',
+
+      };
+
+    }
 
     const [alunos]: any = await pool.query(
 
@@ -88,15 +112,43 @@ export class EvolucaoService {
 
   }
 
-  async listar() {
+  async listar(
+
+    usuarioId: number,
+
+    tipoUsuario: string,
+
+  ) {
 
     const pool = this.databaseService.getPool();
+
+    if (tipoUsuario === 'aluno') {
+
+      const [evolucoes]: any = await pool.query(
+
+        `SELECT *
+
+         FROM evolucao
+
+         WHERE id_aluno = ?
+
+         ORDER BY id_evolucao DESC`,
+
+        [usuarioId]
+
+      );
+
+      return evolucoes;
+
+    }
 
     const [evolucoes]: any = await pool.query(
 
       `SELECT *
 
-       FROM evolucao`
+       FROM evolucao
+
+       ORDER BY id_evolucao DESC`
 
     );
 
@@ -104,9 +156,33 @@ export class EvolucaoService {
 
   }
 
-  async buscarPorAluno(id_aluno: number) {
+  async buscarPorAluno(
+
+    id_aluno: number,
+
+    usuarioId: number,
+
+    tipoUsuario: string,
+
+  ) {
 
     const pool = this.databaseService.getPool();
+
+    if (
+
+      tipoUsuario === 'aluno' &&
+
+      id_aluno !== usuarioId
+
+    ) {
+
+      return {
+
+        mensagem: 'Você não tem acesso à evolução desse aluno',
+
+      };
+
+    }
 
     const [evolucoes]: any = await pool.query(
 

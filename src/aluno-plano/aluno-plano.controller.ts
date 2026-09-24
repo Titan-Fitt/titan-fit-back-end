@@ -7,13 +7,8 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-
-import { AlunoPlanoService } from './aluno-plano.service';
-import { CreateAlunoPlanoDto } from './dto/create-aluno-plano.dto';
-import { AuthGuard } from '../auth/auth.guard';
-
-@Controller('aluno-plano')
-export class AlunoPlanoController {
+import { AlunoPlanoService } from './aluno-plano.service';import { CreateAlunoPlanoDto } from './dto/create-aluno-plano.dto';import { AuthGuard } from '../auth/auth.guard';
+@Controller('aluno-plano')export class AlunoPlanoController {
   constructor(
     private readonly alunoPlanoService: AlunoPlanoService,
   ) {}
@@ -33,25 +28,49 @@ export class AlunoPlanoController {
 
   @UseGuards(AuthGuard)
   @Get()
-  listar() {
-    return this.alunoPlanoService.listar();
+  listar(@Req() request: any) {
+    return this.alunoPlanoService.listar(
+      request.user.id,
+      request.user.tipo,
+    );
   }
 
   @UseGuards(AuthGuard)
   @Get('aluno/:id')
-  buscarPorAluno(@Param('id') id: string) {
-    return this.alunoPlanoService.buscarPorAluno(Number(id));
+  buscarPorAluno(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
+    return this.alunoPlanoService.buscarPorAluno(
+      Number(id),
+      request.user.id,
+      request.user.tipo,
+    );
   }
 
   @UseGuards(AuthGuard)
   @Get('plano/:id')
-  buscarPorPlano(@Param('id') id: string) {
-    return this.alunoPlanoService.buscarPorPlano(Number(id));
+  buscarPorPlano(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
+    return this.alunoPlanoService.buscarPorPlano(
+      Number(id),
+      request.user.id,
+      request.user.tipo,
+    );
   }
 
   @UseGuards(AuthGuard)
   @Get(':id')
-  buscarPorId(@Param('id') id: string) {
-    return this.alunoPlanoService.buscarPorId(Number(id));
+  buscarPorId(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
+    return this.alunoPlanoService.buscarPorId(
+      Number(id),
+      request.user.id,
+      request.user.tipo,
+    );
   }
 }

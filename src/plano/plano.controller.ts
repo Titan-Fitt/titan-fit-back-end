@@ -6,18 +6,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-
-import { PlanoService } from './plano.service';
-import { CreatePlanoDto } from './dto/create-plano.dto';
-import { AuthGuard } from '../auth/auth.guard';
-
-@Controller('plano')
-export class PlanoController {
+import { PlanoService } from './plano.service';import { CreatePlanoDto } from './dto/create-plano.dto';import { AuthGuard } from '../auth/auth.guard';import { ProfessorGuard } from '../auth/professor.guard';
+@Controller('plano')export class PlanoController {
   constructor(
     private readonly planoService: PlanoService,
   ) {}
 
-  @UseGuards(AuthGuard)
+  @UseGuards(ProfessorGuard)
   @Post()
   cadastrar(@Body() dados: CreatePlanoDto) {
     return this.planoService.cadastrar(dados);

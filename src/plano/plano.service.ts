@@ -1,10 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
-
-@Injectable()
-export class PlanoService {
+import { Injectable } from '@nestjs/common';import { DatabaseService } from '../database/database.service';
+@Injectable()export class PlanoService {
   constructor(
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
   ) {}
 
   async cadastrar(dados: any) {
@@ -14,12 +11,12 @@ export class PlanoService {
       `SELECT id_plano
        FROM plano
        WHERE nome = ?`,
-      [dados.nome]
+      [dados.nome],
     );
 
     if (planoExiste.length > 0) {
       return {
-        mensagem: 'Esse plano já está cadastrado'
+        mensagem: 'Esse plano já está cadastrado',
       };
     }
 
@@ -36,20 +33,20 @@ export class PlanoService {
         dados.nome,
         dados.descricao,
         dados.valor,
-        dados.tipo_plano
-      ]
+        dados.tipo_plano,
+      ],
     );
 
     const [planos]: any = await pool.query(
       `SELECT *
        FROM plano
        WHERE id_plano = ?`,
-      [resultado.insertId]
+      [resultado.insertId],
     );
 
     return {
       mensagem: 'Plano cadastrado com sucesso',
-      plano: planos[0]
+      plano: planos[0],
     };
   }
 
@@ -58,7 +55,8 @@ export class PlanoService {
 
     const [planos]: any = await pool.query(
       `SELECT *
-       FROM plano`
+       FROM plano
+       ORDER BY id_plano DESC`,
     );
 
     return planos;
@@ -71,12 +69,12 @@ export class PlanoService {
       `SELECT *
        FROM plano
        WHERE id_plano = ?`,
-      [id]
+      [id],
     );
 
     if (planos.length === 0) {
       return {
-        mensagem: 'Plano não encontrado'
+        mensagem: 'Plano não encontrado',
       };
     }
 

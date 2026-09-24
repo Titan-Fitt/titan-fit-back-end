@@ -1,112 +1,75 @@
 import {
-
   Body,
-
   Controller,
-
   Get,
-
   Param,
-
   Post,
-
   Req,
-
   UseGuards,
-
 } from '@nestjs/common';
-
-import { ProfessorAlunoService } from './professor-aluno.service';
-
-import { CreateProfessorAlunoDto } from './dto/create-professor-aluno.dto';
-
-import { AuthGuard } from '../auth/auth.guard';
-
-import { ProfessorGuard } from '../auth/professor.guard';
-
-@Controller('professor-aluno')
-
-export class ProfessorAlunoController {
-
+import { ProfessorAlunoService } from './professor-aluno.service';import { CreateProfessorAlunoDto } from './dto/create-professor-aluno.dto';import { AuthGuard } from '../auth/auth.guard';import { ProfessorGuard } from '../auth/professor.guard';
+@Controller('professor-aluno')export class ProfessorAlunoController {
   constructor(
-
     private readonly professorAlunoService: ProfessorAlunoService,
-
   ) {}
 
   @UseGuards(ProfessorGuard)
-
   @Post()
-
   cadastrar(
-
     @Body() dados: CreateProfessorAlunoDto,
-
     @Req() request: any,
-
   ) {
-
     return this.professorAlunoService.cadastrar(
-
       dados,
-
       request.user.id,
-
     );
-
   }
 
   @UseGuards(AuthGuard)
-
   @Get()
-
-  listar() {
-
-    return this.professorAlunoService.listar();
-
+  listar(@Req() request: any) {
+    return this.professorAlunoService.listar(
+      request.user.id,
+      request.user.tipo,
+    );
   }
 
   @UseGuards(AuthGuard)
-
   @Get('professor/:id')
-
-  buscarPorProfessor(@Param('id') id: string) {
-
+  buscarPorProfessor(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
     return this.professorAlunoService.buscarPorProfessor(
-
       Number(id),
-
+      request.user.id,
+      request.user.tipo,
     );
-
   }
 
   @UseGuards(AuthGuard)
-
   @Get('aluno/:id')
-
-  buscarPorAluno(@Param('id') id: string) {
-
+  buscarPorAluno(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
     return this.professorAlunoService.buscarPorAluno(
-
       Number(id),
-
+      request.user.id,
+      request.user.tipo,
     );
-
   }
 
   @UseGuards(AuthGuard)
-
   @Get(':id')
-
-  buscarPorId(@Param('id') id: string) {
-
+  buscarPorId(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
     return this.professorAlunoService.buscarPorId(
-
       Number(id),
-
+      request.user.id,
+      request.user.tipo,
     );
-
   }
-
 }
- 
