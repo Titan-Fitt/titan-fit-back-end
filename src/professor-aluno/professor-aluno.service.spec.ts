@@ -12,6 +12,9 @@ describe('ProfessorAlunoService', () => {
     service = module.get<ProfessorAlunoService>(ProfessorAlunoService);
   });
 
+
+  
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });

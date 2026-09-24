@@ -4,7 +4,7 @@ import {
   Get,
   Param,
   Post,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 
 import { AlunoService } from './aluno.service';
@@ -14,9 +14,8 @@ import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('aluno')
 export class AlunoController {
-
   constructor(
-    private readonly alunoService: AlunoService
+    private readonly alunoService: AlunoService,
   ) {}
 
   @Post('cadastro')
@@ -26,9 +25,6 @@ export class AlunoController {
 
   @Post('login')
   login(@Body() dados: LoginAlunoDto) {
-
-    console.log('DADOS RECEBIDOS NO LOGIN:', dados);
-
     return this.alunoService.login(dados);
   }
 
@@ -38,6 +34,7 @@ export class AlunoController {
     return this.alunoService.listar();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   buscarPorId(@Param('id') id: string) {
     return this.alunoService.buscarPorId(Number(id));

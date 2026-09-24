@@ -1,8 +1,24 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+
+  Body,
+
+  Controller,
+
+  Get,
+
+  Param,
+
+  Post,
+
+  UseGuards,
+
+} from '@nestjs/common';
 
 import { EvolucaoService } from './evolucao.service';
 
 import { CreateEvolucaoDto } from './dto/create-evolucao.dto';
+
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('evolucao')
 
@@ -10,9 +26,11 @@ export class EvolucaoController {
 
   constructor(
 
-    private readonly evolucaoService: EvolucaoService
+    private readonly evolucaoService: EvolucaoService,
 
   ) {}
+
+  @UseGuards(AuthGuard)
 
   @Post()
 
@@ -22,6 +40,8 @@ export class EvolucaoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get()
 
   listar() {
@@ -30,13 +50,15 @@ export class EvolucaoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get('aluno/:id')
 
   buscarPorAluno(@Param('id') id: string) {
 
     return this.evolucaoService.buscarPorAluno(
 
-      Number(id)
+      Number(id),
 
     );
 

@@ -7,8 +7,14 @@ export class ProfessorAlunoService {
     private readonly databaseService: DatabaseService
   ) {}
 
-  async cadastrar(dados: any) {
-    const pool = this.databaseService.getPool();
+async cadastrar(dados: any, professorLogadoId: number) {
+  const pool = this.databaseService.getPool();
+
+  if (dados.id_professor !== professorLogadoId) {
+  return {
+    mensagem: 'Você só pode criar vínculos para o seu próprio professor',
+  };
+}
 
     const [professores]: any = await pool.query(
       `SELECT id_professor

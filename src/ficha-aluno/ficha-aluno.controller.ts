@@ -10,7 +10,9 @@ import {
 
   Post,
 
-  Put
+  Put,
+
+  UseGuards,
 
 } from '@nestjs/common';
 
@@ -18,15 +20,19 @@ import { FichaAlunoService } from './ficha-aluno.service';
 
 import { CreateFichaAlunoDto } from './dto/create-ficha-aluno.dto';
 
+import { AuthGuard } from '../auth/auth.guard';
+
 @Controller('ficha-aluno')
 
 export class FichaAlunoController {
 
   constructor(
 
-    private readonly fichaAlunoService: FichaAlunoService
+    private readonly fichaAlunoService: FichaAlunoService,
 
   ) {}
+
+  @UseGuards(AuthGuard)
 
   @Post()
 
@@ -36,6 +42,8 @@ export class FichaAlunoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get()
 
   listar() {
@@ -44,17 +52,21 @@ export class FichaAlunoController {
 
   }
 
+  @UseGuards(AuthGuard)
+
   @Get('aluno/:id')
 
   buscarPorAluno(@Param('id') id: string) {
 
     return this.fichaAlunoService.buscarPorAluno(
 
-      Number(id)
+      Number(id),
 
     );
 
   }
+
+  @UseGuards(AuthGuard)
 
   @Put('aluno/:id')
 
@@ -62,7 +74,7 @@ export class FichaAlunoController {
 
     @Param('id') id: string,
 
-    @Body() dados: CreateFichaAlunoDto
+    @Body() dados: CreateFichaAlunoDto,
 
   ) {
 
@@ -70,7 +82,7 @@ export class FichaAlunoController {
 
       Number(id),
 
-      dados
+      dados,
 
     );
 
