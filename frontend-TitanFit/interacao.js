@@ -30,6 +30,7 @@ const sobreNos = document.querySelector(".sobrenos-home");
 if (sobreNos && "IntersectionObserver" in window) {
 
     const observerSobre = new IntersectionObserver(
+
         (entries) => {
 
             entries.forEach((entry) => {
@@ -39,19 +40,19 @@ if (sobreNos && "IntersectionObserver" in window) {
                     sobreNos.classList.add("animar");
 
                     observerSobre.disconnect();
-
                 }
 
             });
 
         },
+
         {
             threshold: 0.3
         }
+
     );
 
     observerSobre.observe(sobreNos);
-
 }
 
 
@@ -66,6 +67,7 @@ const planosHome = document.querySelectorAll(
 const secaoPlanosHome =
     document.querySelector(".caixa-planos_home");
 
+
 if (
     secaoPlanosHome &&
     planosHome.length > 0 &&
@@ -73,6 +75,7 @@ if (
 ) {
 
     const observerPlanos = new IntersectionObserver(
+
         (entries) => {
 
             entries.forEach((entry) => {
@@ -90,19 +93,19 @@ if (
                     });
 
                     observerPlanos.disconnect();
-
                 }
 
             });
 
         },
+
         {
             threshold: 0.3
         }
+
     );
 
     observerPlanos.observe(secaoPlanosHome);
-
 }
 
 
@@ -113,12 +116,14 @@ if (
 const servicos =
     document.querySelectorAll(".animar-servico");
 
+
 if (
     servicos.length > 0 &&
     "IntersectionObserver" in window
 ) {
 
     const observerServicos = new IntersectionObserver(
+
         (entries) => {
 
             entries.forEach((entry) => {
@@ -136,15 +141,16 @@ if (
                     });
 
                     observerServicos.disconnect();
-
                 }
 
             });
 
         },
+
         {
             threshold: 0.2
         }
+
     );
 
     servicos.forEach((servico) => {
@@ -152,7 +158,6 @@ if (
         observerServicos.observe(servico);
 
     });
-
 }
 
 
@@ -176,8 +181,10 @@ function destacarCardCentral() {
         return;
     }
 
+
     const centroTela =
         window.innerWidth / 2;
+
 
     let cardMaisCentral = null;
 
@@ -189,8 +196,10 @@ function destacarCardCentral() {
         const rect =
             card.getBoundingClientRect();
 
+
         const centroCard =
             rect.left + rect.width / 2;
+
 
         const distancia =
             Math.abs(
@@ -203,7 +212,6 @@ function destacarCardCentral() {
             menorDistancia = distancia;
 
             cardMaisCentral = card;
-
         }
 
     });
@@ -235,10 +243,12 @@ if (
         destacarCardCentral
     );
 
+
     window.addEventListener(
         "resize",
         destacarCardCentral
     );
+
 
     window.addEventListener(
         "load",
@@ -261,6 +271,7 @@ document.addEventListener(
                 ".pagina-plano-card"
             );
 
+
         const secaoPlanos =
             document.querySelector(
                 ".pagina-planos-cards"
@@ -275,6 +286,7 @@ document.addEventListener(
 
             const observer =
                 new IntersectionObserver(
+
                     (entries) => {
 
                         entries.forEach((entry) => {
@@ -308,9 +320,11 @@ document.addEventListener(
                         });
 
                     },
+
                     {
                         threshold: 0.2
                     }
+
                 );
 
 
@@ -339,6 +353,7 @@ if (
 
     const observerPagamento =
         new IntersectionObserver(
+
             (entries) => {
 
                 entries.forEach((entry) => {
@@ -349,6 +364,7 @@ if (
                             "animar"
                         );
 
+
                         observerPagamento.unobserve(
                             entry.target
                         );
@@ -358,9 +374,11 @@ if (
                 });
 
             },
+
             {
                 threshold: 0.3
             }
+
         );
 
 
@@ -384,10 +402,12 @@ document.addEventListener(
                 ".botao-escolha"
             );
 
+
         const camposProfessor =
             document.getElementById(
                 "camposProfessor"
             );
+
 
         const tipoInput =
             document.getElementById(
@@ -462,7 +482,16 @@ document.addEventListener(
 
 
 /* =====================================================
-   ACORDEÃO
+   ACORDEÃO PRINCIPAL
+
+   NÃO ALTERAR:
+   Faturas
+   Peitoral
+   Costas
+   Pernas
+
+   Esses continuam usando:
+   .acordeon-titulo
 ===================================================== */
 
 document.addEventListener(
@@ -476,6 +505,7 @@ document.addEventListener(
 
 
         titulosAcordeon.forEach((titulo) => {
+
 
             /* Acessibilidade */
 
@@ -606,7 +636,45 @@ document.addEventListener(
     }
 );
 
+/* =====================================================
+   MEUS DADOS
+===================================================== */
+function toggleAcordeao(element) {
+    const conteudo = element.nextElementSibling;
+    const icon = element.querySelector(".acordeon-icon");
 
+    if (!conteudo) return;
+
+    conteudo.classList.toggle("ativo");
+
+    if (conteudo.classList.contains("ativo")) {
+        if (icon) {
+            icon.textContent = "−";
+        }
+    } else {
+        if (icon) {
+            icon.textContent = "+";
+        }
+    }
+}
+
+/* =====================================================
+   FICHA
+===================================================== */
+function toggleFicha() {
+    const conteudo = document.getElementById("conteudoFicha");
+    const icone = document.getElementById("iconeFicha");
+
+    if (!conteudo || !icone) return;
+
+    conteudo.classList.toggle("ativo");
+
+    if (conteudo.classList.contains("ativo")) {
+        icone.textContent = "−";
+    } else {
+        icone.textContent = "+";
+    }
+}
 /* =====================================================
    MODAL DE PLANOS
 
@@ -622,10 +690,12 @@ document.addEventListener(
                 "modalPlanos"
             );
 
+
         const abrirModal =
             document.getElementById(
                 "abrirModalPlanos"
             );
+
 
         const fecharModal =
             document.getElementById(
@@ -785,10 +855,12 @@ document.addEventListener(
                 "abrirModalProfessores"
             );
 
+
         const fecharModalProfessores =
             document.getElementById(
                 "fecharModalProfessores"
             );
+
 
         const modalProfessores =
             document.getElementById(
@@ -898,15 +970,172 @@ document.addEventListener(
     }
 );
 
-function toggleAcordeao(element) {
-    const conteudo = element.nextElementSibling;
-    const icon = element.querySelector(".acordeao-icon");
 
-    conteudo.classList.toggle("ativo");
 
-    if (conteudo.classList.contains("ativo")) {
-        icon.textContent = "−";
-    } else {
-        icon.textContent = "+";
+
+// =====================================================
+// MODAL DE FICHA
+// =====================================================
+
+function abrirModalFicha() {
+
+    const modal = document.getElementById("modalFicha");
+
+    if (!modal) return;
+
+    modal.classList.add("ativo");
+
+    // Preenche o formulário com os dados que já aparecem na ficha
+    const idade = document.getElementById("fichaIdade");
+    const altura = document.getElementById("fichaAltura");
+    const peso = document.getElementById("fichaPeso");
+    const objetivo = document.getElementById("fichaObjetivo");
+
+    const modalIdade = document.getElementById("modalIdade");
+    const modalAltura = document.getElementById("modalAltura");
+    const modalPeso = document.getElementById("modalPeso");
+    const modalObjetivo = document.getElementById("modalObjetivo");
+
+    if (idade && idade.textContent !== "Não informado") {
+        modalIdade.value = idade.textContent;
+    }
+
+    if (altura && altura.textContent !== "Não informado") {
+        modalAltura.value = altura.textContent;
+    }
+
+    if (peso && peso.textContent !== "Não informado") {
+        modalPeso.value = peso.textContent;
+    }
+
+    if (objetivo && objetivo.textContent !== "Não informado") {
+        modalObjetivo.value = objetivo.textContent;
     }
 }
+
+
+function fecharModalFicha() {
+
+    const modal = document.getElementById("modalFicha");
+
+    if (!modal) return;
+
+    modal.classList.remove("ativo");
+}
+
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+        fecharModalFicha();
+    }
+
+});
+
+function abrirModalFicha() {
+
+    const modal =
+        document.getElementById("modalFicha");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("ativo");
+
+
+    const idade =
+        document.getElementById("fichaIdade");
+
+    const altura =
+        document.getElementById("fichaAltura");
+
+    const peso =
+        document.getElementById("fichaPeso");
+
+    const objetivo =
+        document.getElementById("fichaObjetivo");
+
+
+    const modalIdade =
+        document.getElementById("modalIdade");
+
+    const modalAltura =
+        document.getElementById("modalAltura");
+
+    const modalPeso =
+        document.getElementById("modalPeso");
+
+    const modalObjetivo =
+        document.getElementById("modalObjetivo");
+
+
+    if (
+        idade &&
+        idade.textContent !== "Não informado"
+    ) {
+
+        modalIdade.value =
+            idade.textContent;
+
+    }
+
+
+    if (
+        altura &&
+        altura.textContent !== "Não informado"
+    ) {
+
+        modalAltura.value =
+            altura.textContent;
+
+    }
+
+
+    if (
+        peso &&
+        peso.textContent !== "Não informado"
+    ) {
+
+        modalPeso.value =
+            peso.textContent;
+
+    }
+
+
+    if (
+        objetivo &&
+        objetivo.textContent !== "Não informado"
+    ) {
+
+        modalObjetivo.value =
+            objetivo.textContent;
+
+    }
+
+}
+
+
+function fecharModalFicha() {
+
+    const modal =
+        document.getElementById("modalFicha");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("ativo");
+
+}
+
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+
+        fecharModalFicha();
+
+    }
+
+});

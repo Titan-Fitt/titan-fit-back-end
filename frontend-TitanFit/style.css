@@ -1776,128 +1776,7 @@ a {
 }
 
 /*TESTE----------------*/
-/*--------------------FICHA---------------------*/
 
-.conteudo-ficha {
-    min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.ficha-box {
-    width: 100%;
-    max-width: 380px;
-    background: #1f1f1f;
-    border: 1px solid #F26807;
-    border-radius: 16px;
-    padding: 30px;
-    color: #fff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.titulo-ficha {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.ficha-box>p {
-    color: #bdbdbd;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.ficha-box form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.caixa-ficha {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.caixa-ficha label {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.caixa-ficha input,
-.caixa-ficha select,
-.caixa-ficha textarea {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    outline: none;
-    background: #1f1f1f;
-    color: #fff;
-    font-size: 14px;
-    transition: .3s;
-    box-sizing: border-box;
-}
-
-.caixa-ficha textarea {
-    resize: none;
-    min-height: 90px;
-}
-
-.caixa-ficha input::placeholder,
-.caixa-ficha textarea::placeholder {
-    color: #999;
-}
-
-.caixa-ficha input:focus,
-.caixa-ficha select:focus,
-.caixa-ficha textarea:focus {
-    border-color: #F26807;
-    box-shadow: 0 0 0 3px rgba(242, 104, 7, .25);
-}
-
-.btn-ficha {
-    width: 100%;
-    padding: 14px;
-    background: #F26807;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .3s;
-}
-
-.btn-ficha:hover {
-    background: #ff7a1a;
-    transform: translateY(-2px);
-}
-
-/* RESPONSIVO FICHA */
-
-@media (max-width: 500px) {
-    .conteudo-ficha {
-        padding: 15px;
-    }
-
-    .ficha-box {
-        width: 90%;
-        padding: 25px;
-    }
-
-    .titulo-ficha {
-        font-size: 26px;
-    }
-}
 
 
 
@@ -3457,52 +3336,501 @@ a {
 
 
 /* =====================================================
-   MEUS DADOS
-   ===================================================== */
-.acordeao {
+   ACORDEÕES - MEUS DADOS E FICHA
+===================================================== */
+
+.acordeon-item {
     width: 100%;
-    border: 1px solid #555;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 12px;
 }
 
-.acordeao:hover {
-    border-color: #ff7d1a;
-    box-shadow: 0 0 8px rgba(255, 125, 26, 0.25);
-}
+/* =====================================================
+   CABEÇALHO
+===================================================== */
 
-.acordeao-header {
-    height: 54px;
-    padding: 0 16px;
+.acordeon-header {
+    width: 100%;
+    min-height: 54px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
-    font-weight: bold;
-    background: #292929;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #4a4a4a;
+    border-radius: 12px;
+
+    background-color: #252525;
+
     color: #ffffff;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
 }
 
-.acordeao-icon {
+/* Hover */
+
+.acordeon-header:hover {
+    border-color: #ff7d1a;
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   ÍCONE +
+===================================================== */
+
+.acordeon-icon {
     color: #ff7d1a;
-    font-size: 24px;
+
+    font-size: 22px;
     font-weight: bold;
+
     transition: transform 0.3s ease;
 }
 
-.acordeao-conteudo {
+/* =====================================================
+   CONTEÚDO
+===================================================== */
+
+.acordeon-conteudo {
+    max-height: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    padding: 0 16px;
+
+    background-color: #252525;
+
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+
+    border-radius: 0 0 12px 12px;
+
+    transition:
+        max-height 0.4s ease,
+        opacity 0.3s ease,
+        padding 0.3s ease;
+}
+
+/* =====================================================
+   ACORDEÃO ABERTO
+===================================================== */
+
+.acordeon-conteudo.ativo {
+    max-height: 400px;
+
+    opacity: 1;
+
+    padding: 16px;
+
+    border-color: #4a4a4a;
+}
+
+/* =====================================================
+   DADOS
+===================================================== */
+
+.ficha-dado {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 5px;
+
+    border-bottom: 1px solid #3d3d3d;
+
+    transition: background-color 0.3s ease;
+}
+
+.ficha-dado:last-child {
+    border-bottom: none;
+}
+
+/* Nome do campo */
+
+.ficha-label {
+    color: #ffffff;
+
+    font-weight: bold;
+}
+
+/* Valor */
+
+.ficha-valor {
+    color: #ff7d1a;
+
+    font-weight: 500;
+}
+
+/* Hover nos dados */
+
+.ficha-dado:hover {
+    background-color: #2d2d2d;
+}
+
+
+/* =====================================================
+   BOTÃO ALTERAR FICHA
+===================================================== */
+
+.botao-alterar-ficha {
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px 20px;
+
+    border: 2px solid #ff7d1a;
+    border-radius: 10px;
+
+    background: #ff7d1a;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.botao-alterar-ficha:hover {
+    background: transparent;
+    color: #ff7d1a;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 125, 26, 0.35);
+}
+
+.botao-alterar-ficha:active {
+    transform: translateY(0);
+}
+
+
+
+/*--------------------FICHA---------------------*/
+
+
+
+/* =====================================================
+   MODAL DE FICHA
+===================================================== */
+
+.modal-ficha {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.75);
+
     display: none;
-    padding: 18px;
-    background: #303030;
-    border-top: 1px solid #555;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    z-index: 10000;
 }
 
-.acordeao-conteudo.ativo {
-    display: block;
+/* MODAL ABERTO */
+
+.modal-ficha.ativo {
+    display: flex;
 }
 
-.acordeao-conteudo p {
-    margin: 8px 0;
+
+/* =====================================================
+   CONTEÚDO DO MODAL
+===================================================== */
+
+.modal-ficha .conteudo-ficha {
+
+    width: 100%;
+    min-height: auto;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
 }
 
+
+/* =====================================================
+   CAIXA DA FICHA
+===================================================== */
+
+.modal-ficha .ficha-box {
+
+    position: relative;
+
+    width: 100%;
+    max-width: 380px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #1f1f1f;
+
+    border: 1px solid #F26807;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    color: #fff;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   BOTÃO FECHAR
+===================================================== */
+
+.fechar-modal-ficha {
+
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #292929;
+
+    color: #fff;
+
+    font-size: 25px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.fechar-modal-ficha:hover {
+
+    background: #F26807;
+
+    transform: rotate(90deg);
+}
+
+
+/* =====================================================
+   TÍTULO
+===================================================== */
+
+.modal-ficha .titulo-ficha {
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   DESCRIÇÃO
+===================================================== */
+
+.modal-ficha .ficha-box > p {
+
+    color: #bdbdbd;
+
+    margin: 0 0 10px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   FORMULÁRIO
+===================================================== */
+
+.modal-ficha .ficha-box form {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+/* =====================================================
+   CAMPOS
+===================================================== */
+
+.modal-ficha .caixa-ficha {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.modal-ficha .caixa-ficha label {
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+
+.modal-ficha .caixa-ficha input,
+.modal-ficha .caixa-ficha select,
+.modal-ficha .caixa-ficha textarea {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #444;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #1f1f1f;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    transition: .3s;
+
+    box-sizing: border-box;
+}
+
+
+.modal-ficha .caixa-ficha input::placeholder {
+
+    color: #999;
+}
+
+
+.modal-ficha .caixa-ficha input:focus,
+.modal-ficha .caixa-ficha select:focus,
+.modal-ficha .caixa-ficha textarea:focus {
+
+    border-color: #F26807;
+
+    box-shadow:
+        0 0 0 3px rgba(242, 104, 7, .25);
+}
+
+
+/* =====================================================
+   BOTÃO SALVAR
+===================================================== */
+
+.modal-ficha .btn-ficha {
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: #F26807;
+
+    color: #fff;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+
+.modal-ficha .btn-ficha:hover {
+
+    background: #ff7a1a;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media (max-width: 500px) {
+
+    .modal-ficha {
+
+        padding: 10px;
+    }
+
+    .modal-ficha .conteudo-ficha {
+
+        padding: 10px;
+    }
+
+    .modal-ficha .ficha-box {
+
+        width: 100%;
+
+        padding: 25px 20px;
+    }
+
+    .modal-ficha .titulo-ficha {
+
+        font-size: 26px;
+    }
+
+}
