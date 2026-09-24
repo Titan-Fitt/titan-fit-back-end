@@ -1,23 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-
-import { ExercicioService } from './exercicio.service';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';import { ExercicioService } from './exercicio.service';
 import { CreateExercicioDto } from './dto/create-exercicio.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { ProfessorGuard } from '../auth/professor.guard';
+@Controller('exercicio')export class ExercicioController {
+  constructor(private readonly exercicioService: ExercicioService) {}
 
-@Controller('exercicio')
-export class ExercicioController {
-  constructor(
-    private readonly exercicioService: ExercicioService,
-  ) {}
-
-  @UseGuards(AuthGuard)
+  @UseGuards(ProfessorGuard)
   @Post()
   cadastrar(@Body() dados: CreateExercicioDto) {
     return this.exercicioService.cadastrar(dados);
