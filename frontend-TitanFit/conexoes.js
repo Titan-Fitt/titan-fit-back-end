@@ -34,6 +34,7 @@ async function lerResposta(resposta) {
         };
 
     }
+
 }
 
 
@@ -594,6 +595,7 @@ async function cadastrarAluno(dados) {
             resposta.status
         );
 
+
         console.log(
             "Resposta do cadastro do aluno:",
             resultado
@@ -642,22 +644,6 @@ async function cadastrarAluno(dados) {
         );
 
 
-        localStorage.setItem(
-            "nome_aluno",
-            dados.nome
-        );
-
-        localStorage.setItem(
-            "email_aluno",
-            dados.email
-        );
-
-        localStorage.setItem(
-            "cpf_aluno",
-            dados.cpf
-        );
-
-
         // =================================================
         // SUCESSO
         // =================================================
@@ -672,12 +658,14 @@ async function cadastrarAluno(dados) {
 
 
     }
+
     catch (erro) {
 
         console.error(
             "Erro ao cadastrar aluno:",
             erro
         );
+
 
         alert(
             "Não foi possível conectar ao servidor."
@@ -783,12 +771,14 @@ async function cadastrarProfessor(dados) {
 
 
     }
+
     catch (erro) {
 
         console.error(
             "Erro ao cadastrar professor:",
             erro
         );
+
 
         alert(
             "Não foi possível conectar ao servidor."
@@ -801,7 +791,7 @@ async function cadastrarProfessor(dados) {
 
 // =====================================================
 // LOGIN DO ALUNO
-// POST /aluno/login
+// POST /auth/aluno
 // =====================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -857,8 +847,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
 
-             const resposta = await fetch(
-    `${API_URL}/auth/aluno`,
+                const resposta =
+                    await fetch(
+                        `${API_URL}/auth/aluno`,
                         {
                             method: "POST",
 
@@ -894,11 +885,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (
                     !resposta.ok ||
-                    !resultado.aluno
+                    !resultado.aluno ||
+                    !resultado.token
                 ) {
 
                     alert(
                         resultado.mensagem ||
+                        resultado.message ||
                         "E-mail ou senha incorretos."
                     );
 
@@ -908,26 +901,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 // =================================================
-                // SALVAR TOKEN JWT
+                // SALVAR TOKEN
                 // =================================================
 
-                if (resultado.token) {
-
-                    localStorage.setItem(
-                        "token",
-                        resultado.token
-                    );
-
-                }
-                else {
-
-                    alert(
-                        "O servidor não retornou o token de autenticação."
-                    );
-
-                    return;
-
-                }
+                localStorage.setItem(
+                    "token",
+                    resultado.token
+                );
 
 
                 // =================================================
@@ -936,6 +916,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 salvarDadosAluno(
                     resultado.aluno
+                );
+
+
+                console.log(
+                    "Dados do aluno salvos no navegador."
                 );
 
 
@@ -948,12 +933,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     "areaCliente.html";
 
             }
+
             catch (erro) {
 
                 console.error(
                     "Erro no login:",
                     erro
                 );
+
 
                 alert(
                     "Não foi possível conectar ao servidor."
@@ -1010,8 +997,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "Você precisa fazer login para acessar a área do cliente."
         );
 
+
         window.location.href =
             "login.html";
+
 
         return;
 
@@ -1026,6 +1015,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem(
             "nome_aluno"
         );
+
 
     const elementoNome =
         document.getElementById(
@@ -1173,6 +1163,33 @@ function mostrarDadosFicha(ficha) {
 
 
     // =================================================
+    // SEM FICHA
+    // =================================================
+
+    if (!ficha) {
+
+        if (fichaIdade)
+            fichaIdade.textContent =
+                "Não informado";
+
+        if (fichaAltura)
+            fichaAltura.textContent =
+                "Não informado";
+
+        if (fichaPeso)
+            fichaPeso.textContent =
+                "Não informado";
+
+        if (fichaObjetivo)
+            fichaObjetivo.textContent =
+                "Não informado";
+
+        return;
+
+    }
+
+
+    // =================================================
     // IDADE
     // =================================================
 
@@ -1289,8 +1306,10 @@ async function carregarFicha() {
     if (!idAluno || !token) {
 
         console.log(
-            "Aluno não autenticado para carregar a ficha."
+            "Aluno ou token não encontrado."
         );
+
+        mostrarFichaNaoInformada();
 
         return;
 
@@ -1348,6 +1367,8 @@ async function carregarFicha() {
                 dados
             );
 
+            mostrarFichaNaoInformada();
+
             return;
 
         }
@@ -1360,12 +1381,15 @@ async function carregarFicha() {
         mostrarDadosFicha(dados);
 
     }
+
     catch (erro) {
 
         console.error(
             "Erro ao carregar ficha:",
             erro
         );
+
+        mostrarFichaNaoInformada();
 
     }
 
@@ -1390,8 +1414,13 @@ async function salvarFicha() {
     if (!idAluno || !token) {
 
         alert(
-            "Você precisa estar logado para salvar sua ficha."
+            "Sua sessão expirou. Faça login novamente."
         );
+
+
+        window.location.href =
+            "login.html";
+
 
         return;
 
@@ -1399,7 +1428,7 @@ async function salvarFicha() {
 
 
     // =================================================
-    // CAMPOS DO MODAL
+    // PEGAR CAMPOS
     // =================================================
 
     const idadeElement =
@@ -1423,35 +1452,40 @@ async function salvarFicha() {
         );
 
 
-    const idade =
-        idadeElement
-            ? idadeElement.value.trim()
-            : "";
+   const idade =
+    idadeElement
+        ? idadeElement.value.trim()
+        : "";
 
-    const altura =
-        alturaElement
-            ? alturaElement.value.trim()
-            : "";
+const altura =
+    alturaElement
+        ? alturaElement.value.trim().replace(",", ".")
+        : "";
 
-    const peso =
-        pesoElement
-            ? pesoElement.value.trim()
-            : "";
+const peso =
+    pesoElement
+        ? pesoElement.value.trim().replace(",", ".")
+        : "";
 
-    const objetivo =
-        objetivoElement
-            ? objetivoElement.value
-            : "";
+const objetivo =
+    objetivoElement
+        ? objetivoElement.value
+        : "";
 
 
     // =================================================
-    // OBJETIVO É OBRIGATÓRIO NO BACKEND
+    // VALIDAR
     // =================================================
 
-    if (!objetivo) {
+    if (
+        !idade ||
+        !altura ||
+        !peso ||
+        !objetivo
+    ) {
 
         alert(
-            "Selecione um objetivo."
+            "Preencha todos os campos da ficha."
         );
 
         return;
@@ -1460,29 +1494,28 @@ async function salvarFicha() {
 
 
     // =================================================
-    // DADOS ENVIADOS
+    // DADOS ENVIADOS AO BACKEND
     // =================================================
 
     const dados = {
 
-        id_aluno:
-            Number(idAluno),
+    id_aluno: Number(idAluno),
 
-        idade:
-            idade
-                ? Number(idade)
-                : null,
+    idade: Number(idade),
 
-        altura:
-            altura || null,
+    altura: Number(altura),
 
-        peso:
-            peso || null,
+    peso: Number(peso),
 
-        objetivo:
-            objetivo
+    objetivo: objetivo
 
-    };
+};
+
+
+    console.log(
+        "Dados da ficha enviados:",
+        dados
+    );
 
 
     try {
@@ -1491,7 +1524,7 @@ async function salvarFicha() {
         // VERIFICAR SE JÁ EXISTE FICHA
         // =================================================
 
-        const consulta =
+        const respostaBusca =
             await fetch(
                 `${API_URL}/ficha-aluno/aluno/${idAluno}`,
                 {
@@ -1504,7 +1537,7 @@ async function salvarFicha() {
 
 
         const fichaAtual =
-            await lerResposta(consulta);
+            await lerResposta(respostaBusca);
 
 
         console.log(
@@ -1513,19 +1546,20 @@ async function salvarFicha() {
         );
 
 
-        let resposta;
+        let respostaSalvar;
 
 
         // =================================================
-        // JÁ POSSUI FICHA → ATUALIZAR
+        // JÁ POSSUI FICHA → PUT
         // =================================================
 
         if (
-            consulta.ok &&
+            respostaBusca.ok &&
+            fichaAtual &&
             fichaAtual.id_ficha
         ) {
 
-            resposta =
+            respostaSalvar =
                 await fetch(
                     `${API_URL}/ficha-aluno/aluno/${idAluno}`,
                     {
@@ -1543,12 +1577,12 @@ async function salvarFicha() {
 
 
         // =================================================
-        // NÃO POSSUI FICHA → CADASTRAR
+        // NÃO POSSUI FICHA → POST
         // =================================================
 
         else {
 
-            resposta =
+            respostaSalvar =
                 await fetch(
                     `${API_URL}/ficha-aluno`,
                     {
@@ -1566,7 +1600,7 @@ async function salvarFicha() {
 
 
         const resultado =
-            await lerResposta(resposta);
+            await lerResposta(respostaSalvar);
 
 
         console.log(
@@ -1579,7 +1613,7 @@ async function salvarFicha() {
         // ERRO
         // =================================================
 
-        if (!resposta.ok) {
+        if (!respostaSalvar.ok) {
 
             alert(
                 resultado.mensagem ||
@@ -1593,16 +1627,17 @@ async function salvarFicha() {
 
 
         // =================================================
-        // ATUALIZAR TELA
+        // SUCESSO
         // =================================================
 
-        if (resultado.ficha) {
+        const fichaSalva =
+            resultado.ficha ||
+            resultado;
 
-            mostrarDadosFicha(
-                resultado.ficha
-            );
 
-        }
+        mostrarDadosFicha(
+            fichaSalva
+        );
 
 
         // =================================================
@@ -1612,22 +1647,20 @@ async function salvarFicha() {
         fecharModalFicha();
 
 
-        // =================================================
-        // SUCESSO
-        // =================================================
-
         alert(
             resultado.mensagem ||
             "Ficha salva com sucesso!"
         );
 
     }
+
     catch (erro) {
 
         console.error(
             "Erro ao salvar ficha:",
             erro
         );
+
 
         alert(
             "Não foi possível conectar ao servidor."
@@ -1642,60 +1675,64 @@ async function salvarFicha() {
 // FORMULÁRIO DA FICHA
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const formFicha =
-        document.getElementById(
-            "formFicha"
+        const formFicha =
+            document.getElementById(
+                "formFicha"
+            );
+
+
+        if (!formFicha) {
+            return;
+        }
+
+
+        formFicha.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                await salvarFicha();
+
+            }
         );
 
-
-    if (!formFicha) {
-
-        return;
-
     }
+);
 
 
-    formFicha.addEventListener(
-        "submit",
-        async (event) => {
+// =====================================================
+// CARREGAR FICHA AO ABRIR A ÁREA DO CLIENTE
+// =====================================================
 
-            event.preventDefault();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-            await salvarFicha();
+        const paginaAtual =
+            window.location.pathname
+                .split("/")
+                .pop();
+
+
+        if (
+            paginaAtual !==
+            "areaCliente.html"
+        ) {
+
+            return;
 
         }
-    );
-
-});
 
 
-// =====================================================
-// CARREGAR FICHA AO ABRIR ÁREA DO CLIENTE
-// =====================================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const paginaAtual =
-        window.location.pathname
-            .split("/")
-            .pop();
-
-
-    if (
-        paginaAtual !==
-        "areaCliente.html"
-    ) {
-
-        return;
+        carregarFicha();
 
     }
-
-
-    carregarFicha();
-
-});
+);
 
 
 // =====================================================
@@ -1712,9 +1749,7 @@ async function carregarProfessores() {
 
 
     if (!listaProfessores) {
-
         return;
-
     }
 
 
@@ -1878,6 +1913,7 @@ async function carregarProfessores() {
         });
 
     }
+
     catch (erro) {
 
         console.error(
@@ -1914,8 +1950,10 @@ async function conectarProfessor(idProfessor) {
             "Faça login para se conectar a um professor."
         );
 
+
         window.location.href =
             "login.html";
+
 
         return;
 
@@ -1990,12 +2028,14 @@ async function conectarProfessor(idProfessor) {
         );
 
     }
+
     catch (erro) {
 
         console.error(
             "Erro ao conectar professor:",
             erro
         );
+
 
         alert(
             "Não foi possível realizar a conexão."
@@ -2019,9 +2059,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (!abrirModalProfessores) {
-
         return;
-
     }
 
 
