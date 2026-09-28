@@ -243,47 +243,97 @@
 
                 </div>
 
+<div class="acordeon-item">
 
-                <div class="acordeon-item">
+    <div
+        class="acordeon-header"
+        onclick="toggleAcordeao(this)"
+    >
 
-                    <button class="acordeon-titulo">
+        <span>Meus Dados</span>
 
-                        Meus dados
+        <span class="acordeon-icon">+</span>
 
-                        <span>+</span>
+    </div>
 
-                    </button>
+    <div class="acordeon-conteudo">
 
-                    <div class="acordeon-conteudo">
+        <div class="ficha-dado">
+            <span class="ficha-label">Nome</span>
 
-                        <p>
-                            ...
-                        </p>
+            <span
+                class="ficha-valor"
+                id="dadosNome"
+            >
+                Não informado
+            </span>
+        </div>
 
-                    </div>
+        <div class="ficha-dado">
+            <span class="ficha-label">E-mail</span>
 
-                </div>
+            <span
+                class="ficha-valor"
+                id="dadosEmail"
+            >
+                Não informado
+            </span>
+        </div>
+
+    </div>
+
+</div>
 
 
-                <div class="acordeon-item">
+<!-- =====================================================
+     FICHA
+===================================================== -->
+<<!-- FICHA -->
+<div class="acordeon-item">
 
-                    <button class="acordeon-titulo">
+    <div class="acordeon-header" onclick="toggleFicha()">
+        <span>Ficha</span>
+        <span id="iconeFicha">+</span>
+    </div>
 
-                        meta mensal
+    <div class="acordeon-conteudo" id="conteudoFicha">
 
-                        <span>+</span>
+        <div class="ficha-dado">
+            <span class="ficha-label">Peso</span>
+            <span class="ficha-valor" id="fichaPeso">Não informado</span>
+        </div>
 
-                    </button>
+        <div class="ficha-dado">
+            <span class="ficha-label">Idade</span>
+            <span class="ficha-valor" id="fichaIdade">Não informado</span>
+        </div>
 
-                    <div class="acordeon-conteudo">
+        <div class="ficha-dado">
+            <span class="ficha-label">Altura</span>
+            <span class="ficha-valor" id="fichaAltura">Não informado</span>
+        </div>
 
-                        <p>
-                            ...
-                        </p>
+        <div class="ficha-dado">
+            <span class="ficha-label">Objetivo</span>
+            <span class="ficha-valor" id="fichaObjetivo">Não informado</span>
+        </div>
 
-                    </div>
+        <!-- BOTÃO ALTERAR FICHA -->
+       <button
+    type="button"
+    class="botao-alterar-ficha"
+    onclick="abrirModalFicha()">
+    Alterar ficha
+</button>
 
-                </div>
+    </div>
+
+</div>
+
+</div>
+
+</div>
+               
 
             </div>
 
@@ -617,6 +667,119 @@
     </div>
 
 
+
+    <!-- =====================================================
+     MODAL DE FICHA
+===================================================== -->
+
+<div id="modalFicha" class="modal-ficha">
+
+    <div class="conteudo-ficha">
+
+        <div class="ficha-box">
+
+            <button
+                type="button"
+                class="fechar-modal-ficha"
+                onclick="fecharModalFicha()">
+                ×
+            </button>
+
+            <h2 class="titulo-ficha">Alterar Ficha</h2>
+
+            <p>Atualize suas informações para personalizar seu treino</p>
+
+            <form id="formFicha">
+
+                <div class="caixa-ficha">
+
+                    <label for="modalIdade">
+                        Idade
+                    </label>
+
+                    <input
+                        type="number"
+                        id="modalIdade"
+                        name="idade"
+                        placeholder="Digite sua idade">
+
+                </div>
+
+                <div class="caixa-ficha">
+
+                    <label for="modalAltura">
+                        Altura
+                    </label>
+
+                    <input
+                        type="text"
+                        id="modalAltura"
+                        name="altura"
+                        placeholder="Ex: 1,75">
+
+                </div>
+
+                <div class="caixa-ficha">
+
+                    <label for="modalPeso">
+                        Peso
+                    </label>
+
+                    <input
+                        type="text"
+                        id="modalPeso"
+                        name="peso"
+                        placeholder="Ex: 70kg">
+
+                </div>
+
+                <div class="caixa-ficha">
+
+                    <label for="modalObjetivo">
+                        Objetivo
+                    </label>
+
+                    <select
+                        id="modalObjetivo"
+                        name="objetivo">
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option value="Funcional">
+                            Funcional
+                        </option>
+
+                        <option value="Hipertrofia">
+                            Hipertrofia
+                        </option>
+
+                        <option value="Força máxima">
+                            Força máxima
+                        </option>
+
+                        <option value="Resistência muscular">
+                            Resistência muscular
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-ficha">
+                    Salvar ficha
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
     <!-- =====================================================
          JAVASCRIPT
     ====================================================== -->
