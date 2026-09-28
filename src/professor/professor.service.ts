@@ -10,7 +10,7 @@ export class ProfessorService {
 
   constructor(
 
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
 
   ) {}
 
@@ -26,7 +26,7 @@ export class ProfessorService {
 
        WHERE email = ? OR registro_cref = ?`,
 
-      [dados.email, dados.registro_cref]
+      [dados.email, dados.registro_cref],
 
     );
 
@@ -34,7 +34,7 @@ export class ProfessorService {
 
       return {
 
-        mensagem: 'E-mail ou registro CREF já cadastrado'
+        mensagem: 'E-mail ou registro CREF já cadastrado',
 
       };
 
@@ -44,7 +44,7 @@ export class ProfessorService {
 
       dados.senha,
 
-      10
+      10,
 
     );
 
@@ -94,9 +94,9 @@ export class ProfessorService {
 
         dados.status,
 
-        dados.especialidade
+        dados.especialidade,
 
-      ]
+      ],
 
     );
 
@@ -120,9 +120,9 @@ export class ProfessorService {
 
         status: dados.status,
 
-        especialidade: dados.especialidade
+        especialidade: dados.especialidade,
 
-      }
+      },
 
     };
 
@@ -140,7 +140,7 @@ export class ProfessorService {
 
        WHERE email = ?`,
 
-      [dados.email]
+      [dados.email],
 
     );
 
@@ -148,7 +148,7 @@ export class ProfessorService {
 
       return {
 
-        mensagem: 'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
 
       };
 
@@ -160,7 +160,7 @@ export class ProfessorService {
 
       dados.senha,
 
-      professor.senha
+      professor.senha,
 
     );
 
@@ -168,7 +168,7 @@ export class ProfessorService {
 
       return {
 
-        mensagem: 'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
 
       };
 
@@ -196,41 +196,89 @@ export class ProfessorService {
 
         status: professor.status,
 
-        especialidade: professor.especialidade
+        especialidade: professor.especialidade,
 
-      }
+      },
 
     };
 
   }
 
-  async listar() {
+  async listar(usuarioId: number, tipoUsuario: string) {
 
     const pool = this.databaseService.getPool();
+
+    if (tipoUsuario === 'professor') {
+
+      const [professores]: any = await pool.query(
+
+        `SELECT
+
+          id_professor,
+
+          nome,
+
+          curriculo,
+
+          email,
+
+          registro_cref,
+
+          bacharelado,
+
+          formacao_academica,
+
+          status,
+
+          especialidade
+
+         FROM professor
+
+         WHERE id_professor = ?`,
+
+        [usuarioId],
+
+      );
+
+      return professores;
+
+    }
 
     const [professores]: any = await pool.query(
 
       `SELECT
 
-        id_professor,
+        p.id_professor,
 
-        nome,
+        p.nome,
 
-        curriculo,
+        p.curriculo,
 
-        email,
+        p.email,
 
-        registro_cref,
+        p.registro_cref,
 
-        bacharelado,
+        p.bacharelado,
 
-        formacao_academica,
+        p.formacao_academica,
 
-        status,
+        p.status,
 
-        especialidade
+        p.especialidade
 
-       FROM professor`
+       FROM professor p
+
+       INNER JOIN professor_aluno pa
+
+         ON pa.id_professor = p.id_professor
+
+       WHERE pa.id_aluno = ?
+
+       AND pa.status = 'Ativo'
+
+       ORDER BY p.id_professor DESC`,
+
+      [usuarioId],
 
     );
 
@@ -238,9 +286,57 @@ export class ProfessorService {
 
   }
 
-  async buscarPorId(id: number) {
+  async buscarPorId(
+
+    id: number,
+
+    usuarioId: number,
+
+    tipoUsuario: string,
+
+  ) {
 
     const pool = this.databaseService.getPool();
+
+    if (tipoUsuario === 'professor' && id !== usuarioId) {
+
+      return {
+
+        mensagem: 'Você só pode consultar seus próprios dados',
+
+      };
+
+    }
+
+    if (tipoUsuario === 'aluno') {
+
+      const [vinculo]: any = await pool.query(
+
+        `SELECT id_professor_aluno
+
+         FROM professor_aluno
+
+         WHERE id_professor = ?
+
+         AND id_aluno = ?
+
+         AND status = 'Ativo'`,
+
+        [id, usuarioId],
+
+      );
+
+      if (vinculo.length === 0) {
+
+        return {
+
+          mensagem: 'Você não está vinculado a esse professor',
+
+        };
+
+      }
+
+    }
 
     const [professores]: any = await pool.query(
 
@@ -268,7 +364,7 @@ export class ProfessorService {
 
        WHERE id_professor = ?`,
 
-      [id]
+      [id],
 
     );
 
@@ -276,7 +372,7 @@ export class ProfessorService {
 
       return {
 
-        mensagem: 'Professor não encontrado'
+        mensagem: 'Professor não encontrado',
 
       };
 

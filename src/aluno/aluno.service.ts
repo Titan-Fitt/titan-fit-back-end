@@ -10,7 +10,7 @@ export class AlunoService {
 
   constructor(
 
-    private readonly databaseService: DatabaseService
+    private readonly databaseService: DatabaseService,
 
   ) {}
 
@@ -22,7 +22,7 @@ export class AlunoService {
 
       'SELECT id_aluno FROM aluno WHERE email = ? OR cpf = ?',
 
-      [dados.email, dados.cpf]
+      [dados.email, dados.cpf],
 
     );
 
@@ -30,7 +30,7 @@ export class AlunoService {
 
       return {
 
-        mensagem: 'E-mail ou CPF já cadastrado'
+        mensagem: 'E-mail ou CPF já cadastrado',
 
       };
 
@@ -40,7 +40,7 @@ export class AlunoService {
 
       dados.senha,
 
-      10
+      10,
 
     );
 
@@ -48,9 +48,9 @@ export class AlunoService {
 
       `INSERT INTO aluno
 
-      (nome, email, senha, cpf)
+       (nome, email, senha, cpf)
 
-      VALUES (?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?)`,
 
       [
 
@@ -60,9 +60,9 @@ export class AlunoService {
 
         senhaCriptografada,
 
-        dados.cpf
+        dados.cpf,
 
-      ]
+      ],
 
     );
 
@@ -78,9 +78,9 @@ export class AlunoService {
 
         email: dados.email,
 
-        cpf: dados.cpf
+        cpf: dados.cpf,
 
-      }
+      },
 
     };
 
@@ -94,7 +94,7 @@ export class AlunoService {
 
       'SELECT * FROM aluno WHERE email = ?',
 
-      [dados.email]
+      [dados.email],
 
     );
 
@@ -102,7 +102,7 @@ export class AlunoService {
 
       return {
 
-        mensagem: 'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
 
       };
 
@@ -114,7 +114,7 @@ export class AlunoService {
 
       dados.senha,
 
-      aluno.senha
+      aluno.senha,
 
     );
 
@@ -122,7 +122,7 @@ export class AlunoService {
 
       return {
 
-        mensagem: 'E-mail ou senha incorretos'
+        mensagem: 'E-mail ou senha incorretos',
 
       };
 
@@ -142,33 +142,73 @@ export class AlunoService {
 
         cpf: aluno.cpf,
 
-        data_cadastro: aluno.data_cadastro
+        data_cadastro: aluno.data_cadastro,
 
-      }
+      },
 
     };
 
   }
 
-  async listar() {
+  async listar(usuarioId: number, tipoUsuario: string) {
 
     const pool = this.databaseService.getPool();
+
+    if (tipoUsuario === 'aluno') {
+
+      const [alunos]: any = await pool.query(
+
+        `SELECT
+
+          id_aluno,
+
+          nome,
+
+          email,
+
+          cpf,
+
+          data_cadastro
+
+         FROM aluno
+
+         WHERE id_aluno = ?`,
+
+        [usuarioId],
+
+      );
+
+      return alunos;
+
+    }
 
     const [alunos]: any = await pool.query(
 
       `SELECT
 
-        id_aluno,
+        a.id_aluno,
 
-        nome,
+        a.nome,
 
-        email,
+        a.email,
 
-        cpf,
+        a.cpf,
 
-        data_cadastro
+        a.data_cadastro
 
-       FROM aluno`
+       FROM aluno a
+
+       INNER JOIN professor_aluno pa
+
+         ON pa.id_aluno = a.id_aluno
+
+       WHERE pa.id_professor = ?
+
+       AND pa.status = 'Ativo'
+
+       ORDER BY a.id_aluno DESC`,
+
+      [usuarioId],
 
     );
 
@@ -176,9 +216,57 @@ export class AlunoService {
 
   }
 
-  async buscarPorId(id: number) {
+  async buscarPorId(
+
+    id: number,
+
+    usuarioId: number,
+
+    tipoUsuario: string,
+
+  ) {
 
     const pool = this.databaseService.getPool();
+
+    if (tipoUsuario === 'aluno' && id !== usuarioId) {
+
+      return {
+
+        mensagem: 'Você só pode consultar seus próprios dados',
+
+      };
+
+    }
+
+    if (tipoUsuario === 'professor') {
+
+      const [vinculo]: any = await pool.query(
+
+        `SELECT id_professor_aluno
+
+         FROM professor_aluno
+
+         WHERE id_professor = ?
+
+         AND id_aluno = ?
+
+         AND status = 'Ativo'`,
+
+        [usuarioId, id],
+
+      );
+
+      if (vinculo.length === 0) {
+
+        return {
+
+          mensagem: 'Você não está vinculado a esse aluno',
+
+        };
+
+      }
+
+    }
 
     const [alunos]: any = await pool.query(
 
@@ -198,7 +286,7 @@ export class AlunoService {
 
        WHERE id_aluno = ?`,
 
-      [id]
+      [id],
 
     );
 
@@ -206,7 +294,7 @@ export class AlunoService {
 
       return {
 
-        mensagem: 'Aluno não encontrado'
+        mensagem: 'Aluno não encontrado',
 
       };
 

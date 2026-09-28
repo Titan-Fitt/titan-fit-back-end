@@ -24,24 +24,42 @@ import { Injectable } from '@nestjs/common';import { DatabaseService } from '../
       };
     }
 
-    if (
-      tipoUsuario === 'aluno' &&alunoPlanos[0].id_aluno !== usuarioId    ) {
+    const idAluno = alunoPlanos[0].id_aluno;
+
+    if (tipoUsuario === 'aluno' && idAluno !== usuarioId) {
       return {
         mensagem: 'Você só pode cadastrar pagamentos do seu próprio plano',
       };
     }
 
+    if (tipoUsuario === 'professor') {
+      const [vinculo]: any = await pool.query(
+        `SELECT id_professor_aluno
+         FROM professor_aluno
+         WHERE id_professor = ?
+         AND id_aluno = ?
+         AND status = 'Ativo'`,
+        [usuarioId, idAluno],
+      );
+
+      if (vinculo.length === 0) {
+        return {
+          mensagem: 'Você não está vinculado a esse aluno',
+        };
+      }
+    }
+
     const [resultado]: any = await pool.query(
       `INSERT INTO pagamento
-      (
-        valor,
-        metodo,
-        status,
-        data,
-        comprovante,
-        id_aluno_plano
-      )
-      VALUES (?, ?, ?, ?, ?, ?)`,
+       (
+         valor,
+         metodo,
+         status,
+         data,
+         comprovante,
+         id_aluno_plano
+       )
+       VALUES (?, ?, ?, ?, ?, ?)`,
       [
         dados.valor,
         dados.metodo,
@@ -86,9 +104,16 @@ import { Injectable } from '@nestjs/common';import { DatabaseService } from '../
     }
 
     const [pagamentos]: any = await pool.query(
-      `SELECT *
-       FROM pagamento
-       ORDER BY id_pagamento DESC`,
+      `SELECT p.*
+       FROM pagamento p
+       INNER JOIN aluno_plano ap
+         ON ap.id_aluno_plano = p.id_aluno_plano
+       INNER JOIN professor_aluno pa
+         ON pa.id_aluno = ap.id_aluno
+       WHERE pa.id_professor = ?
+       AND pa.status = 'Ativo'
+       ORDER BY p.id_pagamento DESC`,
+      [usuarioId],
     );
 
     return pagamentos;
@@ -122,10 +147,16 @@ import { Injectable } from '@nestjs/common';import { DatabaseService } from '../
     }
 
     const [pagamentos]: any = await pool.query(
-      `SELECT *
-       FROM pagamento
-       WHERE id_pagamento = ?`,
-      [id],
+      `SELECT p.*
+       FROM pagamento p
+       INNER JOIN aluno_plano ap
+         ON ap.id_aluno_plano = p.id_aluno_plano
+       INNER JOIN professor_aluno pa
+         ON pa.id_aluno = ap.id_aluno
+       WHERE p.id_pagamento = ?
+       AND pa.id_professor = ?
+       AND pa.status = 'Ativo'`,
+      [id, usuarioId],
     );
 
     if (pagamentos.length === 0) {
@@ -160,11 +191,17 @@ import { Injectable } from '@nestjs/common';import { DatabaseService } from '../
     }
 
     const [pagamentos]: any = await pool.query(
-      `SELECT *
-       FROM pagamento
-       WHERE id_aluno_plano = ?
-       ORDER BY id_pagamento DESC`,
-      [id_aluno_plano],
+      `SELECT p.*
+       FROM pagamento p
+       INNER JOIN aluno_plano ap
+         ON ap.id_aluno_plano = p.id_aluno_plano
+       INNER JOIN professor_aluno pa
+         ON pa.id_aluno = ap.id_aluno
+       WHERE p.id_aluno_plano = ?
+       AND pa.id_professor = ?
+       AND pa.status = 'Ativo'
+       ORDER BY p.id_pagamento DESC`,
+      [id_aluno_plano, usuarioId],
     );
 
     return pagamentos;
