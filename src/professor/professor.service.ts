@@ -204,87 +204,49 @@ export class ProfessorService {
 
   }
 
-  async listar(usuarioId: number, tipoUsuario: string) {
+ async listar(usuarioId: number, tipoUsuario: string) {
+  const pool = this.databaseService.getPool();
 
-    const pool = this.databaseService.getPool();
-
-    if (tipoUsuario === 'professor') {
-
-      const [professores]: any = await pool.query(
-
-        `SELECT
-
-          id_professor,
-
-          nome,
-
-          curriculo,
-
-          email,
-
-          registro_cref,
-
-          bacharelado,
-
-          formacao_academica,
-
-          status,
-
-          especialidade
-
-         FROM professor
-
-         WHERE id_professor = ?`,
-
-        [usuarioId],
-
-      );
-
-      return professores;
-
-    }
-
+  // Se for professor, retorna apenas os próprios dados
+  if (tipoUsuario === 'professor') {
     const [professores]: any = await pool.query(
-
       `SELECT
-
-        p.id_professor,
-
-        p.nome,
-
-        p.curriculo,
-
-        p.email,
-
-        p.registro_cref,
-
-        p.bacharelado,
-
-        p.formacao_academica,
-
-        p.status,
-
-        p.especialidade
-
-       FROM professor p
-
-       INNER JOIN professor_aluno pa
-
-         ON pa.id_professor = p.id_professor
-
-       WHERE pa.id_aluno = ?
-
-       AND pa.status = 'Ativo'
-
-       ORDER BY p.id_professor DESC`,
-
+        id_professor,
+        nome,
+        curriculo,
+        email,
+        registro_cref,
+        bacharelado,
+        formacao_academica,
+        status,
+        especialidade
+       FROM professor
+       WHERE id_professor = ?`,
       [usuarioId],
-
     );
 
     return professores;
-
   }
+
+  // Se for aluno, retorna todos os professores ativos
+  const [professores]: any = await pool.query(
+    `SELECT
+      id_professor,
+      nome,
+      curriculo,
+      email,
+      registro_cref,
+      bacharelado,
+      formacao_academica,
+      status,
+      especialidade
+     FROM professor
+     WHERE status = 'ativo'
+     ORDER BY id_professor DESC`,
+  );
+
+  return professores;
+}
 
   async buscarPorId(
 

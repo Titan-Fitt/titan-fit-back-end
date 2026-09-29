@@ -7,13 +7,22 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ProfessorAlunoService } from './professor-aluno.service';import { CreateProfessorAlunoDto } from './dto/create-professor-aluno.dto';import { AuthGuard } from '../auth/auth.guard';import { ProfessorGuard } from '../auth/professor.guard';
-@Controller('professor-aluno')export class ProfessorAlunoController {
+
+import { ProfessorAlunoService } from './professor-aluno.service';
+import { CreateProfessorAlunoDto } from './dto/create-professor-aluno.dto';
+import { AuthGuard } from '../auth/auth.guard';
+
+@Controller('professor-aluno')
+export class ProfessorAlunoController {
   constructor(
     private readonly professorAlunoService: ProfessorAlunoService,
   ) {}
 
-  @UseGuards(ProfessorGuard)
+  // =====================================================
+  // CRIAR VÍNCULO PROFESSOR + ALUNO
+  // =====================================================
+
+  @UseGuards(AuthGuard)
   @Post()
   cadastrar(
     @Body() dados: CreateProfessorAlunoDto,
@@ -22,8 +31,13 @@ import { ProfessorAlunoService } from './professor-aluno.service';import { Creat
     return this.professorAlunoService.cadastrar(
       dados,
       request.user.id,
+      request.user.tipo,
     );
   }
+
+  // =====================================================
+  // LISTAR VÍNCULOS
+  // =====================================================
 
   @UseGuards(AuthGuard)
   @Get()
@@ -33,6 +47,10 @@ import { ProfessorAlunoService } from './professor-aluno.service';import { Creat
       request.user.tipo,
     );
   }
+
+  // =====================================================
+  // BUSCAR VÍNCULOS DE UM PROFESSOR
+  // =====================================================
 
   @UseGuards(AuthGuard)
   @Get('professor/:id')
@@ -47,6 +65,10 @@ import { ProfessorAlunoService } from './professor-aluno.service';import { Creat
     );
   }
 
+  // =====================================================
+  // BUSCAR PROFESSOR DE UM ALUNO
+  // =====================================================
+
   @UseGuards(AuthGuard)
   @Get('aluno/:id')
   buscarPorAluno(
@@ -59,6 +81,10 @@ import { ProfessorAlunoService } from './professor-aluno.service';import { Creat
       request.user.tipo,
     );
   }
+
+  // =====================================================
+  // BUSCAR VÍNCULO POR ID
+  // =====================================================
 
   @UseGuards(AuthGuard)
   @Get(':id')

@@ -249,17 +249,21 @@
         class="acordeon-header"
         onclick="toggleAcordeao(this)"
     >
-
         <span>Meus Dados</span>
 
-        <span class="acordeon-icon">+</span>
-
+        <span class="acordeon-icon">
+            +
+        </span>
     </div>
 
     <div class="acordeon-conteudo">
 
+        <!-- NOME -->
         <div class="ficha-dado">
-            <span class="ficha-label">Nome</span>
+
+            <span class="ficha-label">
+                Nome
+            </span>
 
             <span
                 class="ficha-valor"
@@ -267,10 +271,15 @@
             >
                 Não informado
             </span>
+
         </div>
 
+        <!-- E-MAIL -->
         <div class="ficha-dado">
-            <span class="ficha-label">E-mail</span>
+
+            <span class="ficha-label">
+                E-mail
+            </span>
 
             <span
                 class="ficha-valor"
@@ -278,6 +287,41 @@
             >
                 Não informado
             </span>
+
+        </div>
+
+        <!-- PROFESSOR CONECTADO -->
+        <div class="ficha-dado professor-conectado-dado">
+
+            <span class="ficha-label">
+                Professor conectado
+            </span>
+
+            <div id="professorConectado">
+
+                <span
+                    class="ficha-valor"
+                    id="professorNome"
+                >
+                    Nenhum professor conectado
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="professorEspecialidade"
+                >
+                </span>
+
+                <button
+                    type="button"
+                    id="botaoConectarProfessor"
+                    class="botao-conectar-professor"
+                >
+                    Se conectar
+                </button>
+
+            </div>
+
         </div>
 
     </div>
@@ -644,14 +688,14 @@
                 </div>
 
 
-                <button
-                    type="button"
-                    class="modal-professores-fechar"
-                    id="fecharModalProfessores"
-                    aria-label="Fechar"
-                >
-                    &times;
-                </button>
+        <button
+    type="button"
+    class="modal-professores-fechar"
+    id="fecharModalProfessores"
+    aria-label="Fechar"
+>
+    &times;
+</button>
 
             </div>
 

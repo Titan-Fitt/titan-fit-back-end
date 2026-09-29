@@ -32,9 +32,7 @@ async function lerResposta(resposta) {
         return {
             mensagem: texto
         };
-
     }
-
 }
 
 
@@ -45,14 +43,12 @@ async function lerResposta(resposta) {
 function obterToken() {
 
     return localStorage.getItem("token");
-
 }
 
 
 function obterIdAluno() {
 
     return localStorage.getItem("id_aluno");
-
 }
 
 
@@ -64,7 +60,6 @@ function obterHeadersAutenticacao() {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
     };
-
 }
 
 
@@ -78,7 +73,6 @@ function salvarDadosAluno(aluno) {
         return;
     }
 
-
     // =================================================
     // ID
     // =================================================
@@ -86,7 +80,6 @@ function salvarDadosAluno(aluno) {
     const idAluno =
         aluno.id_aluno ??
         aluno.id;
-
 
     if (
         idAluno !== undefined &&
@@ -97,7 +90,6 @@ function salvarDadosAluno(aluno) {
             "id_aluno",
             String(idAluno)
         );
-
     }
 
 
@@ -111,7 +103,6 @@ function salvarDadosAluno(aluno) {
             "nome_aluno",
             aluno.nome
         );
-
     }
 
 
@@ -125,7 +116,6 @@ function salvarDadosAluno(aluno) {
             "email_aluno",
             aluno.email
         );
-
     }
 
 
@@ -139,412 +129,530 @@ function salvarDadosAluno(aluno) {
             "cpf_aluno",
             aluno.cpf
         );
-
     }
-
 }
+
 
 
 // =====================================================
 // ESCOLHA ALUNO / PROFESSOR
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const botoesTipo =
-        document.querySelectorAll(".botao-escolha");
+        const botoesTipo =
+            document.querySelectorAll(
+                ".botao-escolha"
+            );
 
-    const tipoInput =
-        document.getElementById("tipoInput");
+        const tipoInput =
+            document.getElementById(
+                "tipoInput"
+            );
 
-    const camposProfessor =
-        document.getElementById("camposProfessor");
+        const camposProfessor =
+            document.getElementById(
+                "camposProfessor"
+            );
 
-    const crefInput =
-        document.getElementById("cref");
+        const crefInput =
+            document.getElementById(
+                "cref"
+            );
 
-    const especialidadeInput =
-        document.getElementById("especialidade");
+        const especialidadeInput =
+            document.getElementById(
+                "especialidade"
+            );
 
-    const curriculoInput =
-        document.getElementById("curriculo");
+        const curriculoInput =
+            document.getElementById(
+                "curriculo"
+            );
 
-    const bachareladoInput =
-        document.getElementById("bacharelado");
+        const bachareladoInput =
+            document.getElementById(
+                "bacharelado"
+            );
 
-    const formacaoAcademicaInput =
-        document.getElementById("formacao_academica");
+        const formacaoAcademicaInput =
+            document.getElementById(
+                "formacao_academica"
+            );
 
 
-    if (!tipoInput) {
-        return;
+        if (!tipoInput) {
+            return;
+        }
+
+
+        botoesTipo.forEach(
+            (botao) => {
+
+                botao.addEventListener(
+                    "click",
+                    () => {
+
+                        botoesTipo.forEach(
+                            (item) => {
+
+                                item.classList.remove(
+                                    "ativo"
+                                );
+
+                            }
+                        );
+
+
+                        botao.classList.add(
+                            "ativo"
+                        );
+
+
+                        const tipo =
+                            botao.dataset.tipo;
+
+
+                        if (tipoInput) {
+
+                            tipoInput.value =
+                                tipo;
+                        }
+
+
+                        // =========================================
+                        // PROFESSOR
+                        // =========================================
+
+                        if (
+                            tipo ===
+                            "professor"
+                        ) {
+
+                            if (camposProfessor) {
+
+                                camposProfessor.style.display =
+                                    "block";
+                            }
+
+                            if (crefInput) {
+
+                                crefInput.required =
+                                    true;
+                            }
+
+                            if (especialidadeInput) {
+
+                                especialidadeInput.required =
+                                    true;
+                            }
+
+                            if (curriculoInput) {
+
+                                curriculoInput.required =
+                                    true;
+                            }
+
+                            if (bachareladoInput) {
+
+                                bachareladoInput.required =
+                                    true;
+                            }
+
+                            if (formacaoAcademicaInput) {
+
+                                formacaoAcademicaInput.required =
+                                    true;
+                            }
+
+                        }
+
+
+                        // =========================================
+                        // ALUNO
+                        // =========================================
+
+                        else {
+
+                            if (camposProfessor) {
+
+                                camposProfessor.style.display =
+                                    "none";
+                            }
+
+                            if (crefInput) {
+
+                                crefInput.required =
+                                    false;
+
+                                crefInput.value =
+                                    "";
+                            }
+
+                            if (especialidadeInput) {
+
+                                especialidadeInput.required =
+                                    false;
+
+                                especialidadeInput.value =
+                                    "";
+                            }
+
+                            if (curriculoInput) {
+
+                                curriculoInput.required =
+                                    false;
+
+                                curriculoInput.value =
+                                    "";
+                            }
+
+                            if (bachareladoInput) {
+
+                                bachareladoInput.required =
+                                    false;
+
+                                bachareladoInput.value =
+                                    "";
+                            }
+
+                            if (formacaoAcademicaInput) {
+
+                                formacaoAcademicaInput.required =
+                                    false;
+
+                                formacaoAcademicaInput.value =
+                                    "";
+                            }
+                        }
+                    }
+                );
+            }
+        );
     }
+);
 
-
-    botoesTipo.forEach((botao) => {
-
-        botao.addEventListener("click", () => {
-
-            botoesTipo.forEach((item) => {
-
-                item.classList.remove("ativo");
-
-            });
-
-
-            botao.classList.add("ativo");
-
-
-            const tipo = botao.dataset.tipo;
-
-
-            if (tipoInput) {
-
-                tipoInput.value = tipo;
-
-            }
-
-
-            // =================================================
-            // PROFESSOR
-            // =================================================
-
-            if (tipo === "professor") {
-
-                if (camposProfessor) {
-
-                    camposProfessor.style.display = "block";
-
-                }
-
-                if (crefInput) {
-
-                    crefInput.required = true;
-
-                }
-
-                if (especialidadeInput) {
-
-                    especialidadeInput.required = true;
-
-                }
-
-                if (curriculoInput) {
-
-                    curriculoInput.required = true;
-
-                }
-
-                if (bachareladoInput) {
-
-                    bachareladoInput.required = true;
-
-                }
-
-                if (formacaoAcademicaInput) {
-
-                    formacaoAcademicaInput.required = true;
-
-                }
-
-            }
-
-
-            // =================================================
-            // ALUNO
-            // =================================================
-
-            else {
-
-                if (camposProfessor) {
-
-                    camposProfessor.style.display = "none";
-
-                }
-
-                if (crefInput) {
-
-                    crefInput.required = false;
-                    crefInput.value = "";
-
-                }
-
-                if (especialidadeInput) {
-
-                    especialidadeInput.required = false;
-                    especialidadeInput.value = "";
-
-                }
-
-                if (curriculoInput) {
-
-                    curriculoInput.required = false;
-                    curriculoInput.value = "";
-
-                }
-
-                if (bachareladoInput) {
-
-                    bachareladoInput.required = false;
-                    bachareladoInput.value = "";
-
-                }
-
-                if (formacaoAcademicaInput) {
-
-                    formacaoAcademicaInput.required = false;
-                    formacaoAcademicaInput.value = "";
-
-                }
-
-            }
-
-        });
-
-    });
-
-});
 
 
 // =====================================================
 // CADASTRO
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const formCadastro =
-        document.getElementById("formCadastro");
-
-
-    if (!formCadastro) {
-        return;
-    }
-
-
-    formCadastro.addEventListener("submit", async (event) => {
-
-        event.preventDefault();
-
-
-        // =================================================
-        // TIPO
-        // =================================================
-
-        const tipoInput =
-            document.getElementById("tipoInput");
-
-        const tipo =
-            tipoInput
-                ? tipoInput.value
-                : "";
-
-
-        // =================================================
-        // CAMPOS
-        // =================================================
-
-        const nomeElement =
-            document.getElementById("nome");
-
-        const emailElement =
-            document.getElementById("email");
-
-        const cpfElement =
-            document.getElementById("cpf");
-
-        const senhaElement =
-            document.getElementById("senha-cadastro");
-
-        const confirmarSenhaElement =
-            document.getElementById("confirmar-senha");
-
-
-        const nome =
-            nomeElement
-                ? nomeElement.value.trim()
-                : "";
-
-        const email =
-            emailElement
-                ? emailElement.value.trim()
-                : "";
-
-        const cpf =
-            cpfElement
-                ? cpfElement.value.trim()
-                : "";
-
-        const senha =
-            senhaElement
-                ? senhaElement.value
-                : "";
-
-        const confirmarSenha =
-            confirmarSenhaElement
-                ? confirmarSenhaElement.value
-                : "";
-
-
-        // =================================================
-        // VALIDAÇÃO
-        // =================================================
-
-        if (
-            !tipo ||
-            !nome ||
-            !email ||
-            !cpf ||
-            !senha
-        ) {
-
-            alert(
-                "Preencha todos os campos obrigatórios."
+        const formCadastro =
+            document.getElementById(
+                "formCadastro"
             );
 
-            return;
 
+        if (!formCadastro) {
+            return;
         }
 
 
-        // =================================================
-        // SENHA
-        // =================================================
+        formCadastro.addEventListener(
+            "submit",
+            async (event) => {
 
-        if (senha.length < 6) {
-
-            alert(
-                "A senha deve ter pelo menos 6 caracteres."
-            );
-
-            return;
-
-        }
+                event.preventDefault();
 
 
-        // =================================================
-        // CONFIRMAÇÃO
-        // =================================================
+                // =============================================
+                // TIPO
+                // =============================================
 
-        if (senha !== confirmarSenha) {
+                const tipoInput =
+                    document.getElementById(
+                        "tipoInput"
+                    );
 
-            alert(
-                "As senhas não coincidem."
-            );
-
-            return;
-
-        }
-
-
-        // =================================================
-        // CADASTRAR ALUNO
-        // =================================================
-
-        if (tipo === "aluno") {
-
-            await cadastrarAluno({
-
-                nome: nome,
-                email: email,
-                senha: senha,
-                cpf: cpf
-
-            });
-
-            return;
-
-        }
+                const tipo =
+                    tipoInput
+                        ? tipoInput.value
+                        : "";
 
 
-        // =================================================
-        // CADASTRAR PROFESSOR
-        // =================================================
+                // =============================================
+                // CAMPOS
+                // =============================================
 
-        if (tipo === "professor") {
+                const nomeElement =
+                    document.getElementById(
+                        "nome"
+                    );
 
-            const crefInput =
-                document.getElementById("cref");
+                const emailElement =
+                    document.getElementById(
+                        "email"
+                    );
 
-            const especialidadeInput =
-                document.getElementById("especialidade");
+                const cpfElement =
+                    document.getElementById(
+                        "cpf"
+                    );
 
-            const curriculoInput =
-                document.getElementById("curriculo");
+                const senhaElement =
+                    document.getElementById(
+                        "senha-cadastro"
+                    );
 
-            const bachareladoInput =
-                document.getElementById("bacharelado");
-
-            const formacaoInput =
-                document.getElementById(
-                    "formacao_academica"
-                );
-
-
-            const cref =
-                crefInput
-                    ? crefInput.value.trim()
-                    : "";
-
-            const especialidade =
-                especialidadeInput
-                    ? especialidadeInput.value.trim()
-                    : "";
-
-            const curriculo =
-                curriculoInput
-                    ? curriculoInput.value.trim()
-                    : "";
-
-            const bacharelado =
-                bachareladoInput
-                    ? bachareladoInput.value.trim()
-                    : "";
-
-            const formacaoAcademica =
-                formacaoInput
-                    ? formacaoInput.value.trim()
-                    : "";
+                const confirmarSenhaElement =
+                    document.getElementById(
+                        "confirmar-senha"
+                    );
 
 
-            // =================================================
-            // VALIDAR PROFESSOR
-            // =================================================
+                const nome =
+                    nomeElement
+                        ? nomeElement.value.trim()
+                        : "";
 
-            if (
-                !cref ||
-                !especialidade ||
-                !curriculo ||
-                !bacharelado ||
-                !formacaoAcademica
-            ) {
 
-                alert(
-                    "Preencha todos os campos do professor."
-                );
+                const email =
+                    emailElement
+                        ? emailElement.value.trim()
+                        : "";
 
-                return;
+
+                const cpf =
+                    cpfElement
+                        ? cpfElement.value.trim()
+                        : "";
+
+
+                const senha =
+                    senhaElement
+                        ? senhaElement.value
+                        : "";
+
+
+                const confirmarSenha =
+                    confirmarSenhaElement
+                        ? confirmarSenhaElement.value
+                        : "";
+
+
+                // =============================================
+                // VALIDAÇÃO
+                // =============================================
+
+                if (
+                    !tipo ||
+                    !nome ||
+                    !email ||
+                    !cpf ||
+                    !senha
+                ) {
+
+                    alert(
+                        "Preencha todos os campos obrigatórios."
+                    );
+
+                    return;
+                }
+
+
+                // =============================================
+                // SENHA
+                // =============================================
+
+                if (senha.length < 6) {
+
+                    alert(
+                        "A senha deve ter pelo menos 6 caracteres."
+                    );
+
+                    return;
+                }
+
+
+                // =============================================
+                // CONFIRMAÇÃO
+                // =============================================
+
+                if (
+                    senha !==
+                    confirmarSenha
+                ) {
+
+                    alert(
+                        "As senhas não coincidem."
+                    );
+
+                    return;
+                }
+
+
+                // =============================================
+                // CADASTRAR ALUNO
+                // =============================================
+
+                if (
+                    tipo ===
+                    "aluno"
+                ) {
+
+                    await cadastrarAluno({
+
+                        nome: nome,
+
+                        email: email,
+
+                        senha: senha,
+
+                        cpf: cpf
+
+                    });
+
+                    return;
+                }
+
+
+                // =============================================
+                // CADASTRAR PROFESSOR
+                // =============================================
+
+                if (
+                    tipo ===
+                    "professor"
+                ) {
+
+                    const crefInput =
+                        document.getElementById(
+                            "cref"
+                        );
+
+                    const especialidadeInput =
+                        document.getElementById(
+                            "especialidade"
+                        );
+
+                    const curriculoInput =
+                        document.getElementById(
+                            "curriculo"
+                        );
+
+                    const bachareladoInput =
+                        document.getElementById(
+                            "bacharelado"
+                        );
+
+                    const formacaoInput =
+                        document.getElementById(
+                            "formacao_academica"
+                        );
+
+
+                    const cref =
+                        crefInput
+                            ? crefInput.value.trim()
+                            : "";
+
+
+                    const especialidade =
+                        especialidadeInput
+                            ? especialidadeInput.value.trim()
+                            : "";
+
+
+                    const curriculo =
+                        curriculoInput
+                            ? curriculoInput.value.trim()
+                            : "";
+
+
+                    const bacharelado =
+                        bachareladoInput
+                            ? bachareladoInput.value.trim()
+                            : "";
+
+
+                    const formacaoAcademica =
+                        formacaoInput
+                            ? formacaoInput.value.trim()
+                            : "";
+
+
+                    // =========================================
+                    // VALIDAR PROFESSOR
+                    // =========================================
+
+                    if (
+                        !cref ||
+                        !especialidade ||
+                        !curriculo ||
+                        !bacharelado ||
+                        !formacaoAcademica
+                    ) {
+
+                        alert(
+                            "Preencha todos os campos do professor."
+                        );
+
+                        return;
+                    }
+
+
+                    console.log(
+                        "EMAIL CAPTURADO:",
+                        email
+                    );
+
+
+                    console.log(
+                        "DADOS DO PROFESSOR:",
+                        {
+                            nome: nome,
+                            email: email,
+                            senha: senha,
+                            cref: cref,
+                            especialidade:
+                                especialidade,
+                            curriculo:
+                                curriculo,
+                            bacharelado:
+                                bacharelado,
+                            formacao_academica:
+                                formacaoAcademica
+                        }
+                    );
+
+
+                    await cadastrarProfessor({
+
+                        nome: nome,
+
+                        email: email,
+
+                        senha: senha,
+
+                        cref: cref,
+
+                        especialidade:
+                            especialidade,
+
+                        curriculo:
+                            curriculo,
+
+                        bacharelado:
+                            bacharelado,
+
+                        formacao_academica:
+                            formacaoAcademica
+
+                    });
+                }
 
             }
+        );
+    }
+);
 
-
-            await cadastrarProfessor({
-
-                nome: nome,
-                email: email,
-                senha: senha,
-                cref: cref,
-                especialidade: especialidade,
-                curriculo: curriculo,
-                bacharelado: bacharelado,
-                formacao_academica: formacaoAcademica
-
-            });
-
-        }
-
-    });
-
-});
 
 
 // =====================================================
@@ -566,6 +674,7 @@ async function cadastrarAluno(dados) {
             await fetch(
                 `${API_URL}/aluno/cadastro`,
                 {
+
                     method: "POST",
 
                     headers: {
@@ -576,18 +685,26 @@ async function cadastrarAluno(dados) {
                     body:
                         JSON.stringify({
 
-                            nome: dados.nome,
-                            email: dados.email,
-                            senha: dados.senha,
-                            cpf: dados.cpf
+                            nome:
+                                dados.nome,
 
+                            email:
+                                dados.email,
+
+                            senha:
+                                dados.senha,
+
+                            cpf:
+                                dados.cpf
                         })
                 }
             );
 
 
         const resultado =
-            await lerResposta(resposta);
+            await lerResposta(
+                resposta
+            );
 
 
         console.log(
@@ -602,9 +719,9 @@ async function cadastrarAluno(dados) {
         );
 
 
-        // =================================================
+        // =============================================
         // ERRO
-        // =================================================
+        // =============================================
 
         if (!resposta.ok) {
 
@@ -615,13 +732,12 @@ async function cadastrarAluno(dados) {
             );
 
             return;
-
         }
 
 
-        // =================================================
+        // =============================================
         // ALUNO RETORNADO
-        // =================================================
+        // =============================================
 
         if (!resultado.aluno) {
 
@@ -631,22 +747,21 @@ async function cadastrarAluno(dados) {
             );
 
             return;
-
         }
 
 
-        // =================================================
+        // =============================================
         // SALVAR DADOS
-        // =================================================
+        // =============================================
 
         salvarDadosAluno(
             resultado.aluno
         );
 
 
-        // =================================================
+        // =============================================
         // SUCESSO
-        // =================================================
+        // =============================================
 
         alert(
             "Aluno cadastrado com sucesso!"
@@ -655,7 +770,6 @@ async function cadastrarAluno(dados) {
 
         window.location.href =
             "login.html";
-
 
     }
 
@@ -670,10 +784,9 @@ async function cadastrarAluno(dados) {
         alert(
             "Não foi possível conectar ao servidor."
         );
-
     }
-
 }
+
 
 
 // =====================================================
@@ -689,6 +802,7 @@ async function cadastrarProfessor(dados) {
             await fetch(
                 `${API_URL}/professor/cadastro`,
                 {
+
                     method: "POST",
 
                     headers: {
@@ -699,9 +813,14 @@ async function cadastrarProfessor(dados) {
                     body:
                         JSON.stringify({
 
-                            nome: dados.nome,
-                            email: dados.email,
-                            senha: dados.senha,
+                            nome:
+                                dados.nome,
+
+                            email:
+                                dados.email,
+
+                            senha:
+                                dados.senha,
 
                             registro_cref:
                                 dados.cref,
@@ -720,14 +839,15 @@ async function cadastrarProfessor(dados) {
 
                             status:
                                 "ativo"
-
                         })
                 }
             );
 
 
         const resultado =
-            await lerResposta(resposta);
+            await lerResposta(
+                resposta
+            );
 
 
         console.log(
@@ -745,7 +865,6 @@ async function cadastrarProfessor(dados) {
             );
 
             return;
-
         }
 
 
@@ -757,7 +876,6 @@ async function cadastrarProfessor(dados) {
             );
 
             return;
-
         }
 
 
@@ -768,7 +886,6 @@ async function cadastrarProfessor(dados) {
 
         window.location.href =
             "login.html";
-
 
     }
 
@@ -783,10 +900,9 @@ async function cadastrarProfessor(dados) {
         alert(
             "Não foi possível conectar ao servidor."
         );
-
     }
-
 }
+
 
 
 // =====================================================
@@ -794,340 +910,359 @@ async function cadastrarProfessor(dados) {
 // POST /auth/aluno
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const formLogin =
-        document.getElementById("formLogin");
-
-
-    if (!formLogin) {
-        return;
-    }
-
-
-    formLogin.addEventListener(
-        "submit",
-        async (event) => {
-
-            event.preventDefault();
+        const formLogin =
+            document.getElementById(
+                "formLogin"
+            );
 
 
-            const emailElement =
-                document.getElementById(
-                    "username-email"
-                );
-
-            const senhaElement =
-                document.getElementById(
-                    "senha"
-                );
+        if (!formLogin) {
+            return;
+        }
 
 
-            const email =
-                emailElement
-                    ? emailElement.value.trim()
-                    : "";
+        formLogin.addEventListener(
+            "submit",
+            async (event) => {
 
-            const senha =
-                senhaElement
-                    ? senhaElement.value
-                    : "";
+                event.preventDefault();
 
 
-            if (!email || !senha) {
-
-                alert(
-                    "Preencha o e-mail e a senha."
-                );
-
-                return;
-
-            }
-
-
-            try {
-
-                const resposta =
-                    await fetch(
-                        `${API_URL}/auth/aluno`,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    email: email,
-                                    senha: senha
-
-                                })
-                        }
+                const emailElement =
+                    document.getElementById(
+                        "username-email"
                     );
 
 
-                const resultado =
-                    await lerResposta(resposta);
+                const senhaElement =
+                    document.getElementById(
+                        "senha"
+                    );
 
 
-                console.log(
-                    "Resposta do login:",
-                    resultado
-                );
+                const email =
+                    emailElement
+                        ? emailElement.value.trim()
+                        : "";
 
 
-                // =================================================
-                // VERIFICAR LOGIN
-                // =================================================
+                const senha =
+                    senhaElement
+                        ? senhaElement.value
+                        : "";
+
 
                 if (
-                    !resposta.ok ||
-                    !resultado.aluno ||
-                    !resultado.token
+                    !email ||
+                    !senha
                 ) {
 
                     alert(
-                        resultado.mensagem ||
-                        resultado.message ||
-                        "E-mail ou senha incorretos."
+                        "Preencha o e-mail e a senha."
                     );
 
                     return;
-
                 }
 
 
-                // =================================================
-                // SALVAR TOKEN
-                // =================================================
+                try {
 
-                localStorage.setItem(
-                    "token",
-                    resultado.token
-                );
+                    const resposta =
+                        await fetch(
+                            `${API_URL}/auth/aluno`,
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        email:
+                                            email,
+
+                                        senha:
+                                            senha
+
+                                    })
+                            }
+                        );
 
 
-                // =================================================
-                // SALVAR DADOS DO ALUNO
-                // =================================================
-
-                salvarDadosAluno(
-                    resultado.aluno
-                );
+                    const resultado =
+                        await lerResposta(
+                            resposta
+                        );
 
 
-                console.log(
-                    "Dados do aluno salvos no navegador."
-                );
+                    console.log(
+                        "Resposta do login:",
+                        resultado
+                    );
 
 
-                alert(
-                    "Login realizado com sucesso!"
-                );
+                    // =========================================
+                    // VERIFICAR LOGIN
+                    // =========================================
+
+                    if (
+                        !resposta.ok ||
+                        !resultado.aluno ||
+                        !resultado.token
+                    ) {
+
+                        alert(
+                            resultado.mensagem ||
+                            resultado.message ||
+                            "E-mail ou senha incorretos."
+                        );
+
+                        return;
+                    }
 
 
-                window.location.href =
-                    "areaCliente.html";
+                    // =========================================
+                    // SALVAR TOKEN
+                    // =========================================
 
+                    localStorage.setItem(
+                        "token",
+                        resultado.token
+                    );
+
+
+                    // =========================================
+                    // SALVAR DADOS DO ALUNO
+                    // =========================================
+
+                    salvarDadosAluno(
+                        resultado.aluno
+                    );
+
+
+                    console.log(
+                        "Dados do aluno salvos no navegador."
+                    );
+
+
+                    alert(
+                        "Login realizado com sucesso!"
+                    );
+
+
+                    window.location.href =
+                        "areaCliente.html";
+
+                }
+
+                catch (erro) {
+
+                    console.error(
+                        "Erro no login:",
+                        erro
+                    );
+
+
+                    alert(
+                        "Não foi possível conectar ao servidor."
+                    );
+                }
             }
+        );
+    }
+);
 
-            catch (erro) {
-
-                console.error(
-                    "Erro no login:",
-                    erro
-                );
-
-
-                alert(
-                    "Não foi possível conectar ao servidor."
-                );
-
-            }
-
-        }
-    );
-
-});
 
 
 // =====================================================
 // PROTEÇÃO DA ÁREA DO CLIENTE
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const paginaAtual =
-        window.location.pathname
-            .split("/")
-            .pop();
+        const paginaAtual =
+            window.location.pathname
+                .split("/")
+                .pop();
 
 
-    if (
-        paginaAtual !==
-        "areaCliente.html"
-    ) {
+        if (
+            paginaAtual !==
+            "areaCliente.html"
+        ) {
+            return;
+        }
 
-        return;
+
+        const idAluno =
+            localStorage.getItem(
+                "id_aluno"
+            );
+
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        // =============================================
+        // VERIFICAR LOGIN
+        // =============================================
+
+        if (
+            !idAluno ||
+            !token
+        ) {
+
+            alert(
+                "Você precisa fazer login para acessar a área do cliente."
+            );
+
+
+            window.location.href =
+                "login.html";
+
+
+            return;
+        }
+
+
+        // =============================================
+        // MOSTRAR NOME
+        // =============================================
+
+        const nomeAluno =
+            localStorage.getItem(
+                "nome_aluno"
+            );
+
+
+        const elementoNome =
+            document.getElementById(
+                "nomeAluno"
+            );
+
+
+        if (
+            elementoNome &&
+            nomeAluno
+        ) {
+
+            elementoNome.textContent =
+                `Olá, ${nomeAluno}`;
+        }
 
     }
+);
 
-
-    const idAluno =
-        localStorage.getItem(
-            "id_aluno"
-        );
-
-    const token =
-        localStorage.getItem(
-            "token"
-        );
-
-
-    // =================================================
-    // VERIFICAR LOGIN
-    // =================================================
-
-    if (!idAluno || !token) {
-
-        alert(
-            "Você precisa fazer login para acessar a área do cliente."
-        );
-
-
-        window.location.href =
-            "login.html";
-
-
-        return;
-
-    }
-
-
-    // =================================================
-    // MOSTRAR NOME
-    // =================================================
-
-    const nomeAluno =
-        localStorage.getItem(
-            "nome_aluno"
-        );
-
-
-    const elementoNome =
-        document.getElementById(
-            "nomeAluno"
-        );
-
-
-    if (
-        elementoNome &&
-        nomeAluno
-    ) {
-
-        elementoNome.textContent =
-            `Olá, ${nomeAluno}`;
-
-    }
-
-});
 
 
 // =====================================================
 // MEUS DADOS
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const dadosNome =
-        document.getElementById(
-            "dadosNome"
-        );
-
-    const dadosEmail =
-        document.getElementById(
-            "dadosEmail"
-        );
-
-    const dadosCpf =
-        document.getElementById(
-            "dadosCpf"
-        );
+        const dadosNome =
+            document.getElementById(
+                "dadosNome"
+            );
 
 
-    if (
-        !dadosNome &&
-        !dadosEmail &&
-        !dadosCpf
-    ) {
+        const dadosEmail =
+            document.getElementById(
+                "dadosEmail"
+            );
 
-        return;
+
+        const dadosCpf =
+            document.getElementById(
+                "dadosCpf"
+            );
+
+
+        if (
+            !dadosNome &&
+            !dadosEmail &&
+            !dadosCpf
+        ) {
+            return;
+        }
+
+
+        // =============================================
+        // PEGAR DADOS
+        // =============================================
+
+        const nome =
+            localStorage.getItem(
+                "nome_aluno"
+            );
+
+
+        const email =
+            localStorage.getItem(
+                "email_aluno"
+            );
+
+
+        const cpf =
+            localStorage.getItem(
+                "cpf_aluno"
+            );
+
+
+        // =============================================
+        // MOSTRAR NOME
+        // =============================================
+
+        if (dadosNome) {
+
+            dadosNome.textContent =
+                nome ||
+                "Não informado";
+        }
+
+
+        // =============================================
+        // MOSTRAR E-MAIL
+        // =============================================
+
+        if (dadosEmail) {
+
+            dadosEmail.textContent =
+                email ||
+                "Não informado";
+        }
+
+
+        // =============================================
+        // MOSTRAR CPF
+        // =============================================
+
+        if (dadosCpf) {
+
+            dadosCpf.textContent =
+                cpf ||
+                "Não informado";
+        }
 
     }
+);
 
-
-    // =================================================
-    // PEGAR DADOS
-    // =================================================
-
-    const nome =
-        localStorage.getItem(
-            "nome_aluno"
-        );
-
-    const email =
-        localStorage.getItem(
-            "email_aluno"
-        );
-
-    const cpf =
-        localStorage.getItem(
-            "cpf_aluno"
-        );
-
-
-    // =================================================
-    // MOSTRAR NOME
-    // =================================================
-
-    if (dadosNome) {
-
-        dadosNome.textContent =
-            nome ||
-            "Não informado";
-
-    }
-
-
-    // =================================================
-    // MOSTRAR E-MAIL
-    // =================================================
-
-    if (dadosEmail) {
-
-        dadosEmail.textContent =
-            email ||
-            "Não informado";
-
-    }
-
-
-    // =================================================
-    // MOSTRAR CPF
-    // =================================================
-
-    if (dadosCpf) {
-
-        dadosCpf.textContent =
-            cpf ||
-            "Não informado";
-
-    }
-
-});
 
 
 // =====================================================
@@ -1146,15 +1281,18 @@ function mostrarDadosFicha(ficha) {
             "fichaIdade"
         );
 
+
     const fichaAltura =
         document.getElementById(
             "fichaAltura"
         );
 
+
     const fichaPeso =
         document.getElementById(
             "fichaPeso"
         );
+
 
     const fichaObjetivo =
         document.getElementById(
@@ -1162,36 +1300,47 @@ function mostrarDadosFicha(ficha) {
         );
 
 
-    // =================================================
+    // =============================================
     // SEM FICHA
-    // =================================================
+    // =============================================
 
     if (!ficha) {
 
-        if (fichaIdade)
+        if (fichaIdade) {
+
             fichaIdade.textContent =
                 "Não informado";
+        }
 
-        if (fichaAltura)
+
+        if (fichaAltura) {
+
             fichaAltura.textContent =
                 "Não informado";
+        }
 
-        if (fichaPeso)
+
+        if (fichaPeso) {
+
             fichaPeso.textContent =
                 "Não informado";
+        }
 
-        if (fichaObjetivo)
+
+        if (fichaObjetivo) {
+
             fichaObjetivo.textContent =
                 "Não informado";
+        }
+
 
         return;
-
     }
 
 
-    // =================================================
+    // =============================================
     // IDADE
-    // =================================================
+    // =============================================
 
     if (fichaIdade) {
 
@@ -1199,15 +1348,16 @@ function mostrarDadosFicha(ficha) {
             ficha.idade !== null &&
             ficha.idade !== undefined &&
             ficha.idade !== ""
-                ? ficha.idade
-                : "Não informado";
 
+                ? ficha.idade
+
+                : "Não informado";
     }
 
 
-    // =================================================
+    // =============================================
     // ALTURA
-    // =================================================
+    // =============================================
 
     if (fichaAltura) {
 
@@ -1215,15 +1365,16 @@ function mostrarDadosFicha(ficha) {
             ficha.altura !== null &&
             ficha.altura !== undefined &&
             ficha.altura !== ""
-                ? ficha.altura
-                : "Não informado";
 
+                ? ficha.altura
+
+                : "Não informado";
     }
 
 
-    // =================================================
+    // =============================================
     // PESO
-    // =================================================
+    // =============================================
 
     if (fichaPeso) {
 
@@ -1231,15 +1382,16 @@ function mostrarDadosFicha(ficha) {
             ficha.peso !== null &&
             ficha.peso !== undefined &&
             ficha.peso !== ""
-                ? ficha.peso
-                : "Não informado";
 
+                ? ficha.peso
+
+                : "Não informado";
     }
 
 
-    // =================================================
+    // =============================================
     // OBJETIVO
-    // =================================================
+    // =============================================
 
     if (fichaObjetivo) {
 
@@ -1247,12 +1399,13 @@ function mostrarDadosFicha(ficha) {
             ficha.objetivo !== null &&
             ficha.objetivo !== undefined &&
             ficha.objetivo !== ""
+
                 ? ficha.objetivo
+
                 : "Não informado";
-
     }
-
 }
+
 
 
 // =====================================================
@@ -1264,29 +1417,34 @@ function mostrarFichaNaoInformada() {
     const campos = [
 
         "fichaIdade",
+
         "fichaAltura",
+
         "fichaPeso",
+
         "fichaObjetivo"
 
     ];
 
 
-    campos.forEach((id) => {
+    campos.forEach(
+        (id) => {
 
-        const elemento =
-            document.getElementById(id);
+            const elemento =
+                document.getElementById(
+                    id
+                );
 
 
-        if (elemento) {
+            if (elemento) {
 
-            elemento.textContent =
-                "Não informado";
-
+                elemento.textContent =
+                    "Não informado";
+            }
         }
-
-    });
-
+    );
 }
+
 
 
 // =====================================================
@@ -1299,20 +1457,24 @@ async function carregarFicha() {
     const idAluno =
         obterIdAluno();
 
+
     const token =
         obterToken();
 
 
-    if (!idAluno || !token) {
+    if (
+        !idAluno ||
+        !token
+    ) {
 
         console.log(
             "Aluno ou token não encontrado."
         );
 
+
         mostrarFichaNaoInformada();
 
         return;
-
     }
 
 
@@ -1322,6 +1484,7 @@ async function carregarFicha() {
             await fetch(
                 `${API_URL}/ficha-aluno/aluno/${idAluno}`,
                 {
+
                     method: "GET",
 
                     headers:
@@ -1331,7 +1494,9 @@ async function carregarFicha() {
 
 
         const dados =
-            await lerResposta(resposta);
+            await lerResposta(
+                resposta
+            );
 
 
         console.log(
@@ -1340,9 +1505,9 @@ async function carregarFicha() {
         );
 
 
-        // =================================================
+        // =============================================
         // FICHA NÃO ENCONTRADA
-        // =================================================
+        // =============================================
 
         if (
             dados.mensagem ===
@@ -1352,13 +1517,12 @@ async function carregarFicha() {
             mostrarFichaNaoInformada();
 
             return;
-
         }
 
 
-        // =================================================
+        // =============================================
         // ERRO
-        // =================================================
+        // =============================================
 
         if (!resposta.ok) {
 
@@ -1367,18 +1531,20 @@ async function carregarFicha() {
                 dados
             );
 
+
             mostrarFichaNaoInformada();
 
             return;
-
         }
 
 
-        // =================================================
+        // =============================================
         // MOSTRAR FICHA
-        // =================================================
+        // =============================================
 
-        mostrarDadosFicha(dados);
+        mostrarDadosFicha(
+            dados
+        );
 
     }
 
@@ -1389,11 +1555,11 @@ async function carregarFicha() {
             erro
         );
 
+
         mostrarFichaNaoInformada();
-
     }
-
 }
+
 
 
 // =====================================================
@@ -1407,11 +1573,15 @@ async function salvarFicha() {
     const idAluno =
         obterIdAluno();
 
+
     const token =
         obterToken();
 
 
-    if (!idAluno || !token) {
+    if (
+        !idAluno ||
+        !token
+    ) {
 
         alert(
             "Sua sessão expirou. Faça login novamente."
@@ -1423,28 +1593,30 @@ async function salvarFicha() {
 
 
         return;
-
     }
 
 
-    // =================================================
+    // =============================================
     // PEGAR CAMPOS
-    // =================================================
+    // =============================================
 
     const idadeElement =
         document.getElementById(
             "modalIdade"
         );
 
+
     const alturaElement =
         document.getElementById(
             "modalAltura"
         );
 
+
     const pesoElement =
         document.getElementById(
             "modalPeso"
         );
+
 
     const objetivoElement =
         document.getElementById(
@@ -1452,30 +1624,37 @@ async function salvarFicha() {
         );
 
 
-   const idade =
-    idadeElement
-        ? idadeElement.value.trim()
-        : "";
-
-const altura =
-    alturaElement
-        ? alturaElement.value.trim().replace(",", ".")
-        : "";
-
-const peso =
-    pesoElement
-        ? pesoElement.value.trim().replace(",", ".")
-        : "";
-
-const objetivo =
-    objetivoElement
-        ? objetivoElement.value
-        : "";
+    const idade =
+        idadeElement
+            ? idadeElement.value.trim()
+            : "";
 
 
-    // =================================================
+    const altura =
+        alturaElement
+            ? alturaElement.value
+                .trim()
+                .replace(",", ".")
+            : "";
+
+
+    const peso =
+        pesoElement
+            ? pesoElement.value
+                .trim()
+                .replace(",", ".")
+            : "";
+
+
+    const objetivo =
+        objetivoElement
+            ? objetivoElement.value
+            : "";
+
+
+    // =============================================
     // VALIDAR
-    // =================================================
+    // =============================================
 
     if (
         !idade ||
@@ -1489,27 +1668,31 @@ const objetivo =
         );
 
         return;
-
     }
 
 
-    // =================================================
-    // DADOS ENVIADOS AO BACKEND
-    // =================================================
+    // =============================================
+    // DADOS ENVIADOS
+    // =============================================
 
     const dados = {
 
-    id_aluno: Number(idAluno),
+        id_aluno:
+            Number(idAluno),
 
-    idade: Number(idade),
+        idade:
+            Number(idade),
 
-    altura: Number(altura),
+        altura:
+            Number(altura),
 
-    peso: Number(peso),
+        peso:
+            Number(peso),
 
-    objetivo: objetivo
+        objetivo:
+            objetivo
 
-};
+    };
 
 
     console.log(
@@ -1520,14 +1703,15 @@ const objetivo =
 
     try {
 
-        // =================================================
+        // =============================================
         // VERIFICAR SE JÁ EXISTE FICHA
-        // =================================================
+        // =============================================
 
         const respostaBusca =
             await fetch(
                 `${API_URL}/ficha-aluno/aluno/${idAluno}`,
                 {
+
                     method: "GET",
 
                     headers:
@@ -1537,7 +1721,9 @@ const objetivo =
 
 
         const fichaAtual =
-            await lerResposta(respostaBusca);
+            await lerResposta(
+                respostaBusca
+            );
 
 
         console.log(
@@ -1549,9 +1735,9 @@ const objetivo =
         let respostaSalvar;
 
 
-        // =================================================
+        // =============================================
         // JÁ POSSUI FICHA → PUT
-        // =================================================
+        // =============================================
 
         if (
             respostaBusca.ok &&
@@ -1563,22 +1749,24 @@ const objetivo =
                 await fetch(
                     `${API_URL}/ficha-aluno/aluno/${idAluno}`,
                     {
+
                         method: "PUT",
 
                         headers:
                             obterHeadersAutenticacao(),
 
                         body:
-                            JSON.stringify(dados)
+                            JSON.stringify(
+                                dados
+                            )
                     }
                 );
-
         }
 
 
-        // =================================================
+        // =============================================
         // NÃO POSSUI FICHA → POST
-        // =================================================
+        // =============================================
 
         else {
 
@@ -1586,21 +1774,25 @@ const objetivo =
                 await fetch(
                     `${API_URL}/ficha-aluno`,
                     {
+
                         method: "POST",
 
                         headers:
                             obterHeadersAutenticacao(),
 
                         body:
-                            JSON.stringify(dados)
+                            JSON.stringify(
+                                dados
+                            )
                     }
                 );
-
         }
 
 
         const resultado =
-            await lerResposta(respostaSalvar);
+            await lerResposta(
+                respostaSalvar
+            );
 
 
         console.log(
@@ -1609,9 +1801,9 @@ const objetivo =
         );
 
 
-        // =================================================
+        // =============================================
         // ERRO
-        // =================================================
+        // =============================================
 
         if (!respostaSalvar.ok) {
 
@@ -1622,13 +1814,12 @@ const objetivo =
             );
 
             return;
-
         }
 
 
-        // =================================================
+        // =============================================
         // SUCESSO
-        // =================================================
+        // =============================================
 
         const fichaSalva =
             resultado.ficha ||
@@ -1640,11 +1831,17 @@ const objetivo =
         );
 
 
-        // =================================================
+        // =============================================
         // FECHAR MODAL
-        // =================================================
+        // =============================================
 
-        fecharModalFicha();
+        if (
+            typeof fecharModalFicha ===
+            "function"
+        ) {
+
+            fecharModalFicha();
+        }
 
 
         alert(
@@ -1665,10 +1862,9 @@ const objetivo =
         alert(
             "Não foi possível conectar ao servidor."
         );
-
     }
-
 }
+
 
 
 // =====================================================
@@ -1705,6 +1901,7 @@ document.addEventListener(
 );
 
 
+
 // =====================================================
 // CARREGAR FICHA AO ABRIR A ÁREA DO CLIENTE
 // =====================================================
@@ -1723,9 +1920,7 @@ document.addEventListener(
             paginaAtual !==
             "areaCliente.html"
         ) {
-
             return;
-
         }
 
 
@@ -1733,6 +1928,7 @@ document.addEventListener(
 
     }
 );
+
 
 
 // =====================================================
@@ -1761,12 +1957,21 @@ async function carregarProfessores() {
 
         const resposta =
             await fetch(
-                `${API_URL}/professor`
+                `${API_URL}/professor`,
+                {
+
+                    method: "GET",
+
+                    headers:
+                        obterHeadersAutenticacao()
+                }
             );
 
 
         const professores =
-            await lerResposta(resposta);
+            await lerResposta(
+                resposta
+            );
 
 
         console.log(
@@ -1781,7 +1986,6 @@ async function carregarProfessores() {
                 "<p>Não foi possível carregar os professores.</p>";
 
             return;
-
         }
 
 
@@ -1794,123 +1998,131 @@ async function carregarProfessores() {
                 "<p>Nenhum professor cadastrado.</p>";
 
             return;
-
         }
 
 
-        listaProfessores.innerHTML = "";
+        listaProfessores.innerHTML =
+            "";
 
 
-        professores.forEach((professor) => {
+        professores.forEach(
+            (professor) => {
 
-            const card =
-                document.createElement("div");
-
-
-            card.classList.add(
-                "card-professor"
-            );
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            const idProfessor =
-                professor.id_professor ??
-                professor.id;
+                card.classList.add(
+                    "card-professor"
+                );
 
 
-            const cref =
-                professor.registro_cref ??
-                professor.cref ??
-                "";
+                const idProfessor =
+                    professor.id_professor ??
+                    professor.id;
 
 
-            card.innerHTML = `
-
-                <div class="professor-info">
-
-                    <h3>
-                        ${professor.nome ?? "Professor"}
-                    </h3>
-
-                    <p>
-                        ${professor.email ?? ""}
-                    </p>
-
-                    ${
-                        cref
-                            ? `
-                                <p>
-                                    CREF: ${cref}
-                                </p>
-                            `
-                            : ""
-                    }
-
-                    ${
-                        professor.especialidade
-                            ? `
-                                <p>
-                                    Especialidade:
-                                    ${professor.especialidade}
-                                </p>
-                            `
-                            : ""
-                    }
-
-                </div>
-
-                <button
-                    type="button"
-                    class="btn-conectar-professor"
-                    data-id="${idProfessor}"
-                >
-                    Se conectar
-                </button>
-
-            `;
+                const cref =
+                    professor.registro_cref ??
+                    professor.cref ??
+                    "";
 
 
-            listaProfessores.appendChild(
-                card
-            );
+                card.innerHTML = `
 
-        });
+                    <div class="professor-info">
 
+                        <h3>
+                            ${professor.nome ?? "Professor"}
+                        </h3>
+
+                        <p>
+                            ${professor.email ?? ""}
+                        </p>
+
+                        ${
+                            cref
+                                ? `
+                                    <p>
+                                        CREF: ${cref}
+                                    </p>
+                                `
+                                : ""
+                        }
+
+                        ${
+                            professor.especialidade
+                                ? `
+                                    <p>
+                                        Especialidade:
+                                        ${professor.especialidade}
+                                    </p>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-conectar-professor"
+                        data-id="${idProfessor}"
+                    >
+                        Se conectar
+                    </button>
+
+                `;
+
+
+                listaProfessores.appendChild(
+                    card
+                );
+            }
+        );
+
+
+        // =============================================
+        // BOTÕES DE CONEXÃO
+        // =============================================
 
         const botoes =
-            document.querySelectorAll(
+            listaProfessores.querySelectorAll(
                 ".btn-conectar-professor"
             );
 
 
-        botoes.forEach((botao) => {
+        botoes.forEach(
+            (botao) => {
 
-            botao.addEventListener(
-                "click",
-                () => {
+                botao.addEventListener(
+                    "click",
+                    () => {
 
-                    const idProfessor =
-                        botao.dataset.id;
+                        const idProfessor =
+                            botao.dataset.id;
 
 
-                    if (!idProfessor) {
+                        if (!idProfessor) {
 
-                        alert(
-                            "Não foi possível identificar o professor."
+                            alert(
+                                "Não foi possível identificar o professor."
+                            );
+
+                            return;
+                        }
+
+
+                        conectarProfessor(
+                            Number(idProfessor)
                         );
 
-                        return;
-
                     }
+                );
 
-
-                    conectarProfessor(
-                        Number(idProfessor)
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
     }
 
@@ -1924,10 +2136,9 @@ async function carregarProfessores() {
 
         listaProfessores.innerHTML =
             "<p>Não foi possível carregar os professores.</p>";
-
     }
-
 }
+
 
 
 // =====================================================
@@ -1937,77 +2148,52 @@ async function carregarProfessores() {
 
 async function conectarProfessor(idProfessor) {
 
-    const idAluno =
-        obterIdAluno();
-
-    const token =
-        obterToken();
-
+    const idAluno = obterIdAluno();
+    const token = obterToken();
 
     if (!idAluno || !token) {
 
-        alert(
-            "Faça login para se conectar a um professor."
-        );
+        alert("Faça login para se conectar a um professor.");
 
-
-        window.location.href =
-            "login.html";
-
+        window.location.href = "login.html";
 
         return;
-
     }
-
 
     if (!idProfessor) {
 
-        alert(
-            "Professor inválido."
-        );
+        alert("Professor inválido.");
 
         return;
-
     }
-
 
     try {
 
-        const resposta =
-            await fetch(
-                `${API_URL}/professor-aluno`,
-                {
-                    method: "POST",
+        const resposta = await fetch(
+            `${API_URL}/professor-aluno`,
+            {
+                method: "POST",
 
-                    headers:
-                        obterHeadersAutenticacao(),
+                headers: obterHeadersAutenticacao(),
 
-                    body:
-                        JSON.stringify({
+                body: JSON.stringify({
 
-                            id_professor:
-                                Number(idProfessor),
+                    id_professor: Number(idProfessor),
 
-                            id_aluno:
-                                Number(idAluno),
+                    id_aluno: Number(idAluno),
 
-                            status:
-                                "pendente"
+                    status: "Ativo"
 
-                        })
-                }
-            );
+                })
+            }
+        );
 
-
-        const resultado =
-            await lerResposta(resposta);
-
+        const resultado = await lerResposta(resposta);
 
         console.log(
             "Resposta da conexão:",
             resultado
         );
-
 
         if (!resposta.ok) {
 
@@ -2018,14 +2204,18 @@ async function conectarProfessor(idProfessor) {
             );
 
             return;
-
         }
-
 
         alert(
             resultado.mensagem ||
-            "Solicitação enviada."
+            "Professor conectado com sucesso!"
         );
+
+        // Atualiza o professor mostrado em "Meus Dados"
+        await carregarProfessorConectado();
+
+        // Atualiza a lista de professores
+        await carregarProfessores();
 
     }
 
@@ -2036,40 +2226,314 @@ async function conectarProfessor(idProfessor) {
             erro
         );
 
-
         alert(
             "Não foi possível realizar a conexão."
         );
-
     }
-
 }
+
 
 
 // =====================================================
 // ABRIR MODAL DE PROFESSORES
 // =====================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const abrirModalProfessores =
+        const abrirModalProfessores =
+            document.getElementById(
+                "abrirModalProfessores"
+            );
+
+
+        if (!abrirModalProfessores) {
+            return;
+        }
+
+
+        abrirModalProfessores.addEventListener(
+            "click",
+            () => {
+
+                carregarProfessores();
+
+            }
+        );
+
+    }
+);
+
+
+
+// =====================================================
+// PROFESSOR CONECTADO - MEUS DADOS
+// =====================================================
+
+async function carregarProfessorConectado() {
+
+    const professorNome =
         document.getElementById(
-            "abrirModalProfessores"
+            "professorNome"
         );
 
 
-    if (!abrirModalProfessores) {
+    const professorEspecialidade =
+        document.getElementById(
+            "professorEspecialidade"
+        );
+
+
+    const botaoConectar =
+        document.getElementById(
+            "botaoConectarProfessor"
+        );
+
+
+    const idAluno =
+        obterIdAluno();
+
+
+    const token =
+        obterToken();
+
+
+    // =============================================
+    // VERIFICAR ELEMENTOS
+    // =============================================
+
+    if (!professorNome) {
         return;
     }
 
 
-    abrirModalProfessores.addEventListener(
-        "click",
-        () => {
+    if (
+        !idAluno ||
+        !token
+    ) {
 
-            carregarProfessores();
+        professorNome.textContent =
+            "Nenhum professor conectado";
 
+
+        if (professorEspecialidade) {
+
+            professorEspecialidade.textContent =
+                "";
         }
-    );
 
-});
+
+        if (botaoConectar) {
+
+            botaoConectar.style.display =
+                "block";
+        }
+
+
+        return;
+    }
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                `${API_URL}/professor-aluno/aluno/${idAluno}`,
+                {
+
+                    method: "GET",
+
+                    headers:
+                        obterHeadersAutenticacao()
+                }
+            );
+
+
+        const dados =
+            await lerResposta(
+                resposta
+            );
+
+
+        console.log(
+            "Professor conectado:",
+            dados
+        );
+
+
+        // =============================================
+        // ERRO
+        // =============================================
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                dados?.message ||
+                dados?.mensagem ||
+                "Erro ao buscar professor conectado"
+            );
+        }
+
+
+        // =============================================
+        // NENHUM PROFESSOR
+        // =============================================
+
+        if (
+            !Array.isArray(dados) ||
+            dados.length === 0
+        ) {
+
+            professorNome.textContent =
+                "Nenhum professor conectado";
+
+
+            if (professorEspecialidade) {
+
+                professorEspecialidade.textContent =
+                    "";
+            }
+
+
+            if (botaoConectar) {
+
+                botaoConectar.style.display =
+                    "block";
+            }
+
+
+            return;
+        }
+
+
+        // =============================================
+        // PROFESSOR ENCONTRADO
+        // =============================================
+
+        const professor =
+            dados[0];
+
+
+        professorNome.textContent =
+            `Prof. ${professor.nome}`;
+
+
+        if (professorEspecialidade) {
+
+            professorEspecialidade.textContent =
+                professor.especialidade ||
+                "Personal Trainer";
+        }
+
+
+        // =============================================
+        // ESCONDER BOTÃO
+        // =============================================
+
+        if (botaoConectar) {
+
+            botaoConectar.style.display =
+                "none";
+        }
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            "Erro ao carregar professor conectado:",
+            erro
+        );
+
+
+        professorNome.textContent =
+            "Nenhum professor conectado";
+
+
+        if (professorEspecialidade) {
+
+            professorEspecialidade.textContent =
+                "";
+        }
+
+
+        if (botaoConectar) {
+
+            botaoConectar.style.display =
+                "block";
+        }
+    }
+}
+
+
+
+// =====================================================
+// BOTÃO SE CONECTAR - MEUS DADOS
+// =====================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const botao =
+            document.getElementById(
+                "botaoConectarProfessor"
+            );
+
+
+        if (!botao) {
+            return;
+        }
+
+
+        botao.addEventListener(
+            "click",
+            () => {
+
+                const botaoModal =
+                    document.getElementById(
+                        "abrirModalProfessores"
+                    );
+
+
+                if (botaoModal) {
+
+                    botaoModal.click();
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+
+// =====================================================
+// CARREGAR PROFESSOR AO ABRIR ÁREA DO CLIENTE
+// =====================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const paginaAtual =
+            window.location.pathname
+                .split("/")
+                .pop();
+
+
+        if (
+            paginaAtual !==
+            "areaCliente.html"
+        ) {
+            return;
+        }
+
+
+        carregarProfessorConectado();
+
+    }
+);

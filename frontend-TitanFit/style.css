@@ -3834,3 +3834,94 @@ a {
     }
 
 }
+
+/* =====================================================
+   BOTÃO SE CONECTAR AO PROFESSOR
+===================================================== */
+
+.botao-conectar-professor {
+    margin-top: 12px;
+
+    padding: 11px 24px;
+
+    border: 2px solid #ff7d1a;
+    border-radius: 10px;
+
+    background: #ff7d1a;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 4px 10px rgba(255, 125, 26, 0.20);
+}
+
+
+/* Hover */
+
+.botao-conectar-professor:hover {
+    background: #ffffff;
+    color: #ff7d1a;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 16px rgba(255, 125, 26, 0.30);
+}
+
+
+/* Clique */
+
+.botao-conectar-professor:active {
+    transform: translateY(0);
+
+    box-shadow: 0 3px 8px rgba(255, 125, 26, 0.20);
+}
+
+
+/* Foco pelo teclado */
+
+.botao-conectar-professor:focus-visible {
+    outline: 3px solid rgba(255, 125, 26, 0.30);
+    outline-offset: 3px;
+}
+
+
+/* =====================================================
+   BOTÃO SE CONECTAR - MODAL PROFESSORES
+===================================================== */
+
+.btn-conectar-professor {
+    padding: 10px 20px;
+
+    border: 2px solid #ff7d1a;
+    border-radius: 9px;
+
+    background: #ff7d1a;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+
+.btn-conectar-professor:hover {
+    background: transparent;
+    color: #ff7d1a;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 12px rgba(255, 125, 26, 0.25);
+}
+
+
+.btn-conectar-professor:active {
+    transform: translateY(0);
+}
