@@ -2366,7 +2366,7 @@ a {
 
 .acordeon-titulo span {
     flex-shrink: 0;
-    color: #f26807;
+    color: #ffffff;
     font-size: 24px;
 
     transition:
@@ -3264,7 +3264,7 @@ a {
 
 .professor-info h3 {
     margin: 0 0 5px;
-    color: #a932ff;
+    color: #ffffff;
     font-size: 19px;
 }
 
@@ -3388,7 +3388,7 @@ a {
 ===================================================== */
 
 .acordeon-icon {
-    color: #ff7d1a;
+    color: #ffffff;
 
     font-size: 22px;
     font-weight: bold;
