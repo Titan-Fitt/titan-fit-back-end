@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TitanFit - Área do Professor</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="professor-page">
+
+    <!-- =====================================================
+         CABEÇALHO
+    ====================================================== -->
+  <header class="topo">
+     <a href="index.html"> <img src="fotos/logo_txt.png" alt="Titan Fit"></a>
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+        <nav id="menu">
+            <div class="close-menu" onclick="toggleMenu()">✖</div>
+
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="servico.html">Serviços</a></li>
+                <li><a href="sobre-nos.html">Sobre Nós</a></li>
+                <li><a href="planos.html">Plano Premium</a></li>
+                <li><a href="login.html" data-open-login id="open-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+ 
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="professor-main-container">
+
+
+        <!-- =================================================
+             SAUDAÇÃO
+        ================================================== -->
+
+        <section class="professor-welcome-section">
+
+            <h1>Olá, Prof. Flavio</h1>
+
+            <p>
+                Bem-vindo(a) de volta, aqui está o resumo dos seus alunos
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             CARDS PRINCIPAIS
+        ================================================== -->
+
+        <section class="professor-summary-cards">
+
+
+            <!-- CARD ALUNOS -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Alunos conectados
+                </span>
+
+                <h2>24 alunos</h2>
+
+                <p>
+                    Alunos ativos atualmente
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver alunos
+                </button>
+
+            </div>
+
+
+            <!-- CARD TREINOS -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Treinos ativos
+                </span>
+
+                <h2>18 treinos</h2>
+
+                <p>
+                    Treinos personalizados
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver treinos
+                </button>
+
+            </div>
+
+
+            <!-- CARD SOLICITAÇÕES -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Solicitações
+                </span>
+
+                <h2>5 pendentes</h2>
+
+                <p>
+                    Alunos aguardando conexão
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver solicitações
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ÁREA INFERIOR
+        ================================================== -->
+
+        <section class="professor-dashboard-content">
+
+
+            <!-- =================================================
+                 COLUNA ESQUERDA
+            ================================================== -->
+
+            <div class="professor-students-panel">
+
+                <h2 class="professor-panel-heading">
+                    Meus Alunos
+                </h2>
+
+
+                <!-- ALUNO 1 -->
+
+                <div class="professor-student-item">
+
+                    <div class="professor-student-information">
+
+                        <strong>
+                            Heloisa Costa
+                        </strong>
+
+                        <span>
+                            Objetivo: Hipertrofia
+                        </span>
+
+                    </div>
+
+                    <button class="professor-secondary-button">
+                        Ver ficha
+                    </button>
+
+                </div>
+
+
+                <!-- ALUNO 2 -->
+
+                <div class="professor-student-item">
+
+                    <div class="professor-student-information">
+
+                        <strong>
+                            Gabriel Santos
+                        </strong>
+
+                        <span>
+                            Objetivo: Emagrecimento
+                        </span>
+
+                    </div>
+
+                    <button class="professor-secondary-button">
+                        Ver ficha
+                    </button>
+
+                </div>
+
+
+                <!-- ALUNO 3 -->
+
+                <div class="professor-student-item">
+
+                    <div class="professor-student-information">
+
+                        <strong>
+                            Maria Oliveira
+                        </strong>
+
+                        <span>
+                            Objetivo: Condicionamento
+                        </span>
+
+                    </div>
+
+                    <button class="professor-secondary-button">
+                        Ver ficha
+                    </button>
+
+                </div>
+
+
+                <button class="professor-primary-button professor-view-all-button">
+                    Visualizar todos os alunos
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 COLUNA DIREITA
+            ================================================== -->
+
+            <div class="professor-right-column">
+
+
+                <!-- =================================================
+                     ACCORDION — TREINOS
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Treinos
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Crie, edite e acompanhe os treinos dos seus alunos.
+                        </p>
+
+                        <button class="professor-secondary-button">
+                            Gerenciar treinos
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCORDION — SOLICITAÇÕES
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Solicitações de alunos
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Confira os alunos que solicitaram conexão.
+                        </p>
+
+                        <button class="professor-secondary-button">
+                            Ver solicitações
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCORDION — PERFIL
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Meu Perfil
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Atualize suas informações profissionais.
+                        </p>
+
+                        <button class="professor-secondary-button">
+                            Editar perfil
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+   <footer class="footer">
+        <div class="footer-conteudo">
+
+            <div class="footer-nav">
+                <h3>navegação</h3>
+
+                <a href="index.html">Home</a>
+                <a href="servico.html">Serviços</a>
+                <a href="sobre-nos.html">Sobre Nós</a>
+                <a href="planos.html">Plano Premium</a>
+                <a href="login.html">Login</a>
+            </div>
+
+            <div class="footer-logo">
+                <img src="fotos/logo_txt.png" alt="Titan Fit">
+            </div>
+
+            <div class="footer-redes">
+                <h3>siga-nos em nossas redes sociais</h3>
+
+                <div class="icones-redes">
+                    <img src="fotos/insta.png" alt="Instagram">
+                    <img src="fotos/facebook.png" alt="Facebook">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-baixo">
+            <p>
+                desenvolvido por Luis Felipe, Pedro Henrique,
+                Pedro Gabriel e Heloisa
+                Site acadêmico | Todos os direitos reservados |
+                Senac LAPA TITO © 2026
+            </p>
+        </div>
+    </footer>
+
+    <script src="interacao.js"></script>
+
+</body>
+
+</html>

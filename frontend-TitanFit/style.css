@@ -307,10 +307,15 @@ a {
 }
 
 
-/*-------------TELA SOBRE NOS----------*/
+/* =====================================================
+   TITAN FIT - SOBRE NÓS
+===================================================== */
 
 
-/* SOBRE */
+/* =====================================================
+   SOBRE
+===================================================== */
+
 .sobre {
     display: flex;
     align-items: center;
@@ -324,6 +329,8 @@ a {
     color: #fff;
 }
 
+
+/* TEXTO */
 
 .texto {
     max-width: 500px;
@@ -358,16 +365,23 @@ a {
     line-height: 1.6;
 }
 
+
+/* IMAGEM PRINCIPAL */
+
 .imagem {
     width: 63%;
     height: 606px;
     object-fit: cover;
     object-position: top;
-    border-radius: 40px 40px 40px 40px;
+    border-radius: 40px;
     margin-left: -40px;
 }
 
-/* QUEM SOMOS */
+
+/* =====================================================
+   QUEM SOMOS
+===================================================== */
+
 .quem {
     display: flex;
     align-items: center;
@@ -399,6 +413,7 @@ a {
 
 .quem-texto ul {
     list-style: none;
+    padding: 0;
 }
 
 .quem-texto li {
@@ -411,6 +426,9 @@ a {
     color: #fff;
 }
 
+
+/* IMAGEM QUEM SOMOS */
+
 .quem-img {
     width: 554px;
     height: 558px;
@@ -422,7 +440,11 @@ a {
     flex-shrink: 0;
 }
 
-/* POR QUE */
+
+/* =====================================================
+   POR QUE ESCOLHER A TITANFIT
+===================================================== */
+
 .porque {
     display: flex;
     align-items: flex-start;
@@ -452,6 +474,9 @@ a {
     color: #7b3cff;
 }
 
+
+/* BLOCOS */
+
 .bloco {
     margin-bottom: 25px;
 }
@@ -466,6 +491,9 @@ a {
     line-height: 1.5;
 }
 
+
+/* IMAGEM */
+
 .porque-img {
     width: 54%;
     height: auto;
@@ -473,7 +501,11 @@ a {
     flex-shrink: 0;
 }
 
-/* COMO FUNCIONA */
+
+/* =====================================================
+   COMO FUNCIONA
+===================================================== */
+
 .como {
     padding: 70px 60px;
     text-align: center;
@@ -487,6 +519,11 @@ a {
     color: #fff;
 }
 
+
+/* =====================================================
+   CARDS
+===================================================== */
+
 .cards {
     display: flex;
     justify-content: center;
@@ -499,10 +536,13 @@ a {
     border-radius: 20px;
     width: 300px;
     padding: 20px 40px 20px;
+
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0px;
+    align-items: center;
+
+    gap: 0;
+
     transition: transform 0.3s;
 }
 
@@ -510,38 +550,56 @@ a {
     transform: translateY(-6px);
 }
 
+
+/* =====================================================
+   ÍCONES
+===================================================== */
+
 .icone {
     width: 100%;
-    aspect-ratio: 1;
-    border-radius: 12px;
+    height: 220px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px;
+
+    padding: 0;
 }
 
 .icone img {
-    width: 100%;
-    height: 80%;
+    width: 130px;
+    height: 130px;
+
     object-fit: contain;
+
+    display: block;
 }
+
+
+/* =====================================================
+   TEXTO DOS CARDS
+===================================================== */
 
 .card p {
     color: #ccc;
     font-size: 20px;
     line-height: 1.5;
     text-align: center;
+    margin: 0;
 }
 
-/* =========================
-   RESPONSIVO COMPLETO
-========================= */
 
-/* NOTEBOOK / LAPTOP (Até 1200px) */
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+
+/* =====================================================
+   NOTEBOOK / LAPTOP
+   Até 1200px
+===================================================== */
+
 @media (max-width: 1200px) {
-    .header {
-        padding: 18px 40px;
-    }
 
     .sobre,
     .quem,
@@ -589,7 +647,12 @@ a {
     }
 }
 
-/* TABLET (Até 900px) */
+
+/* =====================================================
+   TABLET
+   Até 900px
+===================================================== */
+
 @media (max-width: 900px) {
 
     .sobre,
@@ -598,6 +661,9 @@ a {
         padding: 40px 28px;
         gap: 30px;
     }
+
+
+    /* SOBRE */
 
     .texto {
         width: 45%;
@@ -623,6 +689,9 @@ a {
         object-fit: cover;
     }
 
+
+    /* QUEM SOMOS */
+
     .quem-texto {
         width: 50%;
         max-width: none;
@@ -640,6 +709,9 @@ a {
         position: static;
         object-fit: cover;
     }
+
+
+    /* POR QUE */
 
     .porque-texto {
         width: 55%;
@@ -664,14 +736,36 @@ a {
         min-width: 320px;
     }
 
+
+    /* CARDS */
+
     .card {
         width: 260px;
         padding: 18px;
     }
+
+    .icone {
+        height: 200px;
+    }
+
+    .icone img {
+        width: 115px;
+        height: 115px;
+    }
 }
 
-/* MOBILE (Até 600px) - AJUSTADO PARA TEXTO HORIZONTAL */
+
+/* =====================================================
+   MOBILE
+   Até 600px
+===================================================== */
+
 @media (max-width: 600px) {
+
+    /* =================================================
+       SOBRE
+    ================================================= */
+
     .sobre {
         flex-direction: column;
         padding: 24px 16px;
@@ -684,7 +778,6 @@ a {
         width: 100%;
     }
 
-    /* Alinhado à esquerda para horizontalidade */
     .texto h1 {
         font-size: 28px;
         line-height: 1.2;
@@ -696,6 +789,11 @@ a {
         margin: 0;
         border-radius: 20px;
     }
+
+
+    /* =================================================
+       QUEM SOMOS
+    ================================================= */
 
     .quem {
         padding: 24px 16px;
@@ -722,6 +820,11 @@ a {
         border-radius: 18px;
     }
 
+
+    /* =================================================
+       POR QUE
+    ================================================= */
+
     .porque {
         flex-direction: column;
         padding: 24px 16px;
@@ -743,8 +846,18 @@ a {
         margin: 0 auto;
     }
 
+
+    /* =================================================
+       COMO FUNCIONA
+    ================================================= */
+
     .como {
         padding: 30px 30px;
+    }
+
+    .como h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
     }
 
     .cards {
@@ -755,36 +868,42 @@ a {
     .card {
         width: 100%;
         max-width: 100%;
+
         flex-direction: row;
         align-items: center;
+
         gap: 14px;
         padding: 15px;
     }
+
+
+    /* ÍCONES NO CELULAR */
 
     .icone {
         width: 60px;
         height: 60px;
         min-width: 60px;
-        padding: 10px;
+
+        padding: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    .icone img {
+        width: 45px;
+        height: 45px;
+    }
+
+
+    /* TEXTO NO CELULAR */
 
     .card p {
         font-size: 16px;
         text-align: left;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*-----------------TELA PLANOS-----------------*/
 
@@ -1922,267 +2041,498 @@ a {
     }
 
 }
+/* =====================================================
+TITAN FIT - MAIN SERVIÇOS
+===================================================== */
 
-/* SERVIÇOS HERO */
-/* TEXTO */
-.servicos-texto {
-    max-width: 500px;
-    color: #fff;
+/* =====================================================
+HERO DOS SERVIÇOS
+===================================================== */
+
+.servicos-main-hero {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 60px;
 }
 
-.servicos-tag {
-    background: #d9d9d9;
-    color: #000;
-    padding: 8px 20px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 20px;
+/* TEXTO DO HERO */
+
+.servicos-main-hero-texto {
+max-width: 500px;
+color: #fff;
 }
 
-.servicos-texto h1 {
-    font-size: 38px;
-    margin-bottom: 20px;
+.servicos-main-hero-tag {
+background: #d9d9d9;
+color: #000;
+font-weight: bold;
+padding: 8px 20px;
+border-radius: 20px;
+display: inline-block;
+margin-bottom: 20px;
 }
 
-.servicos-laranja {
-    color: #ff7d1a;
+.servicos-main-hero-texto h1 {
+font-size: 38px;
+margin-bottom: 20px;
 }
 
-.servicos-roxo {
-    color: #7b3cff;
+.servicos-main-destaque-laranja {
+color: #ff7d1a;
 }
 
-.servicos-texto p {
-    color: #ccc;
-    line-height: 1.6;
+.servicos-main-destaque-roxo {
+color: #7b3cff;
 }
 
-/* HERO */
-.servicos-hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60px;
+.servicos-main-hero-texto p {
+color: #ccc;
+line-height: 1.6;
 }
 
-.servicos-img-hero {
-    width: 63%;
-    height: 606px;
-    object-fit: cover;
-    border-radius: 40px;
+/* IMAGEM DO HERO */
+
+.servicos-main-hero-imagem {
+width: 63%;
+height: 606px;
+object-fit: cover;
+border-radius: 40px;
 }
 
-/* CARDS */
-.servicos-card {
+/* =====================================================
+CARDS DE SERVIÇOS
+===================================================== */
+/* =====================================================
+   CARDS DE SERVIÇOS
+===================================================== */
+
+.servicos-main-card {
     display: flex;
     justify-content: space-around;
-    padding: 80px 40px;
     align-items: center;
+    padding: 80px 40px;
+    gap: 60px;
 }
 
-.servicos-card-reverse {
+
+/* =====================================================
+   CARD REVERSO
+===================================================== */
+
+.servicos-main-card-reverso {
     flex-direction: row-reverse;
 }
 
-.servicos-card-img img {
-    width: 265px;
-}
 
-.servicos-card-texto {
-    max-width: 550px;
+/* =====================================================
+   ÁREA DA IMAGEM
+===================================================== */
+
+.servicos-main-card-imagem {
+    width: 40%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.servicos-card-texto h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #fff;
+.servicos-main-card-imagem img {
+    width: 265px;
+    height: auto;
+    object-fit: contain;
 }
 
-.servicos-card-texto ul {
-    list-style: none;
+
+/* =====================================================
+   ÁREA DO TEXTO
+===================================================== */
+
+.servicos-main-card-texto {
+    width: 40%;
+    max-width: 550px;
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    color: #fff;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-/* PROFISSIONAIS */
-.servicos-profissionais {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 48px 5%;
-    color: #e9e9e9;
-    border-radius: 12px;
-}
 
-.servicos-profissionais-texto {
-    max-width: 550px;
-}
+/* =====================================================
+   TÍTULO
+===================================================== */
 
-.servicos-profissionais-texto h2 {
+.servicos-main-card-texto h2 {
     font-size: 42px;
     color: #ffffff;
-    margin-bottom: 30px;
+    margin: 0 0 30px 0;
     line-height: 1.1;
 }
 
-.servicos-profissionais-texto ul {
+
+/* =====================================================
+   LISTA
+===================================================== */
+
+.servicos-main-card-texto ul {
     list-style: none;
+
     display: flex;
     flex-direction: column;
+
     gap: 15px;
+
+    padding: 0;
+    margin: 0;
 }
 
-.servicos-profissionais-texto li {
+
+/* =====================================================
+   ITENS DA LISTA
+===================================================== */
+
+.servicos-main-card-texto li {
     font-size: 24px;
     line-height: 1.2;
     color: #ffffff;
 }
 
-.servicos-profissionais-img {
-    width: 600px;
-    border-radius: 40px;
-    object-fit: cover;
+
+/* =====================================================
+   CORES DOS DESTAQUES
+===================================================== */
+
+.servicos-main-destaque-laranja {
+    color: #ff7d1a;
 }
 
-/* RESPONSIVO */
+.servicos-main-destaque-roxo {
+    color: #7b3cff;
+}
+
+
+/* =====================================================
+   RESPONSIVO - TABLET
+===================================================== */
+
 @media (max-width: 900px) {
 
-    .servicos-hero {
+    .servicos-main-card {
         padding: 40px 28px;
         gap: 30px;
     }
 
-    .servicos-texto {
-        max-width: 45%;
+    .servicos-main-card-imagem {
+        width: 45%;
     }
 
-    .servicos-texto h1 {
-        font-size: 28px;
+    .servicos-main-card-imagem img {
+        width: 80%;
+        max-width: 265px;
     }
 
-    .servicos-img-hero {
+    .servicos-main-card-texto {
         width: 50%;
-        height: auto;
+        max-width: 550px;
     }
 
-    .servicos-card,
-    .servicos-profissionais {
-        padding: 40px 28px;
-        gap: 30px;
-    }
-
-    .servicos-card-texto,
-    .servicos-profissionais-texto {
-        max-width: 50%;
-    }
-
-    .servicos-profissionais-texto h2 {
+    .servicos-main-card-texto h2 {
         font-size: 32px;
     }
 
-    .servicos-profissionais-texto li {
+    .servicos-main-card-texto li {
         font-size: 18px;
-    }
-
-    .servicos-card-img img,
-    .servicos-profissionais-img {
-        width: 45%;
-        max-width: 100%;
     }
 }
 
+
+/* =====================================================
+   RESPONSIVO - CELULAR
+===================================================== */
+
 @media (max-width: 600px) {
 
-    .servicos-hero {
+    .servicos-main-card,
+    .servicos-main-card-reverso {
         flex-direction: column;
+
         padding: 24px 16px;
-    }
 
-    .servicos-texto {
-        max-width: 100%;
-        text-align: center;
-    }
-
-    .servicos-tag {
-        margin: 0 auto 20px;
-        display: table;
-    }
-
-    .servicos-img-hero {
-        width: 100%;
-        height: auto;
-        border-radius: 20px;
-        margin-top: 20px;
-    }
-
-    .servicos-card,
-    .servicos-card-reverse {
-        flex-direction: column;
-        padding: 24px 16px;
         background: #373737;
+
         border: 1px solid #494949;
+
         margin: 0 14px 28px;
+
         border-radius: 24px;
+
         gap: 20px;
     }
 
-    .servicos-card-texto {
-        max-width: 100%;
+
+    /* IMAGEM */
+
+    .servicos-main-card-imagem {
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
-    .servicos-card-img img {
+    .servicos-main-card-imagem img {
         width: 150px;
         height: auto;
         border-radius: 18px;
     }
 
-    .servicos-card-reverse .servicos-card-img {
+
+    /* TEXTO */
+
+    .servicos-main-card-texto {
+        width: 100%;
+        max-width: 100%;
+
+        align-items: flex-start;
+    }
+
+
+    /* TÍTULO */
+
+    .servicos-main-card-texto h2 {
+        width: 100%;
+
+        font-size: 28px;
+
+        margin-bottom: 20px;
+
+        text-align: left;
+    }
+
+
+    /* LISTA */
+
+    .servicos-main-card-texto ul {
+        width: 100%;
+
+        gap: 10px;
+    }
+
+
+    /* ITENS */
+
+    .servicos-main-card-texto li {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+
+    /* IMAGEM DO CARD REVERSO */
+
+    .servicos-main-card-reverso .servicos-main-card-imagem {
         order: -1;
     }
-
-    .servicos-profissionais {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px 20px;
-    }
-
-    .servicos-profissionais-texto {
-        display: contents;
-    }
-
-    .servicos-profissionais-texto h2 {
-        order: 1;
-        font-size: 28px;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    .servicos-profissionais-img {
-        order: 2;
-        width: 100%;
-        max-width: 350px;
-        border-radius: 30px;
-        margin: 0 auto 25px;
-    }
-
-    .servicos-profissionais-texto ul {
-        order: 3;
-        text-align: left;
-        margin-left: 15px;
-        gap: 10px;
-        width: 100%;
-    }
-
-    .servicos-profissionais-texto li {
-        font-size: 16px;
-    }
 }
+/* =====================================================
+PROFISSIONAIS
+===================================================== */
+
+.servicos-main-profissionais {
+display: flex;
+align-items: center;
+justify-content: space-around;
+padding: 48px 5%;
+color: #e9e9e9;
+border-radius: 12px;
+}
+
+.servicos-main-profissionais-texto {
+max-width: 550px;
+}
+
+.servicos-main-profissionais-texto h2 {
+font-size: 42px;
+color: #fff;
+margin-bottom: 30px;
+line-height: 1.1;
+}
+
+.servicos-main-profissionais-texto ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.servicos-main-profissionais-texto li {
+font-size: 24px;
+line-height: 1.2;
+color: #fff;
+}
+
+/* IMAGEM DOS PROFISSIONAIS */
+
+.servicos-main-profissionais-imagem {
+width: 600px;
+border-radius: 40px;
+object-fit: cover;
+}
+
+/* =====================================================
+RESPONSIVO - TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+
+.servicos-main-hero {
+    padding: 40px 28px;
+    gap: 30px;
+}
+
+.servicos-main-hero-texto {
+    max-width: 45%;
+}
+
+.servicos-main-hero-texto h1 {
+    font-size: 28px;
+}
+
+.servicos-main-hero-imagem {
+    width: 50%;
+    height: auto;
+}
+
+
+.servicos-main-card,
+.servicos-main-profissionais {
+    padding: 40px 28px;
+    gap: 30px;
+}
+
+.servicos-main-card-texto,
+.servicos-main-profissionais-texto {
+    max-width: 50%;
+}
+
+
+.servicos-main-profissionais-texto h2 {
+    font-size: 32px;
+}
+
+.servicos-main-profissionais-texto li {
+    font-size: 18px;
+}
+
+
+.servicos-main-card-imagem img,
+.servicos-main-profissionais-imagem {
+    width: 45%;
+    max-width: 100%;
+}
+
+
+}
+
+/* =====================================================
+RESPONSIVO - CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+
+/* HERO */
+
+.servicos-main-hero {
+    flex-direction: column;
+    padding: 24px 16px;
+}
+
+.servicos-main-hero-texto {
+    max-width: 100%;
+    text-align: center;
+}
+
+.servicos-main-hero-tag {
+    margin: 0 auto 20px;
+    display: table;
+}
+
+.servicos-main-hero-imagem {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+
+/* CARDS */
+
+.servicos-main-card,
+.servicos-main-card-reverso {
+    flex-direction: column;
+    padding: 24px 16px;
+    background: #373737;
+    border: 1px solid #494949;
+    margin: 0 14px 28px;
+    border-radius: 24px;
+    gap: 20px;
+}
+
+.servicos-main-card-texto {
+    max-width: 100%;
+}
+
+.servicos-main-card-imagem img {
+    width: 150px;
+    height: auto;
+    border-radius: 18px;
+}
+
+.servicos-main-card-reverso .servicos-main-card-imagem {
+    order: -1;
+}
+
+
+/* PROFISSIONAIS */
+
+.servicos-main-profissionais {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.servicos-main-profissionais-texto {
+    display: contents;
+}
+
+.servicos-main-profissionais-texto h2 {
+    order: 1;
+    font-size: 28px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.servicos-main-profissionais-imagem {
+    order: 2;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 30px;
+    margin: 0 auto 25px;
+}
+
+.servicos-main-profissionais-texto ul {
+    order: 3;
+    text-align: left;
+    margin-left: 15px;
+    gap: 10px;
+    width: 100%;
+}
+
+.servicos-main-profissionais-texto li {
+    font-size: 16px;
+}
+
+}
+
 /* ==================================================
    ÁREA DO CLIENTE — COMPATÍVEL COM O HTML ANTIGO
 ================================================== */
@@ -3924,4 +4274,524 @@ a {
 
 .btn-conectar-professor:active {
     transform: translateY(0);
+}
+
+/* =========================================================
+   TITANFIT — ÁREA DO PROFESSOR
+   CSS EXCLUSIVO DO CONTEÚDO DO PROFESSOR
+   Header e Footer NÃO incluídos
+========================================================= */
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
+
+.professor-main-container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 28px 0 50px;
+}
+
+
+/* =========================================================
+   SAUDAÇÃO
+========================================================= */
+
+.professor-welcome-section {
+    margin: 0 0 24px;
+    color: #ffffff;
+    text-align: left;
+}
+
+.professor-welcome-section h1 {
+    margin-bottom: 5px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.professor-welcome-section p {
+    color: #bdbdbd;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   CARDS SUPERIORES
+========================================================= */
+
+.professor-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin: 0 0 28px;
+}
+
+
+/* =========================================================
+   CARD INDIVIDUAL
+========================================================= */
+
+.professor-summary-card {
+    width: auto;
+    min-height: 180px;
+
+    padding: 20px;
+
+    border: 1px solid #505050;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    color: #ffffff;
+    background-color: #353535;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.professor-summary-card:hover {
+    transform: translateY(-4px);
+    border-color: #f26807;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   TEXTO DOS CARDS
+========================================================= */
+
+.professor-card-label {
+    margin-bottom: 8px;
+
+    color: #bdbdbd;
+
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.professor-summary-card h2 {
+    margin-bottom: 4px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.professor-summary-card p {
+    margin-bottom: 4px;
+
+    color: #d9d9d9;
+
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+========================================================= */
+
+.professor-primary-button {
+    margin: auto 0 0;
+
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 6px;
+
+    color: #ffffff;
+    background-color: #f26807;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.professor-primary-button:hover {
+    background-color: #d95800;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ÁREA INFERIOR
+========================================================= */
+
+.professor-dashboard-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+
+    gap: 48px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   PAINEL — MEUS ALUNOS
+========================================================= */
+
+.professor-students-panel {
+    padding: 24px;
+
+    border: 1px solid #5e5e5e;
+    border-radius: 18px;
+
+    background-color: #353535;
+}
+
+
+/* =========================================================
+   TÍTULO DO PAINEL
+========================================================= */
+
+.professor-panel-heading {
+    margin-bottom: 18px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ITEM DO ALUNO
+========================================================= */
+
+.professor-student-item {
+    min-height: 66px;
+
+    margin-bottom: 12px;
+    padding: 12px 16px;
+
+    border: 1px solid #555555;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #2a2a2a;
+
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.professor-student-item:hover {
+    border-color: #f26807;
+    background-color: #303030;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DO ALUNO
+========================================================= */
+
+.professor-student-information {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.professor-student-information strong {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.professor-student-information span {
+    color: #c8c8c8;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+========================================================= */
+
+.professor-secondary-button {
+    padding: 9px 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    color: #ffffff;
+    background-color: #f26807;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.professor-secondary-button:hover {
+    background-color: #d95800;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTÃO VISUALIZAR TODOS
+========================================================= */
+
+.professor-view-all-button {
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   COLUNA DIREITA
+========================================================= */
+
+.professor-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* =========================================================
+   ACCORDION
+========================================================= */
+
+.professor-accordion-box {
+    width: 100%;
+
+    border: 1px solid #555555;
+    border-radius: 12px;
+
+    background-color: #2a2a2a;
+
+    overflow: hidden;
+
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.professor-accordion-box:hover {
+    border-color: #f26807;
+}
+
+
+/* =========================================================
+   BOTÃO DO ACCORDION
+========================================================= */
+
+.professor-accordion-trigger {
+    width: 100%;
+    min-height: 58px;
+
+    padding: 15px 18px;
+
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    color: #ffffff;
+    background-color: transparent;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   ÍCONE + DO ACCORDION
+========================================================= */
+
+.professor-accordion-symbol {
+    flex-shrink: 0;
+
+    color: #ffffff;
+
+    font-size: 24px;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+}
+
+
+/* =========================================================
+   CONTEÚDO DO ACCORDION
+========================================================= */
+
+.professor-accordion-body {
+    max-height: 0;
+
+    padding: 0 18px;
+
+    color: #dddddd;
+
+    overflow: hidden;
+
+    border-top: 1px solid transparent;
+
+    transition:
+        max-height 0.4s ease,
+        padding 0.4s ease,
+        border-color 0.3s ease;
+}
+
+.professor-accordion-body p {
+    margin: 0 0 15px;
+
+    color: #dddddd;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ACCORDION ABERTO
+========================================================= */
+
+.professor-accordion-body.active {
+    max-height: 250px;
+
+    padding: 15px 18px 18px;
+
+    border-top-color: #444444;
+}
+
+
+/* =========================================================
+   RESPONSIVO — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .professor-main-container {
+        width: min(100% - 30px, 1180px);
+    }
+
+    .professor-summary-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .professor-summary-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .professor-dashboard-content {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .professor-right-column {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVO — CELULAR
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .professor-main-container {
+        width: calc(100% - 28px);
+        padding-top: 22px;
+    }
+
+
+    /* SAUDAÇÃO */
+
+    .professor-welcome-section {
+        text-align: left;
+    }
+
+    .professor-welcome-section h1 {
+        font-size: 25px;
+    }
+
+
+    /* CARDS */
+
+    .professor-summary-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .professor-summary-card:last-child {
+        grid-column: auto;
+    }
+
+    .professor-summary-card {
+        min-height: 165px;
+    }
+
+
+    /* PAINEL */
+
+    .professor-students-panel {
+        padding: 18px;
+    }
+
+
+    /* ALUNOS */
+
+    .professor-student-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .professor-secondary-button {
+        width: 100%;
+    }
+
+    .professor-view-all-button {
+        width: 100%;
+    }
+
+
+    /* ACCORDION */
+
+    .professor-accordion-trigger {
+        min-height: 54px;
+
+        padding: 14px 15px;
+
+        font-size: 14px;
+    }
+
+    .professor-accordion-body {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .professor-accordion-body.active {
+        padding: 0 15px 15px;
+    }
 }
