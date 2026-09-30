@@ -261,3 +261,14 @@ CREATE TABLE notificacao (
         FOREIGN KEY (id_aluno)
         REFERENCES aluno (id_aluno)
 );
+
+CREATE TABLE recuperacao_senha (
+    id_recuperacao INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL,
+    tipo_usuario VARCHAR(20) NOT NULL,
+    token_hash VARCHAR(255) NOT NULL,
+    expiracao DATETIME NOT NULL,
+    usado BOOLEAN NOT NULL DEFAULT FALSE,
+    data_criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+
+);
