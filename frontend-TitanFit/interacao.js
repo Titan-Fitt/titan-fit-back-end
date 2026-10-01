@@ -1139,3 +1139,57 @@ document.addEventListener("keydown", (event) => {
     }
 
 });
+
+
+/* =====================================================
+   TITANFIT - ÁREA DO PROFESSOR
+   INTERAÇÕES DA TELA
+===================================================== */
+ 
+ 
+/* =====================================================
+   ACCORDION
+===================================================== */
+ 
+function toggleProfessorSection(button) {
+ 
+    const content = button.nextElementSibling;
+    const icon = button.querySelector(".accordion-icon");
+ 
+    if (!content) {
+        return;
+    }
+ 
+    content.classList.toggle("active");
+ 
+    if (content.classList.contains("active")) {
+        icon.textContent = "−";
+    } else {
+        icon.textContent = "+";
+    }
+}
+ 
+ 
+/* =====================================================
+   BOTÕES DOS CARDS
+===================================================== */
+ 
+document.addEventListener("DOMContentLoaded", () => {
+ 
+    const buttons = document.querySelectorAll(".professor-button");
+ 
+    buttons.forEach((button) => {
+ 
+        button.addEventListener("click", () => {
+ 
+            console.log(
+                "Botão clicado:",
+                button.textContent.trim()
+            );
+ 
+        });
+ 
+    });
+ 
+});
+ 
