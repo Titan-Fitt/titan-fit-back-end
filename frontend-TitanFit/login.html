@@ -1,13 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login - TitanFit</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -15,39 +19,60 @@
     <header class="topo">
 
         <a href="index.html">
-            <img src="fotos/logo_txt.png" alt="Titan Fit">
+
+            <img
+                src="fotos/logo_txt.png"
+                alt="Titan Fit"
+            >
+
         </a>
 
-        <div class="menu-toggle" onclick="toggleMenu()">
+        <div
+            class="menu-toggle"
+            onclick="toggleMenu()"
+        >
             ☰
         </div>
 
         <nav id="menu">
 
-            <div class="close-menu" onclick="toggleMenu()">
+            <div
+                class="close-menu"
+                onclick="toggleMenu()"
+            >
                 ✖
             </div>
 
             <ul>
 
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">
+                        Home
+                    </a>
                 </li>
 
                 <li>
-                    <a href="servico.html">Serviços</a>
+                    <a href="servico.html">
+                        Serviços
+                    </a>
                 </li>
 
                 <li>
-                    <a href="sobre-nos.html">Sobre Nós</a>
+                    <a href="sobre-nos.html">
+                        Sobre Nós
+                    </a>
                 </li>
 
                 <li>
-                    <a href="planos.html">Plano Premium</a>
+                    <a href="planos.html">
+                        Plano Premium
+                    </a>
                 </li>
 
                 <li>
-                    <a href="login.html">Login</a>
+                    <a href="login.html">
+                        Login
+                    </a>
                 </li>
 
             </ul>
@@ -72,9 +97,42 @@
                 </p>
 
 
+                <!-- =================================================
+                     NOVO: ESCOLHA ALUNO / PROFESSOR
+                     Mantendo a classe antiga continuar-com
+                ================================================== -->
+
+                <div class="tipo-login">
+
+                    <button
+                        type="button"
+                        class="continuar-com botao-tipo ativo"
+                        data-tipo="aluno"
+                    >
+                        Aluno
+                    </button>
+
+                    <button
+                        type="button"
+                        class="continuar-com botao-tipo"
+                        data-tipo="professor"
+                    >
+                        Professor
+                    </button>
+
+                </div>
+
+                <input
+                    type="hidden"
+                    id="tipoLogin"
+                    value="aluno"
+                >
+
+
                 <!-- FORMULÁRIO DE LOGIN -->
 
                 <form id="formLogin">
+
 
                     <div class="caixa-login">
 
@@ -110,12 +168,15 @@
                     </div>
 
 
-                    <a href="#" class="esqueci-senha">
+                    <a
+                        href="#"
+                        class="esqueci-senha"
+                    >
                         Esqueci minha senha
                     </a>
 
 
-                    <!-- NÃO COLOCAR LINK PARA areaCliente AQUI -->
+                    <!-- BOTÃO ANTIGO -->
 
                     <button
                         type="submit"
@@ -124,6 +185,8 @@
                         Continuar
                     </button>
 
+
+                    <!-- BOTÃO ANTIGO GOOGLE -->
 
                     <button
                         type="button"
@@ -139,6 +202,8 @@
 
                     </button>
 
+
+                    <!-- BOTÃO ANTIGO FACEBOOK -->
 
                     <button
                         type="button"
@@ -247,14 +312,11 @@
         <div class="footer-baixo">
 
             <p>
-
                 desenvolvido por Luis Felipe,
                 Pedro Henrique, Pedro Gabriel e Heloisa
-
                 Site acadêmico |
                 Todos os direitos reservados |
                 Senac LAPA TITO © 2026
-
             </p>
 
         </div>
@@ -265,6 +327,7 @@
     <!-- JS VISUAL -->
 
     <script src="interacao.js"></script>
+
 
     <!-- JS BACK-END -->
 
