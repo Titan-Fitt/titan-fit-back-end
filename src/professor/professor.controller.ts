@@ -7,10 +7,18 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ProfessorService } from './professor.service';import { CreateProfessorDto } from './dto/create-professor.dto';import { LoginProfessorDto } from './dto/login-professor.dto';import { AuthGuard } from '../auth/auth.guard';
-@Controller('professor')export class ProfessorController {
+
+import { ProfessorService } from './professor.service';
+import { CreateProfessorDto } from './dto/create-professor.dto';
+import { LoginProfessorDto } from './dto/login-professor.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { AuthService } from '../auth/auth.service';
+
+@Controller('professor')
+export class ProfessorController {
   constructor(
     private readonly professorService: ProfessorService,
+    private readonly authService: AuthService,
   ) {}
 
   @Post('cadastro')
@@ -20,7 +28,10 @@ import { ProfessorService } from './professor.service';import { CreateProfessorD
 
   @Post('login')
   login(@Body() dados: LoginProfessorDto) {
-    return this.professorService.login(dados);
+    return this.authService.loginProfessor(
+      dados.email,
+      dados.senha,
+    );
   }
 
   @UseGuards(AuthGuard)

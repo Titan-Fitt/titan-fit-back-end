@@ -4795,3 +4795,51 @@ RESPONSIVO - CELULAR
         padding: 0 15px 15px;
     }
 }
+
+
+/* =====================================================
+   BOTÕES ALUNO / PROFESSOR
+===================================================== */
+
+.tipo-login {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.tipo-login .botao-tipo {
+    flex: 1;
+    padding: 12px;
+    
+    background-color: transparent;
+    border: 1px solid #555;
+    border-radius: 8px;
+    
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Quando passar o mouse */
+.tipo-login .botao-tipo:hover {
+    border-color: #ff7d1a;
+    color: #ff7d1a;
+}
+
+/* Botão selecionado */
+.tipo-login .botao-tipo.ativo {
+    background-color: #ff7d1a;
+    border-color: #ff7d1a;
+    color: white;
+}
+
+/* Hover no botão que já está selecionado */
+.tipo-login .botao-tipo.ativo:hover {
+    background-color: #ff7d1a;
+    border-color: #ff7d1a;
+    color: white;
+}
