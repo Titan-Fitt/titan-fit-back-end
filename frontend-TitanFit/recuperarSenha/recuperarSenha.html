@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recuperar senha - TitanFit</title>
+
+    <link rel="stylesheet" href="recuperarSenha.css">
+</head>
+
+<body>
+
+    <main class="recuperacao">
+
+        <section class="caixa-recuperacao">
+
+            <img
+
+                src="../fotos/logo_txt.png"
+
+                alt="Titan Fit"
+
+                class="logo"
+>
+
+            <h1>Recuperar senha</h1>
+
+            <p class="descricao">
+
+                Digite seu e-mail para receber o código de recuperação.
+</p>
+
+            <!-- ETAPA 1 -->
+<div id="etapaEmail">
+
+                <div class="campo">
+<label for="tipoUsuario">Tipo de usuário</label>
+
+                    <select id="tipoUsuario">
+<option value="aluno">Aluno</option>
+<option value="professor">Professor</option>
+</select>
+</div>
+
+                <div class="campo">
+<label for="email">E-mail</label>
+
+                    <input
+
+                        type="email"
+
+                        id="email"
+
+                        placeholder="Digite seu e-mail"
+
+                        required
+>
+</div>
+
+                <button id="btnEnviarCodigo">
+
+                    Enviar código
+</button>
+
+            </div>
+
+            <!-- ETAPA 2 -->
+<div id="etapaCodigo" class="oculto">
+
+                <p>
+
+                    Enviamos um código para o seu e-mail.
+</p>
+
+                <div class="campo">
+<label for="token">Código de recuperação</label>
+
+                    <input
+
+                        type="text"
+
+                        id="token"
+
+                        placeholder="Digite o código recebido"
+>
+</div>
+
+                <button id="btnContinuar">
+
+                    Continuar
+</button>
+
+            </div>
+
+            <!-- ETAPA 3 -->
+<div id="etapaSenha" class="oculto">
+
+                <div class="campo">
+<label for="novaSenha">Nova senha</label>
+
+                    <input
+
+                        type="password"
+
+                        id="novaSenha"
+
+                        placeholder="Digite sua nova senha"
+>
+</div>
+
+                <div class="campo">
+<label for="confirmarSenha">Confirmar nova senha</label>
+
+                    <input
+
+                        type="password"
+
+                        id="confirmarSenha"
+
+                        placeholder="Digite novamente sua senha"
+>
+</div>
+
+                <button id="btnAlterarSenha">
+
+                    Alterar senha
+</button>
+
+            </div>
+
+            <a href="../login.html" class="voltar">
+
+                Voltar para o login
+</a>
+
+        </section>
+
+    </main>
+
+    <script src="recuperar-senha.js"></script>
+
+</body>
+</html>
