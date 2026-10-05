@@ -134,11 +134,7 @@ await this.emailService.enviarTokenRecuperacao(
 return {
   mensagem: 'Token de recuperação enviado para o e-mail',
 };
-    return {
-      mensagem: 'Solicitação de recuperação criada',
-      token,
-    };
-  }
+}
 
   async redefinirSenha(token: string, novaSenha: string) {
     const pool = this.databaseService.getPool();
