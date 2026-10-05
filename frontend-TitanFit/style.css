@@ -3698,102 +3698,87 @@ RESPONSIVO - CELULAR
    CABEÇALHO
 ===================================================== */
 
+/* ==================================================
+   ACORDEÕES — PADRÃO VISUAL
+   Mesmo estilo de Peitoral, Costas e Pernas
+================================================== */
+
 .acordeon-header {
     width: 100%;
-    min-height: 54px;
+    min-height: 58px;
+    padding: 15px 18px;
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 
-    padding: 0 16px;
+    border: none;
+    border-radius: 0;
 
-    box-sizing: border-box;
+    color: #fff;
+    background-color: transparent;
 
-    border: 1px solid #4a4a4a;
-    border-radius: 12px;
-
-    background-color: #252525;
-
-    color: #ffffff;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
 
     cursor: pointer;
 
-    transition:
-        border-color 0.3s ease,
-        transform 0.3s ease,
-        background-color 0.3s ease;
+    transition: color .3s ease, background-color .3s ease;
 }
 
-/* Hover */
-
-.acordeon-header:hover {
-    border-color: #ff7d1a;
-    transform: translateY(-2px);
-}
-
-/* =====================================================
-   ÍCONE +
-===================================================== */
-
+/* Ícone + */
 .acordeon-icon {
-    color: #ffffff;
+    flex-shrink: 0;
 
-    font-size: 22px;
-    font-weight: bold;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 400;
 
-    transition: transform 0.3s ease;
+    transition: transform .3s ease, color .3s ease;
 }
 
-/* =====================================================
-   CONTEÚDO
-===================================================== */
+/* Hover igual aos outros acordeons */
+.acordeon-header:hover {
+    border-color: transparent;
+    transform: none;
+    background-color: transparent;
+}
 
-.acordeon-conteudo {
+/* Conteúdo fechado */
+.acordeon-header + .acordeon-conteudo {
     max-height: 0;
+    padding: 0 18px;
+
+    color: #ddd;
 
     overflow: hidden;
-
     opacity: 0;
 
-    padding: 0 16px;
+    background-color: transparent;
 
-    background-color: #252525;
-
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-
-    border-radius: 0 0 12px 12px;
+    border: none;
+    border-radius: 0;
 
     transition:
-        max-height 0.4s ease,
-        opacity 0.3s ease,
-        padding 0.3s ease;
+        max-height .4s ease,
+        padding .4s ease,
+        opacity .3s ease;
 }
 
-/* =====================================================
-   ACORDEÃO ABERTO
-===================================================== */
-
+/* Conteúdo aberto */
 .acordeon-conteudo.ativo {
     max-height: 400px;
+    padding: 0 18px 18px;
 
     opacity: 1;
-
-    padding: 16px;
-
-    border-color: #4a4a4a;
 }
 
-/* =====================================================
-   DADOS
-===================================================== */
-
+/* Dados dentro de Meus Dados/Ficha */
 .ficha-dado {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
 
@@ -3801,36 +3786,26 @@ RESPONSIVO - CELULAR
 
     border-bottom: 1px solid #3d3d3d;
 
-    transition: background-color 0.3s ease;
+    transition: background-color .3s ease;
 }
 
 .ficha-dado:last-child {
     border-bottom: none;
 }
 
-/* Nome do campo */
-
 .ficha-label {
-    color: #ffffff;
-
-    font-weight: bold;
+    color: #fff;
+    font-weight: 700;
 }
-
-/* Valor */
 
 .ficha-valor {
     color: #ff7d1a;
-
     font-weight: 500;
 }
 
-/* Hover nos dados */
-
 .ficha-dado:hover {
-    background-color: #2d2d2d;
+    background-color: transparent;
 }
-
-
 /* =====================================================
    BOTÃO ALTERAR FICHA
 ===================================================== */
@@ -4843,3 +4818,55 @@ RESPONSIVO - CELULAR
     border-color: #ff7d1a;
     color: white;
 }
+
+
+.tf-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.tf-modal-caixa {
+    position: relative;
+    width: min(400px, calc(100% - 40px));
+    padding: 35px 25px 25px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid #f26807;
+}
+
+.tf-modal-fechar {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+
+    border: none;
+    background: transparent;
+    color: #ffffff;
+
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tf-modal-fechar:hover {
+    color: #ff7d1a;
+    transform: scale(1.1);
+}
+
+.tf-modal-texto {
+    margin: 0;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
