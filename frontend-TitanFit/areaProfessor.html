@@ -94,25 +94,24 @@
 
             <!-- CARD ALUNOS -->
 
-            <div class="professor-summary-card">
-
-                <span class="professor-card-label">
-                    Alunos conectados
-                </span>
-
-                <h2>
-                    24 alunos
-                </h2>
-
-                <p>
-                    Alunos ativos atualmente
-                </p>
-
-                <button class="professor-primary-button">
-                    Ver alunos
-                </button>
-
-            </div>
+<div class="professor-summary-card">
+    <span class="professor-card-label">
+        Alunos conectados
+    </span>
+    <h2 id="quantidadeAlunosProfessor">
+        0 alunos
+    </h2>
+    <p>
+        Alunos ativos atualmente
+    </p>
+    <button
+        type="button"
+        class="professor-primary-button"
+        id="btnVerAlunosProfessor"
+    >
+        Ver alunos
+    </button>
+</div>
 
 
             <!-- CARD TREINOS -->
@@ -737,6 +736,41 @@
 
     </div>
 
+</div>
+
+<!-- =====================================================
+     MODAL — TODOS OS ALUNOS
+====================================================== -->
+
+<div
+    id="modalTodosAlunosProfessor"
+    class="tf-modal"
+>
+    <div class="tf-modal-content">
+
+        <button
+            type="button"
+            class="tf-modal-close"
+            id="fecharTodosAlunosProfessor"
+        >
+            &times;
+        </button>
+
+        <h2>
+            Meus alunos
+        </h2>
+
+        <p class="modal-alunos-descricao">
+            Alunos atualmente conectados ao seu perfil.
+        </p>
+
+        <div id="listaTodosAlunosProfessor">
+            <p class="professor-loading">
+                Carregando alunos...
+            </p>
+        </div>
+
+    </div>
 </div>
     <!-- =====================================================
          FOOTER
