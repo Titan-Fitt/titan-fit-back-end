@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TitanFit - Área do Professor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="professor-page">
+
+    <!-- =====================================================
+         CABEÇALHO
+    ====================================================== -->
+
+    <header class="topo">
+
+        <a href="index.html">
+            <img src="fotos/logo_txt.png" alt="Titan Fit">
+        </a>
+
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+        <nav id="menu">
+
+            <div class="close-menu" onclick="toggleMenu()">✖</div>
+
+            <ul>
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="servico.html">Serviços</a>
+                </li>
+
+                <li>
+                    <a href="sobre-nos.html">Sobre Nós</a>
+                </li>
+
+                <li>
+                    <a href="planos.html">Plano Premium</a>
+                </li>
+
+                <li>
+                    <a href="login.html" data-open-login id="open-login">
+                        Login
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="professor-main-container">
+
+
+        <!-- =================================================
+             SAUDAÇÃO
+        ================================================== -->
+
+        <section class="professor-welcome-section">
+
+            <h1 id="nomeProfessor">
+                Olá!
+            </h1>
+
+            <p>
+                Bem-vindo(a) de volta, aqui está o resumo dos seus alunos
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             CARDS PRINCIPAIS
+        ================================================== -->
+
+        <section class="professor-summary-cards">
+
+
+            <!-- CARD ALUNOS -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Alunos conectados
+                </span>
+
+                <h2>
+                    24 alunos
+                </h2>
+
+                <p>
+                    Alunos ativos atualmente
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver alunos
+                </button>
+
+            </div>
+
+
+            <!-- CARD TREINOS -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Treinos ativos
+                </span>
+
+                <h2>
+                    18 treinos
+                </h2>
+
+                <p>
+                    Treinos personalizados
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver treinos
+                </button>
+
+            </div>
+
+
+            <!-- CARD SOLICITAÇÕES -->
+
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Solicitações
+                </span>
+
+                <h2>
+                    5 pendentes
+                </h2>
+
+                <p>
+                    Alunos aguardando conexão
+                </p>
+
+                <button class="professor-primary-button">
+                    Ver solicitações
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ÁREA INFERIOR
+        ================================================== -->
+
+        <section class="professor-dashboard-content">
+
+
+            <!-- =================================================
+                 COLUNA ESQUERDA
+            ================================================== -->
+
+       <div class="professor-students-panel">
+
+    <h2 class="professor-panel-heading">
+        Meus Alunos
+    </h2>
+
+    <!-- OS ALUNOS SERÃO INSERIDOS AQUI PELO JAVASCRIPT -->
+    <div id="listaMeusAlunos">
+
+        <p class="professor-loading">
+            Carregando alunos...
+        </p>
+
+    </div>
+
+    <button
+        type="button"
+        class="professor-primary-button professor-view-all-button"
+        id="btnVisualizarTodosAlunos"
+    >
+        Visualizar todos os alunos
+    </button>
+
+</div>
+
+            <!-- =================================================
+                 COLUNA DIREITA
+            ================================================== -->
+
+            <div class="professor-right-column">
+
+
+                <!-- =================================================
+                     ACCORDION — TREINOS
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Treinos
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Crie, edite e acompanhe os treinos dos seus alunos.
+                        </p>
+
+                        <button class="professor-secondary-button">
+                            Gerenciar treinos
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCORDION — SOLICITAÇÕES
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Solicitações de alunos
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Confira os alunos que solicitaram conexão.
+                        </p>
+
+                        <button class="professor-secondary-button">
+                            Ver solicitações
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCORDION — PERFIL
+                ================================================== -->
+
+                <div class="acordeon-item">
+
+
+                    <div
+                        class="acordeon-header"
+                        onclick="toggleAcordeao(this)"
+                    >
+
+                        <span>
+                            Meu Perfil
+                        </span>
+
+                        <span class="acordeon-icon">
+                            +
+                        </span>
+
+                    </div>
+
+
+                    <div class="acordeon-conteudo">
+
+
+                        <!-- NOME -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Nome
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilNomeProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- E-MAIL -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                E-mail
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilEmailProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- REGISTRO CREF -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Registro CREF
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilCrefProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- ESPECIALIDADE -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Especialidade
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilEspecialidadeProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- BACHARELADO -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Bacharelado
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilBachareladoProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- FORMAÇÃO ACADÊMICA -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Formação acadêmica
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilFormacaoProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- CURRÍCULO -->
+
+                        <div class="ficha-dado">
+
+                            <span class="ficha-label">
+                                Currículo
+                            </span>
+
+                            <span
+                                class="ficha-valor"
+                                id="perfilCurriculoProfessor"
+                            >
+                                Não informado
+                            </span>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             BOTÃO EDITAR PERFIL
+                        ================================================== -->
+
+                        <button
+                            type="button"
+                            class="professor-primary-button"
+                            id="btnEditarPerfil"
+                        >
+                            Editar perfil
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         MODAL — EDITAR PERFIL
+    ====================================================== -->
+
+    <div
+        id="modalEditarPerfil"
+        class="tf-modal"
+    >
+
+        <div class="tf-modal-content">
+
+
+            <!-- FECHAR -->
+
+            <button
+                type="button"
+                class="tf-modal-close"
+                id="fecharEditarPerfil"
+            >
+                &times;
+            </button>
+
+
+            <h2>
+                Editar perfil
+            </h2>
+
+            <p>
+                Altere as informações do seu perfil profissional.
+            </p>
+
+
+            <form id="formEditarPerfil">
+
+
+                <!-- NOME -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarNomeProfessor">
+                        Nome
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarNomeProfessor"
+                        name="nome"
+                        placeholder="Digite seu nome"
+                    >
+
+                </div>
+
+
+                <!-- E-MAIL -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarEmailProfessor">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="editarEmailProfessor"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                    >
+
+                </div>
+
+
+                <!-- CREF -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarCrefProfessor">
+                        Registro CREF
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarCrefProfessor"
+                        name="registro_cref"
+                        placeholder="Digite seu registro CREF"
+                    >
+
+                </div>
+
+
+                <!-- ESPECIALIDADE -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarEspecialidadeProfessor">
+                        Especialidade
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarEspecialidadeProfessor"
+                        name="especialidade"
+                        placeholder="Ex: Musculação"
+                    >
+
+                </div>
+
+
+                <!-- BACHARELADO -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarBachareladoProfessor">
+                        Bacharelado
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarBachareladoProfessor"
+                        name="bacharelado"
+                        placeholder="Digite seu bacharelado"
+                    >
+
+                </div>
+
+
+                <!-- FORMAÇÃO ACADÊMICA -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarFormacaoProfessor">
+                        Formação acadêmica
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editarFormacaoProfessor"
+                        name="formacao_academica"
+                        placeholder="Digite sua formação acadêmica"
+                    >
+
+                </div>
+
+
+                <!-- CURRÍCULO -->
+
+                <div class="caixa-cadastro">
+
+                    <label for="editarCurriculoProfessor">
+                        Currículo
+                    </label>
+
+                    <textarea
+                        id="editarCurriculoProfessor"
+                        name="curriculo"
+                        placeholder="Digite seu currículo"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BOTÃO SALVAR -->
+
+                <button
+                    type="submit"
+                    class="professor-primary-button"
+                >
+                    Salvar alterações
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+<!-- =====================================================
+     MODAL — FICHA DO ALUNO
+====================================================== -->
+
+<div
+    id="modalFichaAlunoProfessor"
+    class="tf-modal"
+>
+
+    <div class="tf-modal-content">
+
+        <button
+            type="button"
+            class="tf-modal-close"
+            id="fecharFichaAlunoProfessor"
+        >
+            &times;
+        </button>
+
+        <h2>
+            Ficha do aluno
+        </h2>
+
+        <p id="nomeFichaAlunoProfessor">
+            Aluno
+        </p>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Idade
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoIdadeProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Peso
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoPesoProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Altura
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoAlturaProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Objetivo
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoObjetivoProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Tempo disponível
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoTempoProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+        <div class="ficha-dado">
+            <span class="ficha-label">
+                Última atualização
+            </span>
+
+            <span
+                class="ficha-valor"
+                id="fichaAlunoAtualizacaoProfessor"
+            >
+                Não informado
+            </span>
+        </div>
+
+    </div>
+
+</div>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-conteudo">
+
+
+            <div class="footer-nav">
+
+                <h3>
+                    navegação
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="servico.html">
+                    Serviços
+                </a>
+
+                <a href="sobre-nos.html">
+                    Sobre Nós
+                </a>
+
+                <a href="planos.html">
+                    Plano Premium
+                </a>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+
+            <div class="footer-logo">
+
+                <img
+                    src="fotos/logo_txt.png"
+                    alt="Titan Fit"
+                >
+
+            </div>
+
+
+            <div class="footer-redes">
+
+                <h3>
+                    siga-nos em nossas redes sociais
+                </h3>
+
+                <div class="icones-redes">
+
+                    <img
+                        src="fotos/insta.png"
+                        alt="Instagram"
+                    >
+
+                    <img
+                        src="fotos/facebook.png"
+                        alt="Facebook"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-baixo">
+
+            <p>
+                desenvolvido por Luis Felipe, Pedro Henrique,
+                Pedro Gabriel e Heloisa
+                <br>
+                Site acadêmico | Todos os direitos reservados |
+                Senac LAPA TITO © 2026
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         SCRIPTS
+    ====================================================== -->
+
+    <script src="interacao.js"></script>
+    <script src="conexoes.js"></script>
+
+</body>
+
+</html>
