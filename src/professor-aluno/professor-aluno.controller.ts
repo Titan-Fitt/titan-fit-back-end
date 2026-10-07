@@ -9,17 +9,20 @@ import {
 } from '@nestjs/common';
 
 import { ProfessorAlunoService } from './professor-aluno.service';
+
 import { CreateProfessorAlunoDto } from './dto/create-professor-aluno.dto';
+
 import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('professor-aluno')
 export class ProfessorAlunoController {
+
   constructor(
     private readonly professorAlunoService: ProfessorAlunoService,
   ) {}
 
   // =====================================================
-  // CRIAR VÍNCULO PROFESSOR + ALUNO
+  // CRIAR SOLICITAÇÃO DE CONEXÃO
   // =====================================================
 
   @UseGuards(AuthGuard)
@@ -35,6 +38,7 @@ export class ProfessorAlunoController {
     );
   }
 
+
   // =====================================================
   // LISTAR VÍNCULOS
   // =====================================================
@@ -47,6 +51,57 @@ export class ProfessorAlunoController {
       request.user.tipo,
     );
   }
+
+
+  // =====================================================
+  // LISTAR SOLICITAÇÕES PENDENTES DO PROFESSOR
+  // =====================================================
+
+  @UseGuards(AuthGuard)
+  @Get('solicitacoes')
+  listarSolicitacoes(@Req() request: any) {
+    return this.professorAlunoService.listarSolicitacoes(
+      request.user.id,
+      request.user.tipo,
+    );
+  }
+
+
+  // =====================================================
+  // ACEITAR SOLICITAÇÃO
+  // =====================================================
+
+  @UseGuards(AuthGuard)
+  @Post('solicitacoes/:id/aceitar')
+  aceitarSolicitacao(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
+    return this.professorAlunoService.aceitarSolicitacao(
+      Number(id),
+      request.user.id,
+      request.user.tipo,
+    );
+  }
+
+
+  // =====================================================
+  // RECUSAR SOLICITAÇÃO
+  // =====================================================
+
+  @UseGuards(AuthGuard)
+  @Post('solicitacoes/:id/recusar')
+  recusarSolicitacao(
+    @Param('id') id: string,
+    @Req() request: any,
+  ) {
+    return this.professorAlunoService.recusarSolicitacao(
+      Number(id),
+      request.user.id,
+      request.user.tipo,
+    );
+  }
+
 
   // =====================================================
   // BUSCAR VÍNCULOS DE UM PROFESSOR
@@ -65,6 +120,7 @@ export class ProfessorAlunoController {
     );
   }
 
+
   // =====================================================
   // BUSCAR PROFESSOR DE UM ALUNO
   // =====================================================
@@ -81,6 +137,7 @@ export class ProfessorAlunoController {
       request.user.tipo,
     );
   }
+
 
   // =====================================================
   // BUSCAR VÍNCULO POR ID

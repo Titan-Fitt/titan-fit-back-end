@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>TitanFit - Área do Professor</title>
@@ -94,24 +97,29 @@
 
             <!-- CARD ALUNOS -->
 
-<div class="professor-summary-card">
-    <span class="professor-card-label">
-        Alunos conectados
-    </span>
-    <h2 id="quantidadeAlunosProfessor">
-        0 alunos
-    </h2>
-    <p>
-        Alunos ativos atualmente
-    </p>
-    <button
-        type="button"
-        class="professor-primary-button"
-        id="btnVerAlunosProfessor"
-    >
-        Ver alunos
-    </button>
-</div>
+            <div class="professor-summary-card">
+
+                <span class="professor-card-label">
+                    Alunos conectados
+                </span>
+
+                <h2 id="quantidadeAlunosProfessor">
+                    0 alunos
+                </h2>
+
+                <p>
+                    Alunos ativos atualmente
+                </p>
+
+                <button
+                    type="button"
+                    class="professor-primary-button"
+                    id="btnVerAlunosProfessor"
+                >
+                    Ver alunos
+                </button>
+
+            </div>
 
 
             <!-- CARD TREINOS -->
@@ -130,7 +138,10 @@
                     Treinos personalizados
                 </p>
 
-                <button class="professor-primary-button">
+                <button
+                    type="button"
+                    class="professor-primary-button"
+                >
                     Ver treinos
                 </button>
 
@@ -145,15 +156,19 @@
                     Solicitações
                 </span>
 
-                <h2>
-                    5 pendentes
+                <h2 id="quantidadeSolicitacoesProfessor">
+                    0 solicitações
                 </h2>
 
                 <p>
                     Alunos aguardando conexão
                 </p>
 
-                <button class="professor-primary-button">
+                <button
+                    type="button"
+                    class="professor-primary-button"
+                    id="btnVerSolicitacoesProfessor"
+                >
                     Ver solicitações
                 </button>
 
@@ -173,30 +188,34 @@
                  COLUNA ESQUERDA
             ================================================== -->
 
-       <div class="professor-students-panel">
+            <div class="professor-students-panel">
 
-    <h2 class="professor-panel-heading">
-        Meus Alunos
-    </h2>
+                <h2 class="professor-panel-heading">
+                    Meus Alunos
+                </h2>
 
-    <!-- OS ALUNOS SERÃO INSERIDOS AQUI PELO JAVASCRIPT -->
-    <div id="listaMeusAlunos">
 
-        <p class="professor-loading">
-            Carregando alunos...
-        </p>
+                <!-- OS ALUNOS SERÃO INSERIDOS AQUI PELO JAVASCRIPT -->
 
-    </div>
+                <div id="listaMeusAlunos">
 
-    <button
-        type="button"
-        class="professor-primary-button professor-view-all-button"
-        id="btnVisualizarTodosAlunos"
-    >
-        Visualizar todos os alunos
-    </button>
+                    <p class="professor-loading">
+                        Carregando alunos...
+                    </p>
 
-</div>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="professor-primary-button professor-view-all-button"
+                    id="btnVisualizarTodosAlunos"
+                >
+                    Visualizar todos os alunos
+                </button>
+
+            </div>
+
 
             <!-- =================================================
                  COLUNA DIREITA
@@ -206,49 +225,13 @@
 
 
                 <!-- =================================================
-                     ACCORDION — TREINOS
-                ================================================== -->
-
-                <div class="professor-accordion-box">
-
-                    <button
-                        class="professor-accordion-trigger"
-                        onclick="toggleProfessorSection(this)"
-                    >
-
-                        <span>
-                            Treinos
-                        </span>
-
-                        <span class="professor-accordion-symbol">
-                            +
-                        </span>
-
-                    </button>
-
-
-                    <div class="professor-accordion-body">
-
-                        <p>
-                            Crie, edite e acompanhe os treinos dos seus alunos.
-                        </p>
-
-                        <button class="professor-secondary-button">
-                            Gerenciar treinos
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================================
                      ACCORDION — SOLICITAÇÕES
                 ================================================== -->
 
                 <div class="professor-accordion-box">
 
                     <button
+                        type="button"
                         class="professor-accordion-trigger"
                         onclick="toggleProfessorSection(this)"
                     >
@@ -267,11 +250,56 @@
                     <div class="professor-accordion-body">
 
                         <p>
-                            Confira os alunos que solicitaram conexão.
+                            Alunos que solicitaram conexão com você.
                         </p>
 
-                        <button class="professor-secondary-button">
-                            Ver solicitações
+                        <div id="listaSolicitacoesProfessor">
+
+                            <p class="professor-loading">
+                                Carregando solicitações...
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCORDION — TREINOS
+                ================================================== -->
+
+                <div class="professor-accordion-box">
+
+                    <button
+                        type="button"
+                        class="professor-accordion-trigger"
+                        onclick="toggleProfessorSection(this)"
+                    >
+
+                        <span>
+                            Treinos
+                        </span>
+
+                        <span class="professor-accordion-symbol">
+                            +
+                        </span>
+
+                    </button>
+
+
+                    <div class="professor-accordion-body">
+
+                        <p>
+                            Confira e gerencie seus treinos personalizados.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="professor-secondary-button"
+                        >
+                            Ver treinos
                         </button>
 
                     </div>
@@ -284,7 +312,6 @@
                 ================================================== -->
 
                 <div class="acordeon-item">
-
 
                     <div
                         class="acordeon-header"
@@ -458,10 +485,7 @@
          MODAL — EDITAR PERFIL
     ====================================================== -->
 
-    <div
-        id="modalEditarPerfil"
-        class="tf-modal"
-    >
+    <div id="modalEditarPerfil" class="tf-modal">
 
         <div class="tf-modal-content">
 
@@ -629,149 +653,211 @@
 
     </div>
 
-<!-- =====================================================
-     MODAL — FICHA DO ALUNO
-====================================================== -->
 
-<div
-    id="modalFichaAlunoProfessor"
-    class="tf-modal"
->
+    <!-- =====================================================
+         MODAL — FICHA DO ALUNO
+    ====================================================== -->
 
-    <div class="tf-modal-content">
+    <div id="modalFichaAlunoProfessor" class="tf-modal">
 
-        <button
-            type="button"
-            class="tf-modal-close"
-            id="fecharFichaAlunoProfessor"
-        >
-            &times;
-        </button>
+        <div class="tf-modal-content">
 
-        <h2>
-            Ficha do aluno
-        </h2>
-
-        <p id="nomeFichaAlunoProfessor">
-            Aluno
-        </p>
-
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Idade
-            </span>
-
-            <span
-                class="ficha-valor"
-                id="fichaAlunoIdadeProfessor"
+            <button
+                type="button"
+                class="tf-modal-close"
+                id="fecharFichaAlunoProfessor"
             >
-                Não informado
-            </span>
-        </div>
+                &times;
+            </button>
 
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Peso
-            </span>
 
-            <span
-                class="ficha-valor"
-                id="fichaAlunoPesoProfessor"
-            >
-                Não informado
-            </span>
-        </div>
+            <h2>
+                Ficha do aluno
+            </h2>
 
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Altura
-            </span>
-
-            <span
-                class="ficha-valor"
-                id="fichaAlunoAlturaProfessor"
-            >
-                Não informado
-            </span>
-        </div>
-
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Objetivo
-            </span>
-
-            <span
-                class="ficha-valor"
-                id="fichaAlunoObjetivoProfessor"
-            >
-                Não informado
-            </span>
-        </div>
-
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Tempo disponível
-            </span>
-
-            <span
-                class="ficha-valor"
-                id="fichaAlunoTempoProfessor"
-            >
-                Não informado
-            </span>
-        </div>
-
-        <div class="ficha-dado">
-            <span class="ficha-label">
-                Última atualização
-            </span>
-
-            <span
-                class="ficha-valor"
-                id="fichaAlunoAtualizacaoProfessor"
-            >
-                Não informado
-            </span>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- =====================================================
-     MODAL — TODOS OS ALUNOS
-====================================================== -->
-
-<div
-    id="modalTodosAlunosProfessor"
-    class="tf-modal"
->
-    <div class="tf-modal-content">
-
-        <button
-            type="button"
-            class="tf-modal-close"
-            id="fecharTodosAlunosProfessor"
-        >
-            &times;
-        </button>
-
-        <h2>
-            Meus alunos
-        </h2>
-
-        <p class="modal-alunos-descricao">
-            Alunos atualmente conectados ao seu perfil.
-        </p>
-
-        <div id="listaTodosAlunosProfessor">
-            <p class="professor-loading">
-                Carregando alunos...
+            <p id="nomeFichaAlunoProfessor">
+                Aluno
             </p>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Idade
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoIdadeProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Peso
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoPesoProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Altura
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoAlturaProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Objetivo
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoObjetivoProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Tempo disponível
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoTempoProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
+
+            <div class="ficha-dado">
+
+                <span class="ficha-label">
+                    Última atualização
+                </span>
+
+                <span
+                    class="ficha-valor"
+                    id="fichaAlunoAtualizacaoProfessor"
+                >
+                    Não informado
+                </span>
+
+            </div>
+
         </div>
 
     </div>
-</div>
+
+
+    <!-- =====================================================
+         MODAL — TODOS OS ALUNOS
+    ====================================================== -->
+
+    <div id="modalTodosAlunosProfessor" class="tf-modal">
+
+        <div class="tf-modal-content">
+
+            <button
+                type="button"
+                class="tf-modal-close"
+                id="fecharTodosAlunosProfessor"
+            >
+                &times;
+            </button>
+
+
+            <h2>
+                Meus alunos
+            </h2>
+
+            <p class="modal-alunos-descricao">
+                Alunos atualmente conectados ao seu perfil.
+            </p>
+
+
+            <div id="listaTodosAlunosProfessor">
+
+                <p class="professor-loading">
+                    Carregando alunos...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MODAL — SOLICITAÇÕES
+    ====================================================== -->
+
+    <div id="modalSolicitacoesProfessor" class="tf-modal">
+
+        <div class="tf-modal-content">
+
+            <button
+                type="button"
+                class="tf-modal-close"
+                id="fecharSolicitacoesProfessor"
+            >
+                &times;
+            </button>
+
+
+            <h2>
+                Solicitações de alunos
+            </h2>
+
+            <p>
+                Alunos que solicitaram conexão com você.
+            </p>
+
+
+            <div id="listaModalSolicitacoesProfessor">
+
+                <p class="professor-loading">
+                    Carregando solicitações...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <!-- =====================================================
          FOOTER
     ====================================================== -->
@@ -848,11 +934,15 @@
         <div class="footer-baixo">
 
             <p>
+
                 desenvolvido por Luis Felipe, Pedro Henrique,
                 Pedro Gabriel e Heloisa
+
                 <br>
+
                 Site acadêmico | Todos os direitos reservados |
                 Senac LAPA TITO © 2026
+
             </p>
 
         </div>
@@ -865,8 +955,10 @@
     ====================================================== -->
 
     <script src="interacao.js"></script>
+
     <script src="conexoes.js"></script>
 
 </body>
 
 </html>
+

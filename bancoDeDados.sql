@@ -272,3 +272,28 @@ CREATE TABLE recuperacao_senha (
     data_criacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 
 );
+
+
+CREATE TABLE solicitacao_conexao (
+    id_solicitacao INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_aluno INT NOT NULL,
+
+    id_professor INT NOT NULL,
+
+    status ENUM(
+        'Pendente',
+        'Aceita',
+        'Recusada'
+    ) DEFAULT 'Pendente',
+
+    data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    data_resposta DATETIME NULL,
+
+    FOREIGN KEY (id_aluno)
+        REFERENCES aluno(id_aluno),
+
+    FOREIGN KEY (id_professor)
+        REFERENCES professor(id_professor)
+);

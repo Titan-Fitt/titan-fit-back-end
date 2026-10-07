@@ -1150,26 +1150,30 @@ document.addEventListener("keydown", (event) => {
 /* =====================================================
    ACCORDION
 ===================================================== */
- 
+
 function toggleProfessorSection(button) {
- 
+
     const content = button.nextElementSibling;
-    const icon = button.querySelector(".accordion-icon");
- 
+
+    const icon =
+        button.querySelector(".professor-accordion-symbol");
+
     if (!content) {
         return;
     }
- 
+
     content.classList.toggle("active");
- 
-    if (content.classList.contains("active")) {
-        icon.textContent = "−";
-    } else {
-        icon.textContent = "+";
+
+    if (icon) {
+
+        if (content.classList.contains("active")) {
+            icon.textContent = "−";
+        } else {
+            icon.textContent = "+";
+        }
+
     }
 }
- 
- 
 /* =====================================================
    BOTÕES DOS CARDS
 ===================================================== */
@@ -1193,3 +1197,63 @@ document.addEventListener("DOMContentLoaded", () => {
  
 });
  
+
+function abrirModalSolicitacoesProfessor() {
+
+    const modal =
+        document.getElementById(
+            "modalSolicitacoesProfessor"
+        );
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("ativo");
+
+    carregarSolicitacoesModalProfessor();
+}
+
+function fecharModalSolicitacoesProfessor() {
+
+    const modal =
+        document.getElementById(
+            "modalSolicitacoesProfessor"
+        );
+
+    if (modal) {
+        modal.classList.remove("ativo");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const botaoAbrir =
+        document.getElementById(
+            "btnVerSolicitacoesProfessor"
+        );
+
+    const botaoFechar =
+        document.getElementById(
+            "fecharSolicitacoesProfessor"
+        );
+
+    if (botaoAbrir) {
+
+        botaoAbrir.addEventListener(
+            "click",
+            abrirModalSolicitacoesProfessor
+        );
+
+    }
+
+    if (botaoFechar) {
+
+        botaoFechar.addEventListener(
+            "click",
+            fecharModalSolicitacoesProfessor
+        );
+
+    }
+
+});

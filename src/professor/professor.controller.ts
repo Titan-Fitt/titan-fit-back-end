@@ -1,3 +1,4 @@
+
 import {
   Body,
   Controller,
@@ -13,6 +14,7 @@ import { ProfessorService } from './professor.service';
 import { CreateProfessorDto } from './dto/create-professor.dto';
 import { LoginProfessorDto } from './dto/login-professor.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { ProfessorGuard } from '../auth/professor.guard';
 import { AuthService } from '../auth/auth.service';
 
 @Controller('professor')
@@ -29,7 +31,6 @@ export class ProfessorController {
 
   @Post('cadastro')
   cadastro(@Body() dados: CreateProfessorDto) {
-
     return this.professorService.cadastro(dados);
   }
 
@@ -39,7 +40,6 @@ export class ProfessorController {
 
   @Post('login')
   login(@Body() dados: LoginProfessorDto) {
-
     return this.authService.loginProfessor(
       dados.email,
       dados.senha,
@@ -53,7 +53,6 @@ export class ProfessorController {
   @UseGuards(AuthGuard)
   @Get()
   listar(@Req() request: any) {
-
     return this.professorService.listar(
       request.user.id,
       request.user.tipo,
@@ -70,7 +69,6 @@ export class ProfessorController {
     @Param('id') id: string,
     @Req() request: any,
   ) {
-
     return this.professorService.buscarPorId(
       Number(id),
       request.user.id,
@@ -82,14 +80,13 @@ export class ProfessorController {
   // ATUALIZAR PERFIL DO PROFESSOR
   // =====================================================
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, ProfessorGuard)
   @Put(':id')
   atualizar(
     @Param('id') id: string,
     @Req() request: any,
     @Body() dados: any,
   ) {
-
     return this.professorService.atualizar(
       Number(id),
       request.user.id,
@@ -98,3 +95,4 @@ export class ProfessorController {
     );
   }
 }
+

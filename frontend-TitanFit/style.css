@@ -5440,3 +5440,226 @@ RESPONSIVO - CELULAR
         width: 100%;
     }
 }
+
+/* ==================================================
+   MODAL — SOLICITAÇÕES DO PROFESSOR
+================================================== */
+
+.tf-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.75);
+}
+
+/* MODAL ABERTO */
+.tf-modal.ativo {
+    display: flex;
+}
+
+/* CAIXA DO MODAL */
+.tf-modal-content {
+    position: relative;
+
+    width: min(600px, 100%);
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 14px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* BOTÃO FECHAR */
+.tf-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+    color: #ffffff;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.tf-modal-close:hover {
+    background: #f26807;
+    color: #ffffff;
+}
+
+/* TÍTULO */
+.tf-modal-content h2 {
+    margin: 0 45px 8px 0;
+
+    color: #ffffff;
+    font-size: 24px;
+}
+
+/* DESCRIÇÃO */
+.tf-modal-content > p {
+    margin: 0 0 25px;
+
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* LISTA DE SOLICITAÇÕES */
+#listaModalSolicitacoesProfessor {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ITEM DA SOLICITAÇÃO */
+#listaModalSolicitacoesProfessor
+.professor-request-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 18px;
+
+    background: #242424;
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    transition: 0.2s ease;
+}
+
+#listaModalSolicitacoesProfessor
+.professor-request-item:hover {
+    border-color: #f26807;
+}
+
+/* INFORMAÇÕES DO ALUNO */
+.professor-request-information {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.professor-request-information strong {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.professor-request-information span {
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* BOTÕES */
+.professor-request-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.professor-accept-button,
+.professor-refuse-button {
+    padding: 9px 14px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+/* ACEITAR */
+.professor-accept-button {
+    border: 1px solid #f26807;
+
+    background: #f26807;
+    color: #ffffff;
+}
+
+.professor-accept-button:hover {
+    background: #d95700;
+    border-color: #d95700;
+}
+
+/* RECUSAR */
+.professor-refuse-button {
+    border: 1px solid #555;
+
+    background: transparent;
+    color: #ffffff;
+}
+
+.professor-refuse-button:hover {
+    border-color: #f26807;
+    color: #f26807;
+}
+
+/* MENSAGEM DE CARREGAMENTO / VAZIO */
+#listaModalSolicitacoesProfessor
+.professor-loading {
+    margin: 10px 0;
+    padding: 20px;
+
+    text-align: center;
+
+    color: #aaa;
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+================================================== */
+
+@media (max-width: 600px) {
+
+    .tf-modal {
+        padding: 15px;
+    }
+
+    .tf-modal-content {
+        padding: 25px 18px;
+        max-height: 85vh;
+    }
+
+    #listaModalSolicitacoesProfessor
+    .professor-request-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .professor-request-actions {
+        width: 100%;
+    }
+
+    .professor-accept-button,
+    .professor-refuse-button {
+        flex: 1;
+    }
+
+}

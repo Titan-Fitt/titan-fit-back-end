@@ -9,149 +9,156 @@ export class ProfessorAlunoService {
   ) {}
 
   // =====================================================
-  // CADASTRAR VÍNCULO
+  // CRIAR SOLICITAÇÃO DE CONEXÃO
   // =====================================================
 
-async cadastrar(
+  async cadastrar(
     dados: any,
     usuarioLogadoId: number,
     tipoUsuario: string,
-) {
+  ) {
+
     const pool = this.databaseService.getPool();
 
-    // ==========================================
-    // SOMENTE ALUNO PODE SE CONECTAR
-    // ==========================================
+    // =====================================================
+    // SOMENTE ALUNO PODE SOLICITAR CONEXÃO
+    // =====================================================
 
     if (tipoUsuario !== 'aluno') {
-        return {
-            mensagem: 'Apenas alunos podem se conectar a professores',
-        };
+      return {
+        mensagem: 'Apenas alunos podem solicitar conexão com professores',
+      };
     }
 
-    // ==========================================
+    // =====================================================
     // VERIFICAR PROFESSOR
-    // ==========================================
+    // =====================================================
 
     const [professores]: any = await pool.query(
-        `SELECT id_professor
-         FROM professor
-         WHERE id_professor = ?
-         AND status = 'ativo'`,
-        [dados.id_professor],
+      `SELECT id_professor
+       FROM professor
+       WHERE id_professor = ?
+       AND status = 'ativo'`,
+      [dados.id_professor],
     );
 
     if (professores.length === 0) {
-        return {
-            mensagem: 'Professor não encontrado ou inativo',
-        };
+      return {
+        mensagem: 'Professor não encontrado ou inativo',
+      };
     }
 
-    // ==========================================
+    // =====================================================
     // VERIFICAR ALUNO LOGADO
-    // ==========================================
+    // =====================================================
 
     const [alunos]: any = await pool.query(
-        `SELECT id_aluno
-         FROM aluno
-         WHERE id_aluno = ?`,
-        [usuarioLogadoId],
+      `SELECT id_aluno
+       FROM aluno
+       WHERE id_aluno = ?`,
+      [usuarioLogadoId],
     );
 
     if (alunos.length === 0) {
-        return {
-            mensagem: 'Aluno não encontrado',
-        };
+      return {
+        mensagem: 'Aluno não encontrado',
+      };
     }
 
-    // ==========================================
+    // =====================================================
     // VERIFICAR SE JÁ POSSUI PROFESSOR
-    // ==========================================
+    // =====================================================
 
     const [professorAtual]: any = await pool.query(
-        `SELECT
-            id_professor_aluno,
-            id_professor
-         FROM professor_aluno
-         WHERE id_aluno = ?
-         AND status = 'Ativo'`,
-        [usuarioLogadoId],
+      `SELECT
+        id_professor_aluno,
+        id_professor
+       FROM professor_aluno
+       WHERE id_aluno = ?
+       AND status = 'Ativo'`,
+      [usuarioLogadoId],
     );
 
     if (professorAtual.length > 0) {
-        return {
-            mensagem: 'Você já está conectado a um professor',
-        };
+      return {
+        mensagem: 'Você já está conectado a um professor',
+      };
     }
 
-    // ==========================================
-    // VERIFICAR VÍNCULO DUPLICADO
-    // ==========================================
+    // =====================================================
+    // VERIFICAR SOLICITAÇÃO PENDENTE
+    // =====================================================
 
-    const [vinculoExiste]: any = await pool.query(
-        `SELECT id_professor_aluno
-         FROM professor_aluno
-         WHERE id_professor = ?
-         AND id_aluno = ?`,
-        [
-            dados.id_professor,
-            usuarioLogadoId,
-        ],
+    const [solicitacaoPendente]: any = await pool.query(
+      `SELECT id_solicitacao
+       FROM solicitacao_conexao
+       WHERE id_aluno = ?
+       AND id_professor = ?
+       AND status = 'Pendente'`,
+      [
+        usuarioLogadoId,
+        dados.id_professor,
+      ],
     );
 
-    if (vinculoExiste.length > 0) {
-        return {
-            mensagem: 'Esse professor já está vinculado a esse aluno',
-        };
+    if (solicitacaoPendente.length > 0) {
+      return {
+        mensagem: 'Você já enviou uma solicitação para esse professor',
+      };
     }
 
-    // ==========================================
-    // CRIAR VÍNCULO
-    // ==========================================
+    // =====================================================
+    // VERIFICAR SE JÁ EXISTE SOLICITAÇÃO ACEITA
+    // =====================================================
+
+    const [solicitacaoAceita]: any = await pool.query(
+      `SELECT id_solicitacao
+       FROM solicitacao_conexao
+       WHERE id_aluno = ?
+       AND id_professor = ?
+       AND status = 'Aceita'`,
+      [
+        usuarioLogadoId,
+        dados.id_professor,
+      ],
+    );
+
+    if (solicitacaoAceita.length > 0) {
+      return {
+        mensagem: 'Essa solicitação já foi aceita',
+      };
+    }
+
+    // =====================================================
+    // CRIAR SOLICITAÇÃO
+    // =====================================================
 
     const [resultado]: any = await pool.query(
-        `INSERT INTO professor_aluno
-        (
-            id_professor,
-            id_aluno,
-            status
-        )
-        VALUES (?, ?, ?)`,
-        [
-            dados.id_professor,
-            usuarioLogadoId,
-            'Ativo',
-        ],
-    );
-
-    // ==========================================
-    // BUSCAR VÍNCULO CRIADO
-    // ==========================================
-
-    const [vinculos]: any = await pool.query(
-        `SELECT
-            pa.id_professor_aluno,
-            pa.id_professor,
-            pa.id_aluno,
-            pa.status,
-            p.nome,
-            p.email,
-            p.especialidade,
-            p.registro_cref
-         FROM professor_aluno pa
-
-         INNER JOIN professor p
-             ON p.id_professor = pa.id_professor
-
-         WHERE pa.id_professor_aluno = ?`,
-        [resultado.insertId],
+      `INSERT INTO solicitacao_conexao
+      (
+        id_aluno,
+        id_professor,
+        status
+      )
+      VALUES (?, ?, 'Pendente')`,
+      [
+        usuarioLogadoId,
+        dados.id_professor,
+      ],
     );
 
     return {
-        mensagem: 'Professor conectado com sucesso',
-        professorAluno: vinculos[0],
+      mensagem: 'Solicitação enviada com sucesso',
+      solicitacao: {
+        id_solicitacao: resultado.insertId,
+        id_aluno: usuarioLogadoId,
+        id_professor: dados.id_professor,
+        status: 'Pendente',
+      },
     };
-}
+  }
+
+
   // =====================================================
   // LISTAR VÍNCULOS
   // =====================================================
@@ -222,6 +229,235 @@ async cadastrar(
     return vinculos;
   }
 
+
+  // =====================================================
+  // LISTAR SOLICITAÇÕES PENDENTES DO PROFESSOR
+  // =====================================================
+
+  async listarSolicitacoes(
+    usuarioId: number,
+    tipoUsuario: string,
+  ) {
+
+    const pool = this.databaseService.getPool();
+
+    // =====================================================
+    // SOMENTE PROFESSOR PODE VER SOLICITAÇÕES
+    // =====================================================
+
+    if (tipoUsuario !== 'professor') {
+      return {
+        mensagem: 'Apenas professores podem visualizar solicitações',
+      };
+    }
+
+    const [solicitacoes]: any = await pool.query(
+      `SELECT
+        sc.id_solicitacao,
+        sc.id_aluno,
+        sc.id_professor,
+        sc.status,
+        sc.data_solicitacao,
+
+        a.nome AS nome_aluno,
+        a.email AS email_aluno
+
+       FROM solicitacao_conexao sc
+
+       INNER JOIN aluno a
+         ON a.id_aluno = sc.id_aluno
+
+       WHERE sc.id_professor = ?
+       AND sc.status = 'Pendente'
+
+       ORDER BY sc.data_solicitacao DESC`,
+      [usuarioId],
+    );
+
+    return solicitacoes;
+  }
+
+
+  // =====================================================
+  // ACEITAR SOLICITAÇÃO
+  // =====================================================
+
+  async aceitarSolicitacao(
+    idSolicitacao: number,
+    usuarioId: number,
+    tipoUsuario: string,
+  ) {
+
+    const pool = this.databaseService.getPool();
+
+    // =====================================================
+    // SOMENTE PROFESSOR PODE ACEITAR
+    // =====================================================
+
+    if (tipoUsuario !== 'professor') {
+      return {
+        mensagem: 'Apenas professores podem aceitar solicitações',
+      };
+    }
+
+    // =====================================================
+    // BUSCAR SOLICITAÇÃO
+    // =====================================================
+
+    const [solicitacoes]: any = await pool.query(
+      `SELECT
+        id_solicitacao,
+        id_aluno,
+        id_professor,
+        status
+
+       FROM solicitacao_conexao
+
+       WHERE id_solicitacao = ?
+       AND id_professor = ?`,
+      [
+        idSolicitacao,
+        usuarioId,
+      ],
+    );
+
+    if (solicitacoes.length === 0) {
+      return {
+        mensagem: 'Solicitação não encontrada',
+      };
+    }
+
+    const solicitacao = solicitacoes[0];
+
+    // =====================================================
+    // VERIFICAR STATUS
+    // =====================================================
+
+    if (solicitacao.status !== 'Pendente') {
+      return {
+        mensagem: 'Essa solicitação já foi respondida',
+      };
+    }
+
+    // =====================================================
+    // VERIFICAR SE ALUNO JÁ POSSUI PROFESSOR
+    // =====================================================
+
+    const [vinculoExistente]: any = await pool.query(
+      `SELECT id_professor_aluno
+       FROM professor_aluno
+       WHERE id_aluno = ?
+       AND status = 'Ativo'`,
+      [solicitacao.id_aluno],
+    );
+
+    if (vinculoExistente.length > 0) {
+      return {
+        mensagem: 'Esse aluno já está conectado a um professor',
+      };
+    }
+
+    // =====================================================
+    // CRIAR VÍNCULO
+    // =====================================================
+
+    await pool.query(
+      `INSERT INTO professor_aluno
+      (
+        id_professor,
+        id_aluno,
+        data_vinculo,
+        status
+      )
+      VALUES (?, ?, CURDATE(), 'Ativo')`,
+      [
+        usuarioId,
+        solicitacao.id_aluno,
+      ],
+    );
+
+    // =====================================================
+    // ATUALIZAR SOLICITAÇÃO
+    // =====================================================
+
+    await pool.query(
+      `UPDATE solicitacao_conexao
+       SET
+         status = 'Aceita',
+         data_resposta = NOW()
+       WHERE id_solicitacao = ?`,
+      [idSolicitacao],
+    );
+
+    return {
+      mensagem: 'Solicitação aceita com sucesso',
+    };
+  }
+
+
+  // =====================================================
+  // RECUSAR SOLICITAÇÃO
+  // =====================================================
+
+  async recusarSolicitacao(
+    idSolicitacao: number,
+    usuarioId: number,
+    tipoUsuario: string,
+  ) {
+
+    const pool = this.databaseService.getPool();
+
+    // =====================================================
+    // SOMENTE PROFESSOR PODE RECUSAR
+    // =====================================================
+
+    if (tipoUsuario !== 'professor') {
+      return {
+        mensagem: 'Apenas professores podem recusar solicitações',
+      };
+    }
+
+    // =====================================================
+    // VERIFICAR SOLICITAÇÃO
+    // =====================================================
+
+    const [solicitacoes]: any = await pool.query(
+      `SELECT id_solicitacao
+       FROM solicitacao_conexao
+       WHERE id_solicitacao = ?
+       AND id_professor = ?
+       AND status = 'Pendente'`,
+      [
+        idSolicitacao,
+        usuarioId,
+      ],
+    );
+
+    if (solicitacoes.length === 0) {
+      return {
+        mensagem: 'Solicitação não encontrada ou já respondida',
+      };
+    }
+
+    // =====================================================
+    // RECUSAR SOLICITAÇÃO
+    // =====================================================
+
+    await pool.query(
+      `UPDATE solicitacao_conexao
+       SET
+         status = 'Recusada',
+         data_resposta = NOW()
+       WHERE id_solicitacao = ?`,
+      [idSolicitacao],
+    );
+
+    return {
+      mensagem: 'Solicitação recusada com sucesso',
+    };
+  }
+
+
   // =====================================================
   // BUSCAR VÍNCULO POR ID
   // =====================================================
@@ -287,6 +523,7 @@ async cadastrar(
 
     return vinculos[0];
   }
+
 
   // =====================================================
   // BUSCAR VÍNCULOS DE UM PROFESSOR
@@ -377,6 +614,7 @@ async cadastrar(
     return vinculos;
   }
 
+
   // =====================================================
   // BUSCAR VÍNCULO DE UM ALUNO
   // =====================================================
@@ -455,8 +693,7 @@ async cadastrar(
         p.curriculo,
         p.registro_cref,
         p.bacharelado,
-        p.formacao_academica,
-        p.registro_cref
+        p.formacao_academica
 
        FROM professor_aluno pa
 
